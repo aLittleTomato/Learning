@@ -19,7 +19,7 @@ var AttentionGame = (function () {
             pages: [],
             currentPage: 0,
             totalPages: 3,
-            timePerPage: 20,
+            timePerPage: 70,
             startTime: null,
             pageTimes: [],
             pageResults: []
@@ -97,8 +97,8 @@ var AttentionGame = (function () {
             if (currentPage) {
                 currentPage.classList.remove('active');
             }
+            
             nextPage.classList.add('active');
-
             // 更新游戏阶段
             updateGamePhase(nextPageId);
 
@@ -194,14 +194,14 @@ var AttentionGame = (function () {
 
         // 生成练习题目
         generateTutorialItems();
+        // 渲染练习网格
+        renderTutorialGrid();
 
-        Animation.tutorialToGameTransition(currentPage, tutorialPage, function () {
+        Animation.pageTransition(currentPage, tutorialPage, function () {
             currentPage.classList.remove('active');
             tutorialPage.classList.add('active');
             updateGamePhase('page-tutorial');
 
-            // 渲染练习网格
-            renderTutorialGrid();
         });
     }
 
@@ -488,13 +488,13 @@ AttentionGame.startMainGame = function () {
 
     // 生成游戏数据
     generateGameData();
+    startGamePage(0);
 
     Animation.tutorialToGameTransition(currentPage, gamePage, function () {
         currentPage.classList.remove('active');
         gamePage.classList.add('active');
 
         // 开始第一页游戏
-        startGamePage(0);
     });
 };
 
@@ -709,13 +709,15 @@ AttentionGame.nextGamePage = function () {
         tempGrid.id = 'temp-grid';
         currentGrid.parentNode.appendChild(tempGrid);
 
-        Animation.gamePageTransition(currentGrid, tempGrid, function () {
-            currentGrid.parentNode.removeChild(currentGrid);
-            tempGrid.id = 'main-grid';
-
+        startGamePage(nextPageIndex);
+        requestAnimationFrame(() => {
+        Animation.gamePageTransition(tempGrid, currentGrid, function () {
+            currentGrid.parentNode.removeChild(tempGrid);
             // 开始下一页
-            startGamePage(nextPageIndex);
         });
+
+        });
+       
     } else {
         // 游戏结束，显示结果
         showResult();
@@ -914,7 +916,7 @@ AttentionGame.restart = function () {
         pages: [],
         currentPage: 0,
         totalPages: 3,
-        timePerPage: 20,
+        timePerPage: 70,
         startTime: null,
         pageTimes: [],
         pageResults: []

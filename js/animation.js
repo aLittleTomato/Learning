@@ -21,7 +21,6 @@ var Animation = (function() {
         // 新页面进入动画
         newPage.style.display = 'block';
         newPage.classList.add('page-transition-enter');
-        
         var duration = Config.get('animation.pageTransitionDuration') || 400;
         
         setTimeout(function() {
@@ -51,7 +50,7 @@ var Animation = (function() {
         
         // 新页面从底部升起
         newPage.style.display = 'block';
-        newPage.style.transform = 'translateY(100%) scale(0.95)';
+        newPage.style.transform = 'translateY(100%) scale(0.85)';
         newPage.style.opacity = '0';
         
         setTimeout(function() {
@@ -73,7 +72,7 @@ var Animation = (function() {
             if (callback) {
                 callback();
             }
-        }, 450);
+        }, 11450);
     }
     
     /**
@@ -83,32 +82,37 @@ var Animation = (function() {
      * @param {Function} callback - 动画完成回调
      */
     function gamePageTransition(oldPage, newPage, callback) {
-        // 旧盘面快速向左飞出
+    // 确保新页面已参与布局
+    newPage.style.display = 'block';
+    newPage.style.transition = 'none';
+    newPage.style.transform = 'translateX(100%)';
+
+    // 强制浏览器确认初始状态
+    newPage.offsetWidth;
+
+    requestAnimationFrame(() => {
         oldPage.style.transition = 'transform 0.3s ease-out';
+        newPage.style.transition = 'transform 0.3s ease-out';
+
         oldPage.style.transform = 'translateX(-100%)';
-        
-        // 新盘面从右侧飞入
-        newPage.style.display = 'block';
-        newPage.style.transform = 'translateX(100%)';
-        
-        setTimeout(function() {
-            newPage.style.transition = 'transform 0.3s ease-out';
-            newPage.style.transform = 'translateX(0)';
-        }, 50);
-        
-        setTimeout(function() {
-            oldPage.style.display = 'none';
-            oldPage.style.transform = '';
-            oldPage.style.transition = '';
-            
-            newPage.style.transform = '';
-            newPage.style.transition = '';
-            
-            if (callback) {
-                callback();
-            }
-        }, 350);
+        newPage.style.transform = 'translateX(0)';
+    });
+
+    function onEnd() {
+        oldPage.style.transition = '';
+        oldPage.style.transform = '';
+        oldPage.style.visibility = 'hidden'; // ❗不用 display:none
+
+        newPage.style.transition = '';
+        newPage.style.transform = '';
+
+        oldPage.removeEventListener('transitionend', onEnd);
+
+        if (callback) callback();
     }
+
+    oldPage.addEventListener('transitionend', onEnd, { once: true });
+}
     
     /**
      * 测试结束到结果结算的动画 (P7 → P8)
