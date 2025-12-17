@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认知测试</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="app">
+        <div id="loading" class="loading-screen">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p>加载中...</p>
+            </div>
+        </div>
+        
+        <div id="main-container" class="main-container" style="display: none;">
+            <div class="header">
+                <h1>认知能力测试</h1>
+                <div class="user-info" id="user-info"></div>
+            </div>
+            
+            <div class="game-list">
+                <div class="game-card" data-game="attention">
+                    <div class="game-icon">
+                        <img src="images/base/attention-icon.png" alt="注意力测试" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-info">
+                        <h3>注意力测试</h3>
+                        <p>找出所有带两条竖线的字母 q</p>
+                    </div>
+                    <button class="btn-start" onclick="startGame('attention')">开始测试</button>
+                </div>
+                
+                <div class="game-card disabled" data-game="dst">
+                    <div class="game-icon">
+                        <img src="images/base/dst-icon.png" alt="数字广度测试" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-info">
+                        <h3>数字广度测试 (DST)</h3>
+                        <p>即将推出</p>
+                    </div>
+                    <button class="btn-start" disabled>即将推出</button>
+                </div>
+                
+                <div class="game-card disabled" data-game="memory">
+                    <div class="game-icon">
+                        <img src="images/base/memory-icon.png" alt="情景记忆测试" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-info">
+                        <h3>情景记忆测试</h3>
+                        <p>即将推出</p>
+                    </div>
+                    <button class="btn-start" disabled>即将推出</button>
+                </div>
+                
+                <div class="game-card disabled" data-game="tmt">
+                    <div class="game-icon">
+                        <img src="images/base/tmt-icon.png" alt="连线测试" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-info">
+                        <h3>连线测试 (TMT)</h3>
+                        <p>即将推出</p>
+                    </div>
+                    <button class="btn-start" disabled>即将推出</button>
+                </div>
+                
+                <div class="game-card disabled" data-game="raven">
+                    <div class="game-icon">
+                        <img src="images/base/raven-icon.png" alt="瑞文推理" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-info">
+                        <h3>瑞文推理</h3>
+                        <p>即将推出</p>
+                    </div>
+                    <button class="btn-start" disabled>即将推出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

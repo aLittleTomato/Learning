@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注意力测试</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/attention.css">
+</head>
+<body>
+    <div id="app">
+        <!-- P1: 欢迎页 -->
+        <div id="page-welcome" class="page active">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="welcome-title">欢迎来到注意力小练习</h2>
+                <p class="welcome-text">点击屏幕任意位置继续</p>
+            </div>
+        </div>
+        
+        <!-- P2: 心理建设 -->
+        <div id="page-mindset" class="page">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="page-title">放轻松</h2>
+                <p class="page-text">按自己的节奏来就好</p>
+                <button class="btn btn-primary" onclick="AttentionGame.nextPage()">下一步</button>
+            </div>
+        </div>
+        
+        <!-- P3: 核心任务发布 -->
+        <div id="page-task" class="page">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="page-title">你的任务</h2>
+                <p class="page-text">在限定时间内，找出<strong>"上下都有两条竖线"</strong>的英文字母 <strong>q</strong></p>
+                <button class="btn btn-primary" onclick="AttentionGame.showRules()">查看规则</button>
+            </div>
+        </div>
+        
+        <!-- P4: 规则详解 1 -->
+        <div id="page-rules-1" class="page">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="page-title">规则说明</h2>
+                <div class="rules-content">
+                    <div class="rule-item">
+                        <div class="rule-label">规则 A</div>
+                        <p>字母必须是 <strong>"q"</strong></p>
+                        <p class="rule-note">（排除 p, d, b）</p>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-label">规则 B</div>
+                        <p>竖线总数必须为 <strong>2</strong></p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="AttentionGame.nextPage()">继续</button>
+            </div>
+        </div>
+        
+        <!-- P5: 规则详解 2 -->
+        <div id="page-rules-2" class="page">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="page-title">示例说明</h2>
+                <div class="examples-content">
+                    <div class="example-item correct">
+                        <div class="example-letter">q̍̍</div>
+                        <p>上面 2 条线 + 下面 0 条线 = ✓</p>
+                    </div>
+                    <div class="example-item correct">
+                        <div class="example-letter">q̗̍</div>
+                        <p>上面 1 条线 + 下面 1 条线 = ✓</p>
+                    </div>
+                    <div class="example-item correct">
+                        <div class="example-letter">q̗̗</div>
+                        <p>上面 0 条线 + 下面 2 条线 = ✓</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="AttentionGame.startTutorial()">先试一试</button>
+            </div>
+        </div>
+        
+        <!-- P6: 练习模式 -->
+        <div id="page-tutorial" class="page">
+            <div class="page-content">
+                <div class="mascot mascot-idle">
+                    <div class="mascot-placeholder">🐵</div>
+                </div>
+                <h2 class="page-title">练习模式</h2>
+                <p class="page-subtitle">找出所有正确的字母 q（共 <span id="tutorial-correct-count">2</span> 个）</p>
+                
+                <div class="game-grid tutorial-grid" id="tutorial-grid"></div>
+                
+                <div id="tutorial-complete" class="tutorial-complete" style="display: none;">
+                    <div class="complete-icon">🎉</div>
+                    <p class="complete-text">太棒了！你找到了所有正确的 "q"</p>
+                    <button class="btn btn-success" onclick="AttentionGame.startMainGame()">开始正式测试</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- P7: 正式测试 -->
+        <div id="page-game" class="page">
+            <div class="game-header">
+                <div class="mascot-small">🐵</div>
+                <div class="game-info">
+                    <span class="game-progress">第 <span id="current-page">1</span> / <span id="total-pages">3</span> 部分</span>
+                </div>
+                <div class="game-timer" id="game-timer">00:20</div>
+            </div>
+            
+            <div class="game-container">
+                <div class="game-grid main-grid" id="main-grid"></div>
+            </div>
+            
+            <div class="game-footer">
+                <button class="btn btn-primary btn-next" id="btn-next" onclick="AttentionGame.nextGamePage()">下一部分</button>
+            </div>
+        </div>
+        
+        <!-- P8: 结果结算 -->
+        <div id="page-result" class="page">
+            <div class="page-content">
+                <div class="result-card">
+                    <div class="result-badge">🏆</div>
+                    <h2 class="result-title" id="result-title">真正的字母侦探</h2>
+                    
+                    <div class="result-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">总耗时</div>
+                            <div class="stat-value" id="stat-time">00:00</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">正确率</div>
+                            <div class="stat-value" id="stat-accuracy">0%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">加工速度</div>
+                            <div class="stat-value" id="stat-speed">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">集中程度</div>
+                            <div class="stat-value" id="stat-focus">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button class="btn btn-secondary" onclick="AttentionGame.viewDetails()">查看答题详情</button>
+                        <button class="btn btn-primary" onclick="AttentionGame.restart()">再玩一次</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/utils.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/animation.js"></script>
+    <script src="../js/attention.js"></script>
+</body>
+</html>
