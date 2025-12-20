@@ -122,7 +122,8 @@ var Animation = (function() {
      */
     function gameToResultTransition(oldPage, newPage, callback) {
         // 背景渐变
-        newPage.style.display = 'block';
+        oldPage.classList.remove('active');
+        newPage.classList.add('active');
         newPage.style.opacity = '0';
         
         setTimeout(function() {
@@ -137,7 +138,7 @@ var Animation = (function() {
         }
         
         setTimeout(function() {
-            oldPage.style.display = 'none';
+            // oldPage.style.display = 'none';
             newPage.style.opacity = '';
             newPage.style.transition = '';
             

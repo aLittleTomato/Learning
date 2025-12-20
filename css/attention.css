@@ -2,7 +2,32 @@
 
 body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
+/* 设计尺寸为 750x1334 的响应式布局 */
+@media screen and (max-height: 1334px) {
+    body {
+        justify-content: flex-end;
+    }
+}
+
+@media screen and (min-height: 1334px) and (max-height: 1450px) {
+    body {
+        padding-top: calc((100vh - 1334px) / 2 - 15px);
+        padding-bottom: calc((100vh - 1334px) / 2 + 15px);
+    }
+}
+
+@media screen and (min-height: 1450px) {
+    body {
+        padding-top: calc((100vh - 1334px) / 2 - 25px);
+        padding-bottom: calc((100vh - 1334px) / 2 + 25px);
+    }
+}
+
 
 /* 页面容器 */
 .page {
@@ -158,9 +183,13 @@ body {
 /* 游戏网格 */
 .game-grid {
     display: grid;
+    position: absolute;
     gap: 8px;
     margin: 20px auto;
     max-width: 100%;
+
+    transform: translateX(calc(-50% + var(--slide-x, 0)));
+    transition: transform 0.4s ease;
 }
 
 .tutorial-grid {
@@ -173,11 +202,35 @@ body {
     max-width: 100%;
 }
 
+/* 初始状态 */
+.game-grid.active {
+    --slide-x: 0;
+}
+
+.game-grid.hide{
+    transition: none;
+    transform: translateX(100vw);
+}
+
+.game-grid.next {
+    --slide-x: 100vw;
+}
+
+.game-grid.slide-out {
+    --slide-x: -100vw;
+}
+
+.game-grid.slide-in {
+    --slide-x: 0;
+}
+
 .grid-item {
     aspect-ratio: 1;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     display: flex;
+    width: 88px;
+    height: 88px;
     align-items: center;
     justify-content: center;
     font-size: 20px;
@@ -234,6 +287,11 @@ body {
 .grid-item.disabled {
     pointer-events: none;
     opacity: 0.6;
+}
+
+
+.grid-item.omission  {
+    background-color: #f1c40f;
 }
 
 /* 练习完成提示 */
@@ -298,11 +356,48 @@ body {
     }
 }
 
+/* 进度条容器 */
+.progress-bar-container {
+    padding: 12px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+}
+
+.progress-dot {
+    width: 40px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+    background-color: #3498db;
+}
+
+.progress-dot.correct {
+    background-color: #2ecc71;
+}
+
+.progress-dot.error {
+    background-color: #e74c3c;
+}
+
+
 /* 游戏容器 */
 .game-container {
     padding: 20px;
-    overflow-y: auto;
-    max-height: calc(100vh - 200px);
+    overflow: hidden;
+    /* max-height: calc(100vh - 200px); */
+    width: 665px;
+    height: 794px;
 }
 
 /* 游戏底部 */
@@ -374,6 +469,23 @@ body {
 .result-actions .btn {
     flex: 1;
 }
+
+.details-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 12px;
+}
+
+.details-footer .btn {
+    flex: 1;
+}
+
 
 /* 响应式调整 */
 @media screen and (max-width: 375px) {

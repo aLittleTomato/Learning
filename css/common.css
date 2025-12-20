@@ -122,18 +122,20 @@ html, body {
     border-radius: 8px;
     font-size: 14px;
     z-index: 10000;
-    animation: toast-in 0.3s ease-out;
+    /* animation: toast-in 0.3s ease-out; */
+    width: 660px;
+    height: 89px;
 }
 
 .toast.toast-error {
-    background-color: rgba(231, 76, 60, 0.9);
+    background-color: #FF5E5E;
 }
 
 .toast.toast-success {
-    background-color: rgba(46, 204, 113, 0.9);
+    background-color: #42BB6C;
 }
 
-@keyframes toast-in {
+/* @keyframes toast-in {
     from {
         opacity: 0;
         transform: translateX(-50%) translateY(20px);
@@ -142,7 +144,7 @@ html, body {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
-}
+} */
 
 /* 页面切换动画 */
 .page-transition-enter {

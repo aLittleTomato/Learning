@@ -120,17 +120,43 @@
                 </div>
                 <div class="game-timer" id="game-timer">00:20</div>
             </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
             
             <div class="game-container">
-                <div class="game-grid main-grid" id="main-grid"></div>
+                <!-- <div class="game-grid main-grid" id="main-grid"></div> -->
+                <div class="game-grid main-grid active" id="main-grid"></div>
+                <div class="game-grid main-grid next" id="next-grid"></div>
             </div>
             
             <div class="game-footer">
                 <button class="btn btn-primary btn-next" id="btn-next" onclick="AttentionGame.nextGamePage()">下一部分</button>
             </div>
         </div>
+
+         <!-- P8: 答题详情 -->
+        <div id="page-details" class="page">
+            <div class="details-header">
+                <h2 class="details-title">答题详情</h2>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="details-progress-bar"></div>
+            </div>
+            
+            <div class="details-container">
+                <div class="game-grid main-grid" id="details-grid"></div>
+            </div>
+            
+            <div class="details-footer">
+                <button class="btn btn-secondary" id="btn-prev-detail" onclick="AttentionGame.prevDetailPage()">上一页</button>
+                <button class="btn btn-secondary" id="btn-next-detail" onclick="AttentionGame.nextDetailPage()">下一页</button>
+            </div>
+        </div>
         
-        <!-- P8: 结果结算 -->
+        <!-- P9: 结果结算 -->
         <div id="page-result" class="page">
             <div class="page-content">
                 <div class="result-card">

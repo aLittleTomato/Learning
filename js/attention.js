@@ -97,7 +97,7 @@ var AttentionGame = (function () {
             if (currentPage) {
                 currentPage.classList.remove('active');
             }
-            
+
             nextPage.classList.add('active');
             // 更新游戏阶段
             updateGamePhase(nextPageId);
@@ -242,13 +242,13 @@ var AttentionGame = (function () {
     function generateCorrectQ() {
         var types = [
             // 上下有两条
-            { top: '||',letter: 'q', bottom: ''},
-            { top: '',letter: 'q', bottom: '||'},
+            { top: '||', letter: 'q', bottom: '' },
+            { top: '', letter: 'q', bottom: '||' },
             // 上下各一条
-            { top: '| ',letter: 'q', bottom: '| '},
-            { top: '| ',letter: 'q', bottom: ' |'},
-            { top: ' |',letter: 'q', bottom: '| '},
-            { top: ' |',letter: 'q', bottom: ' |'},
+            { top: '| ', letter: 'q', bottom: '| ' },
+            { top: '| ', letter: 'q', bottom: ' |' },
+            { top: ' |', letter: 'q', bottom: '| ' },
+            { top: ' |', letter: 'q', bottom: ' |' },
 
         ];
 
@@ -270,60 +270,60 @@ var AttentionGame = (function () {
         var types = [
             // 不是 q 的字母
             // 上下有两条
-            { top: '||',letter: 'b', bottom: ''},
-            { top: '',letter: 'b', bottom: '||'},
+            { top: '||', letter: 'b', bottom: '' },
+            { top: '', letter: 'b', bottom: '||' },
             // 上下各一条b
-            { top: '| ',letter: 'b', bottom: '| '},
-            { top: '| ',letter: 'b', bottom: ' |'},
-            { top: ' |',letter: 'b', bottom: '| '},
-            { top: ' |',letter: 'b', bottom: ' |'},
+            { top: '| ', letter: 'b', bottom: '| ' },
+            { top: '| ', letter: 'b', bottom: ' |' },
+            { top: ' |', letter: 'b', bottom: '| ' },
+            { top: ' |', letter: 'b', bottom: ' |' },
             // 上下只有一条
-            { top: ' |',letter: 'b', bottom: '  '},
-            { top: '| ',letter: 'b', bottom: '  '},
-            { top: '  ',letter: 'b', bottom: '| '},
-            { top: '  ',letter: 'b', bottom: ' |'},
+            { top: ' |', letter: 'b', bottom: '  ' },
+            { top: '| ', letter: 'b', bottom: '  ' },
+            { top: '  ', letter: 'b', bottom: '| ' },
+            { top: '  ', letter: 'b', bottom: ' |' },
             // 上下都没有
-            { top: '  ',letter: 'b', bottom: '  '},
+            { top: '  ', letter: 'b', bottom: '  ' },
 
             // 上下有两条
-            { top: '||',letter: 'p', bottom: ''},
-            { top: '',letter: 'p', bottom: '||'},
+            { top: '||', letter: 'p', bottom: '' },
+            { top: '', letter: 'p', bottom: '||' },
             // 上下各一条b
-            { top: '| ',letter: 'p', bottom: '| '},
-            { top: '| ',letter: 'p', bottom: ' |'},
-            { top: ' |',letter: 'p', bottom: '| '},
-            { top: ' |',letter: 'p', bottom: ' |'},
+            { top: '| ', letter: 'p', bottom: '| ' },
+            { top: '| ', letter: 'p', bottom: ' |' },
+            { top: ' |', letter: 'p', bottom: '| ' },
+            { top: ' |', letter: 'p', bottom: ' |' },
             // 上下只有一条
-            { top: ' |',letter: 'p', bottom: '  '},
-            { top: '| ',letter: 'p', bottom: '  '},
-            { top: '  ',letter: 'p', bottom: '| '},
-            { top: '  ',letter: 'p', bottom: ' |'},
+            { top: ' |', letter: 'p', bottom: '  ' },
+            { top: '| ', letter: 'p', bottom: '  ' },
+            { top: '  ', letter: 'p', bottom: '| ' },
+            { top: '  ', letter: 'p', bottom: ' |' },
             // 上下都没有
-            { top: '  ',letter: 'p', bottom: '  '},
+            { top: '  ', letter: 'p', bottom: '  ' },
 
             // 上下有两条
-            { top: '||',letter: 'd', bottom: ''},
-            { top: '',letter: 'd', bottom: '||'},
+            { top: '||', letter: 'd', bottom: '' },
+            { top: '', letter: 'd', bottom: '||' },
             // 上下各一条b
-            { top: '| ',letter: 'd', bottom: '| '},
-            { top: '| ',letter: 'd', bottom: ' |'},
-            { top: ' |',letter: 'd', bottom: '| '},
-            { top: ' |',letter: 'd', bottom: ' |'},
+            { top: '| ', letter: 'd', bottom: '| ' },
+            { top: '| ', letter: 'd', bottom: ' |' },
+            { top: ' |', letter: 'd', bottom: '| ' },
+            { top: ' |', letter: 'd', bottom: ' |' },
             // 上下只有一条
-            { top: ' |',letter: 'd', bottom: '  '},
-            { top: '| ',letter: 'd', bottom: '  '},
-            { top: '  ',letter: 'd', bottom: '| '},
-            { top: '  ',letter: 'd', bottom: ' |'},
+            { top: ' |', letter: 'd', bottom: '  ' },
+            { top: '| ', letter: 'd', bottom: '  ' },
+            { top: '  ', letter: 'd', bottom: '| ' },
+            { top: '  ', letter: 'd', bottom: ' |' },
             // 上下都没有
-            { top: '  ',letter: 'd', bottom: '  '},
+            { top: '  ', letter: 'd', bottom: '  ' },
 
             // 上下只有一条
-            { top: ' |',letter: 'q', bottom: '  '},
-            { top: '| ',letter: 'q', bottom: '  '},
-            { top: '  ',letter: 'q', bottom: '| '},
-            { top: '  ',letter: 'q', bottom: ' |'},
+            { top: ' |', letter: 'q', bottom: '  ' },
+            { top: '| ', letter: 'q', bottom: '  ' },
+            { top: '  ', letter: 'q', bottom: '| ' },
+            { top: '  ', letter: 'q', bottom: ' |' },
             // 上下都没有
-            { top: '  ',letter: 'q', bottom: '  '},
+            { top: '  ', letter: 'q', bottom: '  ' },
         ];
 
         var type = types[Utils.randomInt(0, types.length - 1)];
@@ -543,7 +543,7 @@ function generateGameData() {
 /**
  * 开始某一页游戏
  */
-function startGamePage(pageIndex) {
+function startGamePage(pageIndex, needrender = true) {
     AttentionGame.state.gameData.currentPage = pageIndex;
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
 
@@ -552,6 +552,9 @@ function startGamePage(pageIndex) {
     var totalPagesSpan = document.getElementById('total-pages');
     if (currentPageSpan) currentPageSpan.textContent = pageIndex + 1;
     if (totalPagesSpan) totalPagesSpan.textContent = AttentionGame.state.gameData.totalPages;
+
+
+    renderProgressBar(pageIndex, AttentionGame.state.gameData.totalPages, 'progress-bar');
 
     // 更新按钮文本
     var btnNext = document.getElementById('btn-next');
@@ -563,8 +566,9 @@ function startGamePage(pageIndex) {
         }
     }
 
-    // 渲染游戏网格
-    renderGameGrid(pageData.items);
+    if (needrender)
+        // 渲染游戏网格
+        renderGameGridTo(document.getElementById('main-grid'), pageData.items);
 
     // 开始计时
     pageData.startTime = Date.now();
@@ -574,9 +578,9 @@ function startGamePage(pageIndex) {
 /**
  * 渲染游戏网格
  */
-function renderGameGrid(items) {
-    var grid = document.getElementById('main-grid');
-    if (!grid) return;
+function renderGameGridTo(grid, items) {
+    // var grid = document.getElementById('main-grid');
+    // if (!grid) return;
 
     grid.innerHTML = '';
 
@@ -588,20 +592,20 @@ function renderGameGrid(items) {
         gridItem.setAttribute('data-index', i);
 
         var top = document.createElement('div');
-            top.className = 'mark--small';
-            top.innerHTML = item.top;
+        top.className = 'mark--small';
+        top.innerHTML = item.top;
 
-            var mid = document.createElement('div');
-            mid.className = 'letter--small';
-            mid.innerHTML = item.letter;
+        var mid = document.createElement('div');
+        mid.className = 'letter--small';
+        mid.innerHTML = item.letter;
 
-            var bottom = document.createElement('div');
-            bottom.className = 'mark--small';
-            bottom.innerHTML = item.bottom;
+        var bottom = document.createElement('div');
+        bottom.className = 'mark--small';
+        bottom.innerHTML = item.bottom;
 
-            gridItem.appendChild(top);
-            gridItem.appendChild(mid);
-            gridItem.appendChild(bottom);
+        gridItem.appendChild(top);
+        gridItem.appendChild(mid);
+        gridItem.appendChild(bottom);
 
 
         gridItem.addEventListener('click', function () {
@@ -701,23 +705,56 @@ AttentionGame.nextGamePage = function () {
     // 检查是否还有下一页
     if (pageIndex < AttentionGame.state.gameData.totalPages - 1) {
         // 翻页动画
+        // var currentGrid = document.getElementById('main-grid');
+        // var nextPageIndex = pageIndex + 1;
+
+        var currentPage = AttentionGame.state.gameData.currentPage;
+        var nextPage = currentPage + 1;
+        if (nextPage >= AttentionGame.state.gameData.totalPages) return;
+
         var currentGrid = document.getElementById('main-grid');
         var nextPageIndex = pageIndex + 1;
+        var nextGrid = document.getElementById('next-grid');
+
+        // ① 先渲染下一页（在屏幕外）
+        renderGameGridTo(
+            nextGrid,
+            AttentionGame.state.gameData.pages[nextPage].items
+
+        );
+        // ② 等一帧，确保 Grid 已布局完成
+        requestAnimationFrame(function () {
+            currentGrid.classList.add('slide-out');
+            nextGrid.classList.add('slide-in');
+            nextGrid.classList.remove('hide');
+            nextGrid.classList.add('next');
+            // ③ 动画结束后交换身份
+            nextGrid.addEventListener('transitionend', function () {
+                currentGrid.classList.remove('active', 'slide-out');
+                currentGrid.classList.add('hide');
+
+                nextGrid.classList.remove('next', 'slide-in');
+                nextGrid.classList.add('active');
+                // 交换 id（保持你原逻辑）
+                currentGrid.id = 'next-grid';
+                nextGrid.id = 'main-grid';
+
+                startGamePage(nextPageIndex, false);
+            }, { once: true });
+        });
 
         // 创建临时网格用于动画
-        var tempGrid = currentGrid.cloneNode(true);
-        tempGrid.id = 'temp-grid';
-        currentGrid.parentNode.appendChild(tempGrid);
+        // var tempGrid = currentGrid.cloneNode(true);
+        // tempGrid.id = 'temp-grid';
+        // currentGrid.parentNode.appendChild(tempGrid);
 
-        startGamePage(nextPageIndex);
-        requestAnimationFrame(() => {
-        Animation.gamePageTransition(tempGrid, currentGrid, function () {
-            currentGrid.parentNode.removeChild(tempGrid);
-            // 开始下一页
-        });
+        // requestAnimationFrame(() => {
+        // Animation.gamePageTransition(tempGrid, currentGrid, function () {
+        //     currentGrid.parentNode.removeChild(tempGrid);
+        //     // 开始下一页
+        // });
 
-        });
-       
+
     } else {
         // 游戏结束，显示结果
         showResult();
@@ -772,18 +809,23 @@ function calculatePageResult(pageIndex) {
 /**
  * 显示结果页面
  */
-function showResult() {
+function showResult(fromDeail = false) {
     console.log('Showing result...');
 
     // 计算总体结果
     calculateTotalResult();
 
     var gamePage = document.getElementById('page-game');
+
+    if (fromDeail)
+        gamePage = document.getElementById('page-details');
+
     var resultPage = document.getElementById('page-result');
 
+    // gamePage.classList.remove('active');
+
     Animation.gameToResultTransition(gamePage, resultPage, function () {
-        gamePage.classList.remove('active');
-        resultPage.classList.add('active');
+    resultPage.classList.add('active');
 
         // 渲染结果
         renderResult();
@@ -897,13 +939,6 @@ function submitTestData() {
     });
 }
 
-/**
- * 查看答题详情
- */
-AttentionGame.viewDetails = function () {
-    Utils.showToast('答题详情功能开发中', 'info');
-    // TODO: 实现答题详情页面
-};
 
 /**
  * 重新开始
@@ -933,7 +968,11 @@ AttentionGame.restart = function () {
     };
 
     // 重新加载页面
-    window.location.reload();
+    // window.location.reload();
+    var detailsPage = document.getElementById('page-result');
+    if(detailsPage)
+        detailsPage.classList.remove("active")
+    AttentionGame.startMainGame()
 };
 
 // 暴露内部函数供其他函数使用
@@ -943,3 +982,187 @@ AttentionGame.getCurrentPage = function () {
 
 AttentionGame.state = AttentionGame.state || {};
 AttentionGame.timers = AttentionGame.timers || {};
+
+
+/**
+ * 渲染进度条
+ */
+function renderProgressBar(currentPage, totalPages, progressBarId) {
+    var progressBar = document.getElementById(progressBarId || 'progress-bar');
+    if (!progressBar) return;
+
+    progressBar.innerHTML = '';
+
+    for (var i = 0; i < totalPages; i++) {
+        var dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        if (i === currentPage) {
+            dot.classList.add('active');
+        }
+        progressBar.appendChild(dot);
+    }
+}
+
+/**
+ * 更新进度条状态
+ */
+function updateProgressBarStatus(progressBarId) {
+    var progressBar = document.getElementById(progressBarId || 'details-progress-bar');
+    if (!progressBar) return;
+
+    var dots = progressBar.querySelectorAll('.progress-dot');
+
+    for (var i = 0; i < AttentionGame.state.gameData.pages.length; i++) {
+        var pageData = AttentionGame.state.gameData.pages[i];
+        var result = pageData.result;
+
+        if (result && dots[i]) {
+            dots[i].classList.remove('correct', 'error');
+            if (result.errorCount === 0 && result.omissionCount === 0) {
+                dots[i].classList.add('correct');
+            } else {
+                dots[i].classList.add('error');
+            }
+        }
+    }
+}
+
+/**
+ * 查看答题详情
+ */
+AttentionGame.viewDetails = function () {
+    console.log('Viewing details...');
+
+    AttentionGame.state.detailsPage = 0;
+
+    var resultPage = document.getElementById('page-result');
+    var detailsPage = document.getElementById('page-details');
+
+    Animation.pageTransition(resultPage, detailsPage, function () {
+        resultPage.classList.remove('active');
+        detailsPage.classList.add('active');
+
+        // 渲染进度条
+        renderProgressBar(0, AttentionGame.state.gameData.totalPages, 'details-progress-bar');
+        updateProgressBarStatus('details-progress-bar');
+
+        // 渲染第一页详情
+        renderDetailsPage(0);
+    });
+};
+
+/**
+ * 渲染详情页面
+ */
+function renderDetailsPage(pageIndex) {
+    var pageData = AttentionGame.state.gameData.pages[pageIndex];
+    var grid = document.getElementById('details-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    for (var i = 0; i < pageData.items.length; i++) {
+        var item = pageData.items[i];
+        var gridItem = document.createElement('div');
+        gridItem.className = 'grid-item';
+        // gridItem.textContent = item.display;
+        gridItem.setAttribute('data-index', i);
+
+        var top = document.createElement('div');
+        top.className = 'mark--small';
+        top.innerHTML = item.top;
+
+        var mid = document.createElement('div');
+        mid.className = 'letter--small';
+        mid.innerHTML = item.letter;
+
+        var bottom = document.createElement('div');
+        bottom.className = 'mark--small';
+        bottom.innerHTML = item.bottom;
+
+        gridItem.appendChild(top);
+        gridItem.appendChild(mid);
+        gridItem.appendChild(bottom);
+
+        // 判断状态
+        var isSelected = pageData.selected.indexOf(i) !== -1;
+        var isCorrect = item.isCorrect;
+
+        if (isSelected && isCorrect) {
+            // 选中且正确
+            gridItem.classList.add('correct');
+        } else if (!isSelected && isCorrect) {
+            // 漏选
+            gridItem.classList.add('omission');
+        } else if (isSelected && !isCorrect) {
+            // 错选
+            gridItem.classList.add('error');
+        }
+
+        grid.appendChild(gridItem);
+    }
+
+    // 更新进度条当前页
+    var dots = document.querySelectorAll('#details-progress-bar .progress-dot');
+    for (var j = 0; j < dots.length; j++) {
+        dots[j].classList.remove('active');
+        if (j === pageIndex) {
+            dots[j].classList.add('active');
+        }
+    }
+
+    // 更新按钮状态
+    var btnPrev = document.getElementById('btn-prev-detail');
+    var btnNext = document.getElementById('btn-next-detail');
+
+    if (btnPrev) {
+        if (pageIndex === 0)
+            btnPrev.textContent = "返回答题结果"
+        else
+            btnPrev.textContent = "上一页"
+    }
+
+    if (btnNext) {
+        if (pageIndex === AttentionGame.state.gameData.totalPages - 1)
+            btnNext.textContent = "返回答题结果"
+        else
+            btnNext.textContent = "下一页"
+    }
+}
+
+/**
+ * 上一页详情
+ */
+AttentionGame.prevDetailPage = function () {
+    if (AttentionGame.state.detailsPage > 0) {
+        AttentionGame.state.detailsPage--;
+        renderDetailsPage(AttentionGame.state.detailsPage);
+    }
+    else {
+        showResult(true);
+    }
+};
+
+/**
+ * 下一页详情
+ */
+AttentionGame.nextDetailPage = function () {
+    if (AttentionGame.state.detailsPage < AttentionGame.state.gameData.totalPages - 1) {
+        AttentionGame.state.detailsPage++;
+        renderDetailsPage(AttentionGame.state.detailsPage);
+    }
+    else {
+        showResult(true);
+    }
+};
+
+/**
+ * 返回主页
+ */
+AttentionGame.backToHome = function () {
+    window.location.href = '../index.html?token=' + (Config.get('user.token') || '');
+};
+
+// 在状态中添加详情页索引
+AttentionGame.state.detailsPage = 0;
+
