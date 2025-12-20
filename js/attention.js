@@ -492,7 +492,7 @@ AttentionGame.startMainGame = function () {
 
     Animation.tutorialToGameTransition(currentPage, gamePage, function () {
         currentPage.classList.remove('active');
-        gamePage.classList.add('active');
+        // gamePage.classList.add('active');
 
         // 开始第一页游戏
     });
@@ -809,23 +809,26 @@ function calculatePageResult(pageIndex) {
 /**
  * 显示结果页面
  */
-function showResult(fromDeail = false) {
+function showResult() {
     console.log('Showing result...');
 
     // 计算总体结果
     calculateTotalResult();
 
-    var gamePage = document.getElementById('page-game');
+    var currentPage = AttentionGame.getCurrentPage();
 
-    if (fromDeail)
-        gamePage = document.getElementById('page-details');
+
+    // var gamePage = document.getElementById('page-game');
+
+    // if (fromDeail)
+    // gamePage = document.getElementById('page-details');
 
     var resultPage = document.getElementById('page-result');
 
-    // gamePage.classList.remove('active');
+    currentPage.classList.remove('active');
 
-    Animation.gameToResultTransition(gamePage, resultPage, function () {
-    resultPage.classList.add('active');
+    Animation.gameToResultTransition(currentPage, resultPage, function () {
+        resultPage.classList.add('active');
 
         // 渲染结果
         renderResult();
@@ -969,9 +972,6 @@ AttentionGame.restart = function () {
 
     // 重新加载页面
     // window.location.reload();
-    var detailsPage = document.getElementById('page-result');
-    if(detailsPage)
-        detailsPage.classList.remove("active")
     AttentionGame.startMainGame()
 };
 
@@ -1139,7 +1139,7 @@ AttentionGame.prevDetailPage = function () {
         renderDetailsPage(AttentionGame.state.detailsPage);
     }
     else {
-        showResult(true);
+        showResult();
     }
 };
 
@@ -1152,7 +1152,7 @@ AttentionGame.nextDetailPage = function () {
         renderDetailsPage(AttentionGame.state.detailsPage);
     }
     else {
-        showResult(true);
+        showResult();
     }
 };
 
