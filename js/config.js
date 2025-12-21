@@ -18,11 +18,16 @@ var Config = (function() {
             attention: {
                 name: '注意力测试',
                 enabled: true,
-                pages: 3,
+                // 正式测试页数
+                pages: 7,
                 itemsPerPage: 56,
+                // 每个页面正确的个数
                 correctItemsPerPage: 25,
-                timePerPage: 20,
+                // 每个页面的答题时间
+                timePerPage: 70,
+                // 模拟测试的选项个数
                 practiceItems: 6,
+                // 模拟测试的正确选项个数
                 practiceCorrectItems: 2
             },
             dst: {
