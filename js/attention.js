@@ -3,17 +3,17 @@
  */
 
 var AttentionGame = (function () {
-    'use strict';
+    "use strict";
 
     // 游戏状态
     var state = {
         currentPageIndex: 0,
-        gamePhase: 'welcome', // welcome, mindset, task, rules-1, rules-2, tutorial, game, result
+        gamePhase: "welcome", // welcome, mindset, task, rules-1, rules-2, tutorial, game, result
         tutorialData: {
             items: [],
             selected: [],
             correctCount: 0,
-            errors: 0
+            errors: 0,
         },
         gameData: {
             pages: [],
@@ -22,7 +22,7 @@ var AttentionGame = (function () {
             timePerPage: 70,
             startTime: null,
             pageTimes: [],
-            pageResults: []
+            pageResults: [],
         },
         results: {
             totalTime: 0,
@@ -31,28 +31,28 @@ var AttentionGame = (function () {
             omissionCount: 0,
             accuracy: 0,
             speed: 0,
-            focus: 0
-        }
+            focus: 0,
+        },
     };
 
     var timers = {
         gameTimer: null,
-        mascotIdle: null
+        mascotIdle: null,
     };
 
     /**
      * 初始化游戏
      */
     function init() {
-        console.log('Initializing Attention Game...');
+        console.log("Initializing Attention Game...");
 
         // 初始化配置
         Config.init();
 
         // 绑定欢迎页点击事件
-        var welcomePage = document.getElementById('page-welcome');
+        var welcomePage = document.getElementById("page-welcome");
         if (welcomePage) {
-            welcomePage.addEventListener('click', function () {
+            welcomePage.addEventListener("click", function () {
                 nextPage();
             });
         }
@@ -60,14 +60,14 @@ var AttentionGame = (function () {
         // 启动吉祥物闲置动画
         startMascotIdleAnimation();
 
-        console.log('Attention Game initialized');
+        console.log("Attention Game initialized");
     }
 
     /**
      * 启动吉祥物闲置动画
      */
     function startMascotIdleAnimation() {
-        var mascots = document.querySelectorAll('.mascot');
+        var mascots = document.querySelectorAll(".mascot");
         for (var i = 0; i < mascots.length; i++) {
             timers.mascotIdle = Animation.startMascotIdle(mascots[i]);
         }
@@ -81,13 +81,13 @@ var AttentionGame = (function () {
         var nextPageId = getNextPageId();
 
         if (!nextPageId) {
-            console.error('No next page found');
+            console.error("No next page found");
             return;
         }
 
         var nextPage = document.getElementById(nextPageId);
         if (!nextPage) {
-            console.error('Next page element not found:', nextPageId);
+            console.error("Next page element not found:", nextPageId);
             return;
         }
 
@@ -95,15 +95,15 @@ var AttentionGame = (function () {
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
             if (currentPage) {
-                currentPage.classList.remove('active');
+                currentPage.classList.remove("active");
             }
 
-            nextPage.classList.add('active');
+            nextPage.classList.add("active");
             // 更新游戏阶段
             updateGamePhase(nextPageId);
 
             // 猴子探头动画
-            var mascot = nextPage.querySelector('.mascot');
+            var mascot = nextPage.querySelector(".mascot");
             if (mascot) {
                 Animation.mascotPeek(mascot);
             }
@@ -114,7 +114,7 @@ var AttentionGame = (function () {
      * 获取当前页面元素
      */
     function getCurrentPage() {
-        return document.querySelector('.page.active');
+        return document.querySelector(".page.active");
     }
 
     /**
@@ -122,14 +122,14 @@ var AttentionGame = (function () {
      */
     function getNextPageId() {
         var pageSequence = [
-            'page-welcome',
-            'page-mindset',
-            'page-task',
-            'page-rules-1',
-            'page-rules-2',
-            'page-tutorial',
-            'page-game',
-            'page-result'
+            "page-welcome",
+            "page-mindset",
+            "page-rules-1",
+            "page-rules-2",
+            "page-tutorial",
+            "page-task",
+            "page-game",
+            "page-result",
         ];
 
         var currentPage = getCurrentPage();
@@ -150,18 +150,18 @@ var AttentionGame = (function () {
      */
     function updateGamePhase(pageId) {
         var phaseMap = {
-            'page-welcome': 'welcome',
-            'page-mindset': 'mindset',
-            'page-task': 'task',
-            'page-rules-1': 'rules-1',
-            'page-rules-2': 'rules-2',
-            'page-tutorial': 'tutorial',
-            'page-game': 'game',
-            'page-result': 'result'
+            "page-welcome": "welcome",
+            "page-mindset": "mindset",
+            "page-task": "task",
+            "page-rules-1": "rules-1",
+            "page-rules-2": "rules-2",
+            "page-tutorial": "tutorial",
+            "page-game": "game",
+            "page-result": "result",
         };
 
         state.gamePhase = phaseMap[pageId] || state.gamePhase;
-        console.log('Game phase:', state.gamePhase);
+        console.log("Game phase:", state.gamePhase);
     }
 
     /**
@@ -169,14 +169,14 @@ var AttentionGame = (function () {
      */
     function showRules() {
         var currentPage = getCurrentPage();
-        var rulesPage = document.getElementById('page-rules-1');
+        var rulesPage = document.getElementById("page-rules-1");
 
         Animation.pageTransition(currentPage, rulesPage, function () {
-            currentPage.classList.remove('active');
-            rulesPage.classList.add('active');
-            updateGamePhase('page-rules-1');
+            currentPage.classList.remove("active");
+            rulesPage.classList.add("active");
+            updateGamePhase("page-rules-1");
 
-            var mascot = rulesPage.querySelector('.mascot');
+            var mascot = rulesPage.querySelector(".mascot");
             if (mascot) {
                 Animation.mascotPeek(mascot);
             }
@@ -187,10 +187,10 @@ var AttentionGame = (function () {
      * 开始练习模式
      */
     function startTutorial() {
-        console.log('Starting tutorial...');
+        console.log("Starting tutorial...");
 
         var currentPage = getCurrentPage();
-        var tutorialPage = document.getElementById('page-tutorial');
+        var tutorialPage = document.getElementById("page-tutorial");
 
         // 生成练习题目
         generateTutorialItems();
@@ -198,10 +198,9 @@ var AttentionGame = (function () {
         renderTutorialGrid();
 
         Animation.pageTransition(currentPage, tutorialPage, function () {
-            currentPage.classList.remove('active');
-            tutorialPage.classList.add('active');
-            updateGamePhase('page-tutorial');
-
+            currentPage.classList.remove("active");
+            tutorialPage.classList.add("active");
+            updateGamePhase("page-tutorial");
         });
     }
 
@@ -209,7 +208,7 @@ var AttentionGame = (function () {
      * 生成练习题目
      */
     function generateTutorialItems() {
-        var config = Config.get('games.attention');
+        var config = Config.get("games.attention");
         var totalItems = config.practiceItems || 6;
         var correctItems = config.practiceCorrectItems || 2;
 
@@ -233,7 +232,7 @@ var AttentionGame = (function () {
         state.tutorialData.correctCount = correctItems;
         state.tutorialData.errors = 0;
 
-        console.log('Tutorial items generated:', items);
+        console.log("Tutorial items generated:", items);
     }
 
     /**
@@ -242,97 +241,57 @@ var AttentionGame = (function () {
     function generateCorrectQ() {
         var types = [
             // 上下有两条
-            { top: '||', letter: 'q', bottom: '' },
-            { top: '', letter: 'q', bottom: '||' },
-            // 上下各一条
-            { top: '| ', letter: 'q', bottom: '| ' },
-            { top: '| ', letter: 'q', bottom: ' |' },
-            { top: ' |', letter: 'q', bottom: '| ' },
-            { top: ' |', letter: 'q', bottom: ' |' },
-
+            { letter: "q", index: 1 },
+            { letter: "q", index: 2 },
+            { letter: "q", index: 3 },
+            { letter: "q", index: 4 },
+            { letter: "q", index: 5 },
+            { letter: "q", index: 6 },
         ];
 
         var type = types[Utils.randomInt(0, types.length - 1)];
 
         return {
             letter: type.letter,
-            top: type.top,
-            bottom: type.bottom,
-            display: type.display,
-            isCorrect: true
+            index: type.index,
+            isCorrect: true,
         };
     }
+
+    var types = [
+        // q
+        { letter: "q", index: 7 },
+        { letter: "q", index: 8 },
+        { letter: "q", index: 9 },
+        { letter: "q", index: 10 },
+        { letter: "q", index: 11 },
+        { letter: "q", index: 12 },
+
+        // b
+        { letter: "b", index: 1 },
+        { letter: "b", index: 2 },
+        { letter: "b", index: 3 },
+        { letter: "b", index: 4 },
+        { letter: "b", index: 5 },
+        { letter: "b", index: 6 },
+        { letter: "b", index: 7 },
+        { letter: "b", index: 8 },
+        { letter: "b", index: 9 },
+        { letter: "b", index: 10 },
+        { letter: "b", index: 11 },
+        { letter: "b", index: 12 },
+    ];
 
     /**
      * 生成错误的字母
      */
     function generateIncorrectLetter() {
-        var types = [
-            // 不是 q 的字母
-            // 上下有两条
-            { top: '||', letter: 'b', bottom: '' },
-            { top: '', letter: 'b', bottom: '||' },
-            // 上下各一条b
-            { top: '| ', letter: 'b', bottom: '| ' },
-            { top: '| ', letter: 'b', bottom: ' |' },
-            { top: ' |', letter: 'b', bottom: '| ' },
-            { top: ' |', letter: 'b', bottom: ' |' },
-            // 上下只有一条
-            { top: ' |', letter: 'b', bottom: '  ' },
-            { top: '| ', letter: 'b', bottom: '  ' },
-            { top: '  ', letter: 'b', bottom: '| ' },
-            { top: '  ', letter: 'b', bottom: ' |' },
-            // 上下都没有
-            { top: '  ', letter: 'b', bottom: '  ' },
-
-            // 上下有两条
-            { top: '||', letter: 'p', bottom: '' },
-            { top: '', letter: 'p', bottom: '||' },
-            // 上下各一条b
-            { top: '| ', letter: 'p', bottom: '| ' },
-            { top: '| ', letter: 'p', bottom: ' |' },
-            { top: ' |', letter: 'p', bottom: '| ' },
-            { top: ' |', letter: 'p', bottom: ' |' },
-            // 上下只有一条
-            { top: ' |', letter: 'p', bottom: '  ' },
-            { top: '| ', letter: 'p', bottom: '  ' },
-            { top: '  ', letter: 'p', bottom: '| ' },
-            { top: '  ', letter: 'p', bottom: ' |' },
-            // 上下都没有
-            { top: '  ', letter: 'p', bottom: '  ' },
-
-            // 上下有两条
-            { top: '||', letter: 'd', bottom: '' },
-            { top: '', letter: 'd', bottom: '||' },
-            // 上下各一条b
-            { top: '| ', letter: 'd', bottom: '| ' },
-            { top: '| ', letter: 'd', bottom: ' |' },
-            { top: ' |', letter: 'd', bottom: '| ' },
-            { top: ' |', letter: 'd', bottom: ' |' },
-            // 上下只有一条
-            { top: ' |', letter: 'd', bottom: '  ' },
-            { top: '| ', letter: 'd', bottom: '  ' },
-            { top: '  ', letter: 'd', bottom: '| ' },
-            { top: '  ', letter: 'd', bottom: ' |' },
-            // 上下都没有
-            { top: '  ', letter: 'd', bottom: '  ' },
-
-            // 上下只有一条
-            { top: ' |', letter: 'q', bottom: '  ' },
-            { top: '| ', letter: 'q', bottom: '  ' },
-            { top: '  ', letter: 'q', bottom: '| ' },
-            { top: '  ', letter: 'q', bottom: ' |' },
-            // 上下都没有
-            { top: '  ', letter: 'q', bottom: '  ' },
-        ];
-
         var type = types[Utils.randomInt(0, types.length - 1)];
 
         return {
             letter: type.letter,
-            top: type.top,
-            bottom: type.bottom,
-            isCorrect: false
+            index: type.index,
+            isCorrect: false,
         };
     }
 
@@ -340,87 +299,107 @@ var AttentionGame = (function () {
      * 渲染练习网格
      */
     function renderTutorialGrid() {
-        var grid = document.getElementById('tutorial-grid');
+        var grid = document.getElementById("tutorial-grid");
         if (!grid) return;
 
-        grid.innerHTML = '';
+        grid.innerHTML = "";
 
         for (var i = 0; i < state.tutorialData.items.length; i++) {
             var item = state.tutorialData.items[i];
-            var gridItem = document.createElement('div');
-            gridItem.className = 'grid-item';
+            var gridItem = getAGridItem(item);
 
-            var top = document.createElement('div');
-            top.className = 'mark';
-            top.innerHTML = item.top;
+            // 选中且正确
+            gridItem.classList.add("correct");
+            gridItem.setAttribute("tutorial-index", i);
 
-            var mid = document.createElement('div');
-            mid.className = 'letter';
-            mid.innerHTML = item.letter;
+            updateItemState(gridItem, itemState.normal);
 
-            var bottom = document.createElement('div');
-            bottom.className = 'mark';
-            bottom.innerHTML = item.bottom;
-
-            gridItem.appendChild(top);
-            gridItem.appendChild(mid);
-            gridItem.appendChild(bottom);
-
-
-            gridItem.setAttribute('data-index', i);
-
-            gridItem.addEventListener('click', function () {
+            gridItem.addEventListener("click", function () {
                 handleTutorialItemClick(this);
             });
 
             grid.appendChild(gridItem);
         }
     }
+    let hideTimer = null;
+    function showTutorialToast(corrent) {
+        const img = document.getElementById("toast-corrent");
+        const imgE = document.getElementById("toast-error");
+
+        // 清除旧定时器
+        if (hideTimer) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+        }
+
+        img.classList.remove("show");
+        imgE.classList.remove("show");
+        img.classList.add("hide");
+        imgE.classList.add("hide");
+
+        let tempImg = corrent ? img : imgE;
+        tempImg.classList.remove("hide");
+        tempImg.classList.add("show");
+
+        // 1 秒后自动消失
+        hideTimer = setTimeout(() => {
+            tempImg.classList.remove("show");
+            tempImg.classList.add("hide");
+        }, 1000);
+    }
 
     /**
      * 处理练习模式的点击事件
      */
     function handleTutorialItemClick(element) {
-        var index = parseInt(element.getAttribute('data-index'));
+        var index = parseInt(element.getAttribute("tutorial-index"));
         var item = state.tutorialData.items[index];
 
         var isSelected = state.tutorialData.selected.indexOf(index) !== -1;
 
         if (isSelected) {
             // 取消选中
-            state.tutorialData.selected = state.tutorialData.selected.filter(function (i) {
-                return i !== index;
-            });
-            element.classList.remove('selected', 'correct', 'error');
+            state.tutorialData.selected = state.tutorialData.selected.filter(
+                function (i) {
+                    return i !== index;
+                }
+            );
+            element.classList.remove("selected", "correct", "error");
             Animation.deselectFeedback(element);
+            updateItemState(element, itemState.normal);
         } else {
             // 选中
             state.tutorialData.selected.push(index);
-            element.classList.add('selected');
+            element.classList.add("selected");
             Animation.selectFeedback(element);
+
+            updateItemState(element, itemState.chose);
 
             // 检查是否正确
             if (item.isCorrect) {
-                element.classList.add('correct');
-                element.classList.remove('error');
+                element.classList.add("correct");
+                element.classList.remove("error");
 
                 // 检查是否完成
                 checkTutorialComplete();
             } else {
-                element.classList.add('error');
-                element.classList.remove('correct');
+                showTutorialToast(item.isCorrect);
+                element.classList.add("error");
+                element.classList.remove("correct");
                 state.tutorialData.errors++;
 
                 // 错误提示
                 Animation.errorShake(element);
-                Utils.showToast('这个不是正确的 q 哦', 'error', 1000);
 
                 // 1秒后恢复默认色
                 setTimeout(function () {
-                    element.classList.remove('selected', 'error');
-                    state.tutorialData.selected = state.tutorialData.selected.filter(function (i) {
-                        return i !== index;
-                    });
+                    element.classList.remove("selected", "error");
+                    updateItemState(element, itemState.normal);
+
+                    state.tutorialData.selected =
+                        state.tutorialData.selected.filter(function (i) {
+                            return i !== index;
+                        });
                 }, 1000);
             }
         }
@@ -442,16 +421,24 @@ var AttentionGame = (function () {
 
         if (correctSelected === state.tutorialData.correctCount) {
             // 完成练习
-            var completeDiv = document.getElementById('tutorial-complete');
+            var completeDiv = document.getElementById("tutorial-complete");
             if (completeDiv) {
-                completeDiv.style.display = 'block';
+                completeDiv.style.display = "block";
             }
 
             // 禁用所有选项
-            var gridItems = document.querySelectorAll('#tutorial-grid .grid-item');
+            var gridItems = document.querySelectorAll(
+                "#tutorial-grid .grid-item"
+            );
             for (var j = 0; j < gridItems.length; j++) {
-                gridItems[j].classList.add('disabled');
+                gridItems[j].classList.add("disabled");
             }
+
+            setTimeout(function () {
+                nextPage();
+            }, 1000);
+        } else {
+            showTutorialToast(true);
         }
     }
 
@@ -466,13 +453,13 @@ var AttentionGame = (function () {
         startMainGame: null, // 将在第2部分定义
         nextGamePage: null, // 将在第2部分定义
         viewDetails: null, // 将在第2部分定义
-        restart: null // 将在第2部分定义
+        restart: null, // 将在第2部分定义
     };
 })();
 
 // 页面加载完成后初始化
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', AttentionGame.init);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", AttentionGame.init);
 } else {
     AttentionGame.init();
 }
@@ -481,17 +468,19 @@ if (document.readyState === 'loading') {
  * 开始正式游戏
  */
 AttentionGame.startMainGame = function () {
-    console.log('Starting main game...');
+    console.log("Starting main game...");
 
-    var currentPage = AttentionGame.getCurrentPage ? AttentionGame.getCurrentPage() : document.querySelector('.page.active');
-    var gamePage = document.getElementById('page-game');
+    var currentPage = AttentionGame.getCurrentPage
+        ? AttentionGame.getCurrentPage()
+        : document.querySelector(".page.active");
+    var gamePage = document.getElementById("page-game");
 
     // 生成游戏数据
     generateGameData();
     startGamePage(0);
 
     Animation.tutorialToGameTransition(currentPage, gamePage, function () {
-        currentPage.classList.remove('active');
+        currentPage.classList.remove("active");
         // gamePage.classList.add('active');
 
         // 开始第一页游戏
@@ -502,7 +491,7 @@ AttentionGame.startMainGame = function () {
  * 生成游戏数据
  */
 function generateGameData() {
-    var config = Config.get('games.attention');
+    var config = Config.get("games.attention");
     var totalPages = config.pages || 3;
     var itemsPerPage = config.itemsPerPage || 56;
     var correctItemsPerPage = config.correctItemsPerPage || 25;
@@ -533,11 +522,15 @@ function generateGameData() {
             selected: [],
             startTime: null,
             endTime: null,
-            timeSpent: 0
+            timeSpent: 0,
         });
     }
 
-    console.log('Game data generated:', AttentionGame.state.gameData.pages.length, 'pages');
+    console.log(
+        "Game data generated:",
+        AttentionGame.state.gameData.pages.length,
+        "pages"
+    );
 }
 
 /**
@@ -548,27 +541,31 @@ function startGamePage(pageIndex, needrender = true) {
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
 
     // 更新页面信息
-    var currentPageSpan = document.getElementById('current-page');
-    var totalPagesSpan = document.getElementById('total-pages');
+    var currentPageSpan = document.getElementById("current-page");
+    var totalPagesSpan = document.getElementById("total-pages");
     if (currentPageSpan) currentPageSpan.textContent = pageIndex + 1;
-    if (totalPagesSpan) totalPagesSpan.textContent = AttentionGame.state.gameData.totalPages;
+    if (totalPagesSpan)
+        totalPagesSpan.textContent = AttentionGame.state.gameData.totalPages;
 
-
-    renderProgressBar(pageIndex, AttentionGame.state.gameData.totalPages, 'progress-bar');
+    renderProgressBar(
+        pageIndex,
+        AttentionGame.state.gameData.totalPages,
+        "progress-bar"
+    );
 
     // 更新按钮文本
-    var btnNext = document.getElementById('btn-next');
+    var btnNext = document.getElementById("btn-next");
     if (btnNext) {
         if (pageIndex === AttentionGame.state.gameData.totalPages - 1) {
-            btnNext.textContent = '完成测试';
+            btnNext.textContent = "完成测试";
         } else {
-            btnNext.textContent = '下一部分';
+            btnNext.textContent = "下一部分";
         }
     }
 
     if (needrender)
         // 渲染游戏网格
-        renderGameGridTo(document.getElementById('main-grid'), pageData.items);
+        renderGameGridTo(document.getElementById("main-grid"), pageData.items);
 
     // 开始计时
     pageData.startTime = Date.now();
@@ -582,38 +579,36 @@ function renderGameGridTo(grid, items) {
     // var grid = document.getElementById('main-grid');
     // if (!grid) return;
 
-    grid.innerHTML = '';
+    grid.innerHTML = "";
 
     for (var i = 0; i < items.length; i++) {
         var item = items[i];
-        var gridItem = document.createElement('div');
-        gridItem.className = 'grid-item';
-        // gridItem.textContent = item.display;
-        gridItem.setAttribute('data-index', i);
+        var gridItem = getAGridItem(item);
 
-        var top = document.createElement('div');
-        top.className = 'mark--small';
-        top.innerHTML = item.top;
+        updateItemState(gridItem, itemState.normal);
 
-        var mid = document.createElement('div');
-        mid.className = 'letter--small';
-        mid.innerHTML = item.letter;
-
-        var bottom = document.createElement('div');
-        bottom.className = 'mark--small';
-        bottom.innerHTML = item.bottom;
-
-        gridItem.appendChild(top);
-        gridItem.appendChild(mid);
-        gridItem.appendChild(bottom);
-
-
-        gridItem.addEventListener('click', function () {
-            handleGameItemClick(this);
+        gridItem.addEventListener("click", function () {
+            handleGameItemClick(this, item);
         });
 
         grid.appendChild(gridItem);
     }
+}
+
+const itemState = {
+    normal: "normal",
+    highlight: "highlight",
+    chose: "result1",
+    missing: "result2",
+};
+
+function updateItemState(gridItem, state) {
+    const letter = gridItem.getAttribute("letter");
+    const index = gridItem.getAttribute("index");
+
+    gridItem.style.background = `url('../images/game1/${letter}/${state}/${Utils.format2(
+        index
+    )}.png')`;
 }
 
 /**
@@ -622,7 +617,7 @@ function renderGameGridTo(grid, items) {
 function handleGameItemClick(element) {
     var pageIndex = AttentionGame.state.gameData.currentPage;
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
-    var index = parseInt(element.getAttribute('data-index'));
+    var index = parseInt(element.getAttribute("index"));
 
     var isSelected = pageData.selected.indexOf(index) !== -1;
 
@@ -631,12 +626,14 @@ function handleGameItemClick(element) {
         pageData.selected = pageData.selected.filter(function (i) {
             return i !== index;
         });
-        element.classList.remove('selected');
+        element.classList.remove("selected");
+        updateItemState(element, itemState.normal);
         Animation.deselectFeedback(element);
     } else {
         // 选中
         pageData.selected.push(index);
-        element.classList.add('selected');
+        element.classList.add("selected");
+        updateItemState(element, itemState.highlight);
         Animation.selectFeedback(element);
     }
 }
@@ -669,17 +666,17 @@ function startGameTimer() {
  * 更新计时器显示
  */
 function updateTimerDisplay(seconds) {
-    var timerElement = document.getElementById('game-timer');
+    var timerElement = document.getElementById("game-timer");
     if (!timerElement) return;
 
     timerElement.textContent = Utils.formatTime(seconds);
 
     // 根据剩余时间改变样式
-    timerElement.classList.remove('warning', 'danger');
+    timerElement.classList.remove("warning", "danger");
     if (seconds <= 5) {
-        timerElement.classList.add('danger');
+        timerElement.classList.add("danger");
     } else if (seconds <= 10) {
-        timerElement.classList.add('warning');
+        timerElement.classList.add("warning");
     }
 }
 
@@ -697,7 +694,9 @@ AttentionGame.nextGamePage = function () {
 
     // 记录结束时间
     pageData.endTime = Date.now();
-    pageData.timeSpent = Math.floor((pageData.endTime - pageData.startTime) / 1000);
+    pageData.timeSpent = Math.floor(
+        (pageData.endTime - pageData.startTime) / 1000
+    );
 
     // 计算本页结果
     calculatePageResult(pageIndex);
@@ -712,35 +711,38 @@ AttentionGame.nextGamePage = function () {
         var nextPage = currentPage + 1;
         if (nextPage >= AttentionGame.state.gameData.totalPages) return;
 
-        var currentGrid = document.getElementById('main-grid');
+        var currentGrid = document.getElementById("main-grid");
         var nextPageIndex = pageIndex + 1;
-        var nextGrid = document.getElementById('next-grid');
+        var nextGrid = document.getElementById("next-grid");
 
         // ① 先渲染下一页（在屏幕外）
         renderGameGridTo(
             nextGrid,
             AttentionGame.state.gameData.pages[nextPage].items
-
         );
         // ② 等一帧，确保 Grid 已布局完成
         requestAnimationFrame(function () {
-            currentGrid.classList.add('slide-out');
-            nextGrid.classList.add('slide-in');
-            nextGrid.classList.remove('hide');
-            nextGrid.classList.add('next');
+            currentGrid.classList.add("slide-out");
+            nextGrid.classList.add("slide-in");
+            nextGrid.classList.remove("hide");
+            nextGrid.classList.add("next");
             // ③ 动画结束后交换身份
-            nextGrid.addEventListener('transitionend', function () {
-                currentGrid.classList.remove('active', 'slide-out');
-                currentGrid.classList.add('hide');
+            nextGrid.addEventListener(
+                "transitionend",
+                function () {
+                    currentGrid.classList.remove("active", "slide-out");
+                    currentGrid.classList.add("hide");
 
-                nextGrid.classList.remove('next', 'slide-in');
-                nextGrid.classList.add('active');
-                // 交换 id（保持你原逻辑）
-                currentGrid.id = 'next-grid';
-                nextGrid.id = 'main-grid';
+                    nextGrid.classList.remove("next", "slide-in");
+                    nextGrid.classList.add("active");
+                    // 交换 id（保持你原逻辑）
+                    currentGrid.id = "next-grid";
+                    nextGrid.id = "main-grid";
 
-                startGamePage(nextPageIndex, false);
-            }, { once: true });
+                    startGamePage(nextPageIndex, false);
+                },
+                { once: true }
+            );
         });
 
         // 创建临时网格用于动画
@@ -753,8 +755,6 @@ AttentionGame.nextGamePage = function () {
         //     currentGrid.parentNode.removeChild(tempGrid);
         //     // 开始下一页
         // });
-
-
     } else {
         // 游戏结束，显示结果
         showResult();
@@ -800,41 +800,40 @@ function calculatePageResult(pageIndex) {
         correctCount: correctCount,
         errorCount: errorCount,
         omissionCount: omissionCount,
-        totalCorrect: totalCorrect
+        totalCorrect: totalCorrect,
     };
 
-    console.log('Page', pageIndex + 1, 'result:', pageData.result);
+    console.log("Page", pageIndex + 1, "result:", pageData.result);
 }
 
 /**
  * 显示结果页面
  */
 function showResult() {
-    console.log('Showing result...');
+    console.log("Showing result...");
 
     // 计算总体结果
     calculateTotalResult();
 
     var currentPage = AttentionGame.getCurrentPage();
 
-
     // var gamePage = document.getElementById('page-game');
 
     // if (fromDeail)
     // gamePage = document.getElementById('page-details');
 
-    var resultPage = document.getElementById('page-result');
+    var resultPage = document.getElementById("page-result");
 
-    currentPage.classList.remove('active');
+    currentPage.classList.remove("active");
 
     Animation.gameToResultTransition(currentPage, resultPage, function () {
-        resultPage.classList.add('active');
+        resultPage.classList.add("active");
 
         // 渲染结果
         renderResult();
 
         // 徽章动画
-        var badge = resultPage.querySelector('.result-badge');
+        var badge = resultPage.querySelector(".result-badge");
         if (badge) {
             Animation.badgeStamp(badge, 200);
         }
@@ -867,7 +866,10 @@ function calculateTotalResult() {
 
     // 计算指标
     var completedItems = totalCorrect + totalError + totalOmission;
-    var accuracy = completedItems > 0 ? Math.round((totalCorrect / completedItems) * 100) : 0;
+    var accuracy =
+        completedItems > 0
+            ? Math.round((totalCorrect / completedItems) * 100)
+            : 0;
     var speed = totalCorrect + totalError + totalOmission;
     var focus = totalCorrect - (totalError + totalOmission);
 
@@ -879,10 +881,10 @@ function calculateTotalResult() {
         totalItems: totalItems,
         accuracy: accuracy,
         speed: speed,
-        focus: focus
+        focus: focus,
     };
 
-    console.log('Total result:', AttentionGame.state.results);
+    console.log("Total result:", AttentionGame.state.results);
 }
 
 /**
@@ -892,25 +894,25 @@ function renderResult() {
     var results = AttentionGame.state.results;
 
     // 更新标题
-    var title = document.getElementById('result-title');
+    var title = document.getElementById("result-title");
     if (title) {
         if (results.accuracy >= 90) {
-            title.textContent = '真正的字母侦探！';
+            title.textContent = "真正的字母侦探！";
         } else if (results.accuracy >= 70) {
-            title.textContent = '表现不错！';
+            title.textContent = "表现不错！";
         } else {
-            title.textContent = '继续加油！';
+            title.textContent = "继续加油！";
         }
     }
 
     // 更新统计数据
-    var statTime = document.getElementById('stat-time');
-    var statAccuracy = document.getElementById('stat-accuracy');
-    var statSpeed = document.getElementById('stat-speed');
-    var statFocus = document.getElementById('stat-focus');
+    var statTime = document.getElementById("stat-time");
+    var statAccuracy = document.getElementById("stat-accuracy");
+    var statSpeed = document.getElementById("stat-speed");
+    var statFocus = document.getElementById("stat-focus");
 
     if (statTime) statTime.textContent = Utils.formatTime(results.totalTime);
-    if (statAccuracy) statAccuracy.textContent = results.accuracy + '%';
+    if (statAccuracy) statAccuracy.textContent = results.accuracy + "%";
     if (statSpeed) statSpeed.textContent = results.speed;
     if (statFocus) statFocus.textContent = results.focus;
 }
@@ -920,34 +922,35 @@ function renderResult() {
  */
 function submitTestData() {
     var testData = {
-        gameType: 'attention',
+        gameType: "attention",
         timestamp: Date.now(),
-        token: Config.get('user.token'),
+        token: Config.get("user.token"),
         results: AttentionGame.state.results,
         details: {
             pages: AttentionGame.state.gameData.pages.map(function (page) {
                 return {
                     timeSpent: page.timeSpent,
-                    result: page.result
+                    result: page.result,
                 };
-            })
-        }
+            }),
+        },
     };
 
-    API.submitTestData(testData).then(function (response) {
-        console.log('Test data submitted:', response);
-    }).catch(function (error) {
-        console.error('Failed to submit test data:', error);
-        Utils.showToast('数据上报失败，已保存到本地', 'error');
-    });
+    API.submitTestData(testData)
+        .then(function (response) {
+            console.log("Test data submitted:", response);
+        })
+        .catch(function (error) {
+            console.error("Failed to submit test data:", error);
+            Utils.showToast("数据上报失败，已保存到本地", "error");
+        });
 }
-
 
 /**
  * 重新开始
  */
 AttentionGame.restart = function () {
-    console.log('Restarting game...');
+    console.log("Restarting game...");
 
     // 重置状态
     AttentionGame.state.gameData = {
@@ -957,7 +960,7 @@ AttentionGame.restart = function () {
         timePerPage: 70,
         startTime: null,
         pageTimes: [],
-        pageResults: []
+        pageResults: [],
     };
 
     AttentionGame.state.results = {
@@ -967,37 +970,36 @@ AttentionGame.restart = function () {
         omissionCount: 0,
         accuracy: 0,
         speed: 0,
-        focus: 0
+        focus: 0,
     };
 
     // 重新加载页面
     // window.location.reload();
-    AttentionGame.startMainGame()
+    AttentionGame.startMainGame();
 };
 
 // 暴露内部函数供其他函数使用
 AttentionGame.getCurrentPage = function () {
-    return document.querySelector('.page.active');
+    return document.querySelector(".page.active");
 };
 
 AttentionGame.state = AttentionGame.state || {};
 AttentionGame.timers = AttentionGame.timers || {};
 
-
 /**
  * 渲染进度条
  */
 function renderProgressBar(currentPage, totalPages, progressBarId) {
-    var progressBar = document.getElementById(progressBarId || 'progress-bar');
+    var progressBar = document.getElementById(progressBarId || "progress-bar");
     if (!progressBar) return;
 
-    progressBar.innerHTML = '';
+    progressBar.innerHTML = "";
 
     for (var i = 0; i < totalPages; i++) {
-        var dot = document.createElement('div');
-        dot.className = 'progress-dot';
+        var dot = document.createElement("div");
+        dot.className = "progress-dot";
         if (i === currentPage) {
-            dot.classList.add('active');
+            dot.classList.add("active");
         }
         progressBar.appendChild(dot);
     }
@@ -1007,21 +1009,23 @@ function renderProgressBar(currentPage, totalPages, progressBarId) {
  * 更新进度条状态
  */
 function updateProgressBarStatus(progressBarId) {
-    var progressBar = document.getElementById(progressBarId || 'details-progress-bar');
+    var progressBar = document.getElementById(
+        progressBarId || "details-progress-bar"
+    );
     if (!progressBar) return;
 
-    var dots = progressBar.querySelectorAll('.progress-dot');
+    var dots = progressBar.querySelectorAll(".progress-dot");
 
     for (var i = 0; i < AttentionGame.state.gameData.pages.length; i++) {
         var pageData = AttentionGame.state.gameData.pages[i];
         var result = pageData.result;
 
         if (result && dots[i]) {
-            dots[i].classList.remove('correct', 'error');
+            dots[i].classList.remove("correct", "error");
             if (result.errorCount === 0 && result.omissionCount === 0) {
-                dots[i].classList.add('correct');
+                dots[i].classList.add("correct");
             } else {
-                dots[i].classList.add('error');
+                dots[i].classList.add("error");
             }
         }
     }
@@ -1031,58 +1035,52 @@ function updateProgressBarStatus(progressBarId) {
  * 查看答题详情
  */
 AttentionGame.viewDetails = function () {
-    console.log('Viewing details...');
+    console.log("Viewing details...");
 
     AttentionGame.state.detailsPage = 0;
 
-    var resultPage = document.getElementById('page-result');
-    var detailsPage = document.getElementById('page-details');
+    var resultPage = document.getElementById("page-result");
+    var detailsPage = document.getElementById("page-details");
 
     Animation.pageTransition(resultPage, detailsPage, function () {
-        resultPage.classList.remove('active');
-        detailsPage.classList.add('active');
+        resultPage.classList.remove("active");
+        detailsPage.classList.add("active");
 
         // 渲染进度条
-        renderProgressBar(0, AttentionGame.state.gameData.totalPages, 'details-progress-bar');
-        updateProgressBarStatus('details-progress-bar');
+        renderProgressBar(
+            0,
+            AttentionGame.state.gameData.totalPages,
+            "details-progress-bar"
+        );
+        updateProgressBarStatus("details-progress-bar");
 
         // 渲染第一页详情
         renderDetailsPage(0);
     });
 };
 
+function getAGridItem(item) {
+    var gridItem = document.createElement("div");
+    gridItem.className = "grid-item";
+    // gridItem.textContent = item.display;
+    gridItem.setAttribute("index", item.index);
+    gridItem.setAttribute("letter", item.letter);
+    return gridItem;
+}
+
 /**
  * 渲染详情页面
  */
 function renderDetailsPage(pageIndex) {
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
-    var grid = document.getElementById('details-grid');
+    var grid = document.getElementById("details-grid");
     if (!grid) return;
 
-    grid.innerHTML = '';
+    grid.innerHTML = "";
 
     for (var i = 0; i < pageData.items.length; i++) {
         var item = pageData.items[i];
-        var gridItem = document.createElement('div');
-        gridItem.className = 'grid-item';
-        // gridItem.textContent = item.display;
-        gridItem.setAttribute('data-index', i);
-
-        var top = document.createElement('div');
-        top.className = 'mark--small';
-        top.innerHTML = item.top;
-
-        var mid = document.createElement('div');
-        mid.className = 'letter--small';
-        mid.innerHTML = item.letter;
-
-        var bottom = document.createElement('div');
-        bottom.className = 'mark--small';
-        bottom.innerHTML = item.bottom;
-
-        gridItem.appendChild(top);
-        gridItem.appendChild(mid);
-        gridItem.appendChild(bottom);
+        var gridItem = getAGridItem(item);
 
         // 判断状态
         var isSelected = pageData.selected.indexOf(i) !== -1;
@@ -1090,43 +1088,43 @@ function renderDetailsPage(pageIndex) {
 
         if (isSelected && isCorrect) {
             // 选中且正确
-            gridItem.classList.add('correct');
+            gridItem.classList.add("correct");
+            updateItemState(gridItem, itemState.chose);
         } else if (!isSelected && isCorrect) {
             // 漏选
-            gridItem.classList.add('omission');
+            updateItemState(gridItem, itemState.missing);
+            gridItem.classList.add("omission");
         } else if (isSelected && !isCorrect) {
             // 错选
-            gridItem.classList.add('error');
+            updateItemState(gridItem, itemState.chose);
+            gridItem.classList.add("error");
         }
 
         grid.appendChild(gridItem);
     }
 
     // 更新进度条当前页
-    var dots = document.querySelectorAll('#details-progress-bar .progress-dot');
+    var dots = document.querySelectorAll("#details-progress-bar .progress-dot");
     for (var j = 0; j < dots.length; j++) {
-        dots[j].classList.remove('active');
+        dots[j].classList.remove("active");
         if (j === pageIndex) {
-            dots[j].classList.add('active');
+            dots[j].classList.add("active");
         }
     }
 
     // 更新按钮状态
-    var btnPrev = document.getElementById('btn-prev-detail');
-    var btnNext = document.getElementById('btn-next-detail');
+    var btnPrev = document.getElementById("btn-prev-detail");
+    var btnNext = document.getElementById("btn-next-detail");
 
     if (btnPrev) {
-        if (pageIndex === 0)
-            btnPrev.textContent = "返回答题结果"
-        else
-            btnPrev.textContent = "上一页"
+        if (pageIndex === 0) btnPrev.textContent = "返回答题结果";
+        else btnPrev.textContent = "上一页";
     }
 
     if (btnNext) {
         if (pageIndex === AttentionGame.state.gameData.totalPages - 1)
-            btnNext.textContent = "返回答题结果"
-        else
-            btnNext.textContent = "下一页"
+            btnNext.textContent = "返回答题结果";
+        else btnNext.textContent = "下一页";
     }
 }
 
@@ -1137,8 +1135,7 @@ AttentionGame.prevDetailPage = function () {
     if (AttentionGame.state.detailsPage > 0) {
         AttentionGame.state.detailsPage--;
         renderDetailsPage(AttentionGame.state.detailsPage);
-    }
-    else {
+    } else {
         showResult();
     }
 };
@@ -1147,11 +1144,13 @@ AttentionGame.prevDetailPage = function () {
  * 下一页详情
  */
 AttentionGame.nextDetailPage = function () {
-    if (AttentionGame.state.detailsPage < AttentionGame.state.gameData.totalPages - 1) {
+    if (
+        AttentionGame.state.detailsPage <
+        AttentionGame.state.gameData.totalPages - 1
+    ) {
         AttentionGame.state.detailsPage++;
         renderDetailsPage(AttentionGame.state.detailsPage);
-    }
-    else {
+    } else {
         showResult();
     }
 };
@@ -1160,9 +1159,9 @@ AttentionGame.nextDetailPage = function () {
  * 返回主页
  */
 AttentionGame.backToHome = function () {
-    window.location.href = '../index.html?token=' + (Config.get('user.token') || '');
+    window.location.href =
+        "../index.html?token=" + (Config.get("user.token") || "");
 };
 
 // 在状态中添加详情页索引
 AttentionGame.state.detailsPage = 0;
-

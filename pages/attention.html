@@ -25,7 +25,7 @@
                         src="../images/game1/welcom_mask.png"
                     />
                     <img
-                        class="page-logo welcome"
+                        class="page-logo right"
                         src="../images/game1/attention_logo.png"
                     />
                     <img
@@ -38,11 +38,11 @@
                             <p class="line2">欢迎来到<br />注意力小练习👋</p>
                         </div>
 
-                        <div class="page-texts">
+                        <div class="page-texts out">
                             <p class="line1">你好呀</p>
                             <p class="line2">准备好接受<br />我的挑战了吗</p>
                         </div>
-                        <div class="page-texts out">
+                        <div class="page-texts in">
                             <p class="line3">请跟随我<br />查看挑战规则</p>
                         </div>
                         <button
@@ -54,18 +54,135 @@
 
                 <!-- P2: 心理建设 -->
                 <div id="page-mindset" class="page">
+                    <img
+                        class="page-logo left"
+                        src="../images/game1/attention_logo.png"
+                    />
+                    <img
+                        class="page-mindset-mask"
+                        src="../images/game1/big_txt_bg.png"
+                    />
                     <div class="page-content">
-                        <div class="mascot mascot-idle">
-                            <div class="mascot-placeholder">🐵</div>
+                        <div class="page-texts mindset">
+                            <p class="line1">接下来你将看到一组图案，</p>
+                            <p class="line1">试着在最快时间内找出</p>
+                            <p class="line1">上下一共有两条竖线的</p>
+                            <p class="line1">字母“q”，</p>
+                            <p class="line2">并点击他们吧！</p>
                         </div>
-                        <h2 class="page-title">放轻松</h2>
-                        <p class="page-text">按自己的节奏来就好</p>
                         <button
-                            class="btn btn-primary"
+                            class="btn btn-bottom long"
                             onclick="AttentionGame.nextPage()"
-                        >
-                            下一步
-                        </button>
+                        ></button>
+                    </div>
+                </div>
+
+                <!-- P4: 规则详解 1 -->
+                <div id="page-rules-1" class="page">
+                    <img
+                        class="page-logo right1"
+                        src="../images/game1/attention_logo.png"
+                    />
+                    <img
+                        class="page-rule-mask"
+                        src="../images/game1/normal_bg.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rules">
+                            <p class="line2">
+                                例如以下图案<span class="rule-text-green"
+                                    >是</span
+                                >
+                            </p>
+                            <p class="line2">上下一共有两条竖线的</p>
+                            <p class="line2">字母“q”，</p>
+                            <p class="line2">
+                                找到后请<span class="rule-text-green"
+                                    >快速点击</span
+                                >它们。
+                            </p>
+                        </div>
+                        <div class="rule-grid">
+                            <div class="rule-item i1"></div>
+                            <div class="rule-item i2"></div>
+                            <div class="rule-item i3"></div>
+                            <div class="rule-item i4"></div>
+                            <div class="rule-item i5"></div>
+                            <div class="rule-item i6"></div>
+                        </div>
+                        <button
+                            class="btn btn-bottom long"
+                            onclick="AttentionGame.nextPage()"
+                        ></button>
+                    </div>
+                </div>
+
+                <!-- P5: 规则详解 2 -->
+                <div id="page-rules-2" class="page">
+                    <img
+                        class="page-logo right1"
+                        src="../images/game1/attention_logo.png"
+                    />
+                    <img
+                        class="page-rule-mask"
+                        src="../images/game1/normal_bg.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rules">
+                            <p class="line2">请注意</p>
+                            <p class="line2">
+                                例如以下图案<span class="rule-text-red"
+                                    >不是</span
+                                >上下共有
+                            </p>
+                            <p class="line2">两条竖线的字母“q”，</p>
+                            <p class="line2">
+                                请<span class="rule-text-red">不要点击</span
+                                >它们哦。
+                            </p>
+                        </div>
+                        <div class="rule-grid">
+                            <div class="rule-item e1"></div>
+                            <div class="rule-item e2"></div>
+                            <div class="rule-item e3"></div>
+                            <div class="rule-item e4"></div>
+                            <div class="rule-item e5"></div>
+                            <div class="rule-item e6"></div>
+                        </div>
+                        <button
+                            class="btn btn-bottom long try"
+                            onclick="AttentionGame.startTutorial()"
+                        ></button>
+                    </div>
+                </div>
+
+                <!-- P6: 练习模式 -->
+                <div id="page-tutorial" class="page">
+                    <img
+                        class="page-logo left1"
+                        src="../images/game1/attention_logo.png"
+                    />
+                    <img
+                        class="page-tutorial-mask"
+                        src="../images/game1/normal_bg.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rules">
+                            <p class="line2">找一找，点一点，</p>
+                            <p class="line2">哪些是上下有两条竖线的</p>
+                            <p class="line2">字母“q”呢？</p>
+                        </div>
+                        <div id="tutorial-grid" class="tutorial-grid"></div>
+                        <img
+                            id="toast-corrent"
+                            class="page-tutorial-toast corrent"
+                            src="../images/game1/toast_correct.png"
+                        />
+                        <img
+                            id="toast-error"
+                            class="page-tutorial-toast error"
+                            src="../images/game1/toast_error.png"
+                        />
                     </div>
                 </div>
 
@@ -86,99 +203,6 @@
                         >
                             查看规则
                         </button>
-                    </div>
-                </div>
-
-                <!-- P4: 规则详解 1 -->
-                <div id="page-rules-1" class="page">
-                    <div class="page-content">
-                        <div class="mascot mascot-idle">
-                            <div class="mascot-placeholder">🐵</div>
-                        </div>
-                        <h2 class="page-title">规则说明</h2>
-                        <div class="rules-content">
-                            <div class="rule-item">
-                                <div class="rule-label">规则 A</div>
-                                <p>字母必须是 <strong>"q"</strong></p>
-                                <p class="rule-note">（排除 p, d, b）</p>
-                            </div>
-                            <div class="rule-item">
-                                <div class="rule-label">规则 B</div>
-                                <p>竖线总数必须为 <strong>2</strong></p>
-                            </div>
-                        </div>
-                        <button
-                            class="btn btn-primary"
-                            onclick="AttentionGame.nextPage()"
-                        >
-                            继续
-                        </button>
-                    </div>
-                </div>
-
-                <!-- P5: 规则详解 2 -->
-                <div id="page-rules-2" class="page">
-                    <div class="page-content">
-                        <div class="mascot mascot-idle">
-                            <div class="mascot-placeholder">🐵</div>
-                        </div>
-                        <h2 class="page-title">示例说明</h2>
-                        <div class="examples-content">
-                            <div class="example-item correct">
-                                <div class="example-letter">q̍̍</div>
-                                <p>上面 2 条线 + 下面 0 条线 = ✓</p>
-                            </div>
-                            <div class="example-item correct">
-                                <div class="example-letter">q̗̍</div>
-                                <p>上面 1 条线 + 下面 1 条线 = ✓</p>
-                            </div>
-                            <div class="example-item correct">
-                                <div class="example-letter">q̗̗</div>
-                                <p>上面 0 条线 + 下面 2 条线 = ✓</p>
-                            </div>
-                        </div>
-                        <button
-                            class="btn btn-primary"
-                            onclick="AttentionGame.startTutorial()"
-                        >
-                            先试一试
-                        </button>
-                    </div>
-                </div>
-
-                <!-- P6: 练习模式 -->
-                <div id="page-tutorial" class="page">
-                    <div class="page-content">
-                        <div class="mascot mascot-idle">
-                            <div class="mascot-placeholder">🐵</div>
-                        </div>
-                        <h2 class="page-title">练习模式</h2>
-                        <p class="page-subtitle">
-                            找出所有正确的字母 q（共
-                            <span id="tutorial-correct-count">2</span> 个）
-                        </p>
-
-                        <div
-                            class="game-grid tutorial-grid"
-                            id="tutorial-grid"
-                        ></div>
-
-                        <div
-                            id="tutorial-complete"
-                            class="tutorial-complete"
-                            style="display: none"
-                        >
-                            <div class="complete-icon">🎉</div>
-                            <p class="complete-text">
-                                太棒了！你找到了所有正确的 "q"
-                            </p>
-                            <button
-                                class="btn btn-success"
-                                onclick="AttentionGame.startMainGame()"
-                            >
-                                开始正式测试
-                            </button>
-                        </div>
                     </div>
                 </div>
 
