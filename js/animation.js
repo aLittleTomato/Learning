@@ -4,7 +4,7 @@
  */
 
 var Animation = (function () {
-    'use strict';
+    "use strict";
 
     /**
      * 页面切换动画 - 引导流程切换 (P1 → P2 → P3 → P4 → P5)
@@ -15,22 +15,22 @@ var Animation = (function () {
     function pageTransition(oldPage, newPage, callback) {
         // 旧页面退出动画
         if (oldPage) {
-            oldPage.classList.add('page-transition-exit');
+            oldPage.classList.add("page-transition-exit");
         }
 
         // 新页面进入动画
         // newPage.style.display = 'block';
-        newPage.classList.add('active');
-        newPage.classList.add('page-transition-enter');
-        var duration = Config.get('animation.pageTransitionDuration') || 400;
+        newPage.classList.add("active");
+        newPage.classList.add("page-transition-enter");
+        var duration = Config.get("animation.pageTransitionDuration") || 400;
 
         setTimeout(function () {
             if (oldPage) {
                 // oldPage.style.display = 'none';
-                oldPage.classList.remove('active');
-                oldPage.classList.remove('page-transition-exit');
+                oldPage.classList.remove("active");
+                oldPage.classList.remove("page-transition-exit");
             }
-            newPage.classList.remove('page-transition-enter');
+            newPage.classList.remove("page-transition-enter");
 
             if (callback) {
                 callback();
@@ -46,31 +46,31 @@ var Animation = (function () {
      */
     function tutorialToGameTransition(oldPage, newPage, callback) {
         // 旧页面向下沉降
-        oldPage.style.transition = 'all 0.4s ease-out';
-        oldPage.style.transform = 'translateY(30%)';
-        oldPage.style.opacity = '0';
+        oldPage.style.transition = "all 0.4s ease-out";
+        oldPage.style.transform = "translateY(30%)";
+        oldPage.style.opacity = "0";
 
         // 新页面从底部升起
         // newPage.style.display = 'block';
-        newPage.classList.add('active');
-        newPage.style.transform = 'translateY(100%) scale(0.85)';
-        newPage.style.opacity = '0';
+        newPage.classList.add("active");
+        newPage.style.transform = "translateY(100%) scale(0.85)";
+        newPage.style.opacity = "0";
 
         setTimeout(function () {
-            newPage.style.transition = 'all 0.4s ease-out';
-            newPage.style.transform = 'translateY(0) scale(1)';
-            newPage.style.opacity = '1';
+            newPage.style.transition = "all 0.4s ease-out";
+            newPage.style.transform = "translateY(0) scale(1)";
+            newPage.style.opacity = "1";
         }, 50);
 
         setTimeout(function () {
             // oldPage.style.display = 'none';
-            oldPage.style.transform = '';
-            oldPage.style.opacity = '';
-            oldPage.style.transition = '';
+            oldPage.style.transform = "";
+            oldPage.style.opacity = "";
+            oldPage.style.transition = "";
 
-            newPage.style.transform = '';
-            newPage.style.opacity = '';
-            newPage.style.transition = '';
+            newPage.style.transform = "";
+            newPage.style.opacity = "";
+            newPage.style.transition = "";
 
             if (callback) {
                 callback();
@@ -125,28 +125,28 @@ var Animation = (function () {
      */
     function gameToResultTransition(oldPage, newPage, callback) {
         // 背景渐变
-        oldPage.classList.remove('active');
-        newPage.classList.add('active');
-        newPage.style.opacity = '0';
+        oldPage.classList.remove("active");
+        newPage.classList.add("active");
+        newPage.style.opacity = "0";
 
         setTimeout(function () {
-            newPage.style.transition = 'opacity 0.3s ease-out';
-            newPage.style.opacity = '1';
+            newPage.style.transition = "opacity 0.3s ease-out";
+            newPage.style.opacity = "1";
         }, 50);
 
         // 结果卡片弹射出现
-        var resultCard = newPage.querySelector('.result-card');
+        var resultCard = newPage.querySelector(".result-card");
         if (resultCard) {
-            resultCard.classList.add('popup-enter');
+            resultCard.classList.add("popup-enter");
         }
 
         setTimeout(function () {
             // oldPage.style.display = 'none';
-            newPage.style.opacity = '';
-            newPage.style.transition = '';
+            newPage.style.opacity = "";
+            newPage.style.transition = "";
 
             if (resultCard) {
-                resultCard.classList.remove('popup-enter');
+                resultCard.classList.remove("popup-enter");
             }
 
             if (callback) {
@@ -160,10 +160,10 @@ var Animation = (function () {
      * @param {HTMLElement} button - 按钮元素
      */
     function buttonPress(button) {
-        button.style.transform = 'scale(0.95)';
+        button.style.transform = "scale(0.95)";
 
         setTimeout(function () {
-            button.style.transform = '';
+            button.style.transform = "";
         }, 100);
     }
 
@@ -172,10 +172,10 @@ var Animation = (function () {
      * @param {HTMLElement} element - 元素
      */
     function selectFeedback(element) {
-        element.classList.add('select-feedback');
+        element.classList.add("select-feedback");
 
         setTimeout(function () {
-            element.classList.remove('select-feedback');
+            element.classList.remove("select-feedback");
         }, 250);
     }
 
@@ -184,11 +184,12 @@ var Animation = (function () {
      * @param {HTMLElement} element - 元素
      */
     function deselectFeedback(element) {
-        element.classList.add('deselect-feedback');
+        element.classList.add("deselect-feedback");
 
         setTimeout(function () {
-            element.classList.remove('deselect-feedback');
-        }, 250);
+            element.classList.remove("deselect-feedback");
+            console.log("item点击移除：");
+        }, 150);
     }
 
     /**
@@ -196,10 +197,10 @@ var Animation = (function () {
      * @param {HTMLElement} element - 元素
      */
     function errorShake(element) {
-        element.classList.add('shake-error');
+        element.classList.add("shake-error");
 
         setTimeout(function () {
-            element.classList.remove('shake-error');
+            element.classList.remove("shake-error");
         }, 300);
     }
 
@@ -211,29 +212,29 @@ var Animation = (function () {
         if (!mascot) return;
 
         var idleTimer = setTimeout(function () {
-            mascot.classList.add('mascot-idle');
+            mascot.classList.add("mascot-idle");
         }, 3000);
 
         // 用户交互时停止闲置动画
         var stopIdle = function () {
             clearTimeout(idleTimer);
-            mascot.classList.remove('mascot-idle');
+            mascot.classList.remove("mascot-idle");
 
             idleTimer = setTimeout(function () {
-                mascot.classList.add('mascot-idle');
+                mascot.classList.add("mascot-idle");
             }, 3000);
         };
 
-        document.addEventListener('click', stopIdle);
-        document.addEventListener('touchstart', stopIdle);
+        document.addEventListener("click", stopIdle);
+        document.addEventListener("touchstart", stopIdle);
 
         return {
             stop: function () {
                 clearTimeout(idleTimer);
-                mascot.classList.remove('mascot-idle');
-                document.removeEventListener('click', stopIdle);
-                document.removeEventListener('touchstart', stopIdle);
-            }
+                mascot.classList.remove("mascot-idle");
+                document.removeEventListener("click", stopIdle);
+                document.removeEventListener("touchstart", stopIdle);
+            },
         };
     }
 
@@ -244,18 +245,18 @@ var Animation = (function () {
     function mascotPeek(mascot) {
         if (!mascot) return;
 
-        mascot.style.transformOrigin = 'right bottom';
-        mascot.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        mascot.style.transform = 'rotate(10deg) scale(0.9)';
+        mascot.style.transformOrigin = "right bottom";
+        mascot.style.transition = "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        mascot.style.transform = "rotate(10deg) scale(0.9)";
 
         setTimeout(function () {
-            mascot.style.transform = 'rotate(0deg) scale(1)';
+            mascot.style.transform = "rotate(0deg) scale(1)";
         }, 50);
 
         setTimeout(function () {
-            mascot.style.transform = '';
-            mascot.style.transition = '';
-            mascot.style.transformOrigin = '';
+            mascot.style.transform = "";
+            mascot.style.transition = "";
+            mascot.style.transformOrigin = "";
         }, 450);
     }
 
@@ -268,20 +269,20 @@ var Animation = (function () {
         if (!badge) return;
 
         delay = delay || 200;
-        badge.style.opacity = '0';
+        badge.style.opacity = "0";
 
         setTimeout(function () {
-            badge.style.transition = 'all 0.3s ease-out';
-            badge.style.transform = 'scale(2) rotate(-30deg)';
-            badge.style.opacity = '1';
+            badge.style.transition = "all 0.3s ease-out";
+            badge.style.transform = "scale(2) rotate(-30deg)";
+            badge.style.opacity = "1";
 
             setTimeout(function () {
-                badge.style.transform = 'scale(1) rotate(0deg)';
+                badge.style.transform = "scale(1) rotate(0deg)";
             }, 50);
 
             setTimeout(function () {
-                badge.style.transform = '';
-                badge.style.transition = '';
+                badge.style.transform = "";
+                badge.style.transition = "";
             }, 350);
         }, delay);
     }
@@ -297,6 +298,6 @@ var Animation = (function () {
         errorShake: errorShake,
         startMascotIdle: startMascotIdle,
         mascotPeek: mascotPeek,
-        badgeStamp: badgeStamp
+        badgeStamp: badgeStamp,
     };
 })();

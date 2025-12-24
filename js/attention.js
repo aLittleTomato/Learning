@@ -585,8 +585,10 @@ function renderGameGridTo(grid, items) {
         var item = items[i];
         var gridItem = getAGridItem(item);
 
-        updateItemState(gridItem, itemState.normal);
+        gridItem.setAttribute("indexInGrid", i);
 
+        updateItemState(gridItem, itemState.normal);
+        gridItem.classList.add("small");
         gridItem.addEventListener("click", function () {
             handleGameItemClick(this, item);
         });
@@ -606,7 +608,7 @@ function updateItemState(gridItem, state) {
     const letter = gridItem.getAttribute("letter");
     const index = gridItem.getAttribute("index");
 
-    gridItem.style.background = `url('../images/game1/${letter}/${state}/${Utils.format2(
+    gridItem.style.backgroundImage = `url('../images/game1/${letter}/${state}/${Utils.format2(
         index
     )}.png')`;
 }
@@ -617,9 +619,10 @@ function updateItemState(gridItem, state) {
 function handleGameItemClick(element) {
     var pageIndex = AttentionGame.state.gameData.currentPage;
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
-    var index = parseInt(element.getAttribute("index"));
-
+    var index = parseInt(element.getAttribute("indexInGrid"));
+    console.log("item点击Index：" + index);
     var isSelected = pageData.selected.indexOf(index) !== -1;
+    console.log("item点击isSelected：" + isSelected);
 
     if (isSelected) {
         // 取消选中
@@ -669,7 +672,7 @@ function updateTimerDisplay(seconds) {
     var timerElement = document.getElementById("game-timer");
     if (!timerElement) return;
 
-    timerElement.textContent = Utils.formatTime(seconds);
+    timerElement.textContent = "时间：" + Utils.formatTime(seconds);
 
     // 根据剩余时间改变样式
     timerElement.classList.remove("warning", "danger");
@@ -710,6 +713,14 @@ AttentionGame.nextGamePage = function () {
         var currentPage = AttentionGame.state.gameData.currentPage;
         var nextPage = currentPage + 1;
         if (nextPage >= AttentionGame.state.gameData.totalPages) return;
+
+        var nextBtn = document.getElementById("test-next-btn");
+        // 更新下一页按钮
+        if (pageIndex == AttentionGame.state.gameData.totalPages - 2) {
+            nextBtn.classList.add("last");
+        } else {
+            nextBtn.classList.remove("last");
+        }
 
         var currentGrid = document.getElementById("main-grid");
         var nextPageIndex = pageIndex + 1;
@@ -905,6 +916,11 @@ function renderResult() {
         }
     }
 
+    /**?  1. 总耗时：每一关的耗时加起来，展示格式MM:SS
+  2. 正确率：(完成的图案总数-错漏数量)/(完成的图案总数）
+  3. 加工速度：正确数+错误数+遗漏数
+  4. 集中程度：正确完成的图案总数 - 错漏总数
+- 操作按钮： */
     // 更新统计数据
     var statTime = document.getElementById("stat-time");
     var statAccuracy = document.getElementById("stat-accuracy");
@@ -956,8 +972,8 @@ AttentionGame.restart = function () {
     AttentionGame.state.gameData = {
         pages: [],
         currentPage: 0,
-        totalPages: 3,
-        timePerPage: 70,
+        totalPages: Config.get("games.attention.pages"),
+        timePerPage: Config.get("games.attention.timePerPage"),
         startTime: null,
         pageTimes: [],
         pageResults: [],
@@ -1068,6 +1084,15 @@ function getAGridItem(item) {
     return gridItem;
 }
 
+function numberToChinese(num) {
+    const map = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    if (num >= 0 && num <= 9) {
+        return map[num];
+    } else {
+        throw new Error("只支持 0-9 的数字");
+    }
+}
+
 /**
  * 渲染详情页面
  */
@@ -1078,9 +1103,13 @@ function renderDetailsPage(pageIndex) {
 
     grid.innerHTML = "";
 
+    var title = document.getElementById("detail-title");
+    title.textContent = "📄 第" + numberToChinese(pageIndex + 1) + "关";
+
     for (var i = 0; i < pageData.items.length; i++) {
         var item = pageData.items[i];
         var gridItem = getAGridItem(item);
+        gridItem.classList.add("small");
 
         // 判断状态
         var isSelected = pageData.selected.indexOf(i) !== -1;
@@ -1098,6 +1127,9 @@ function renderDetailsPage(pageIndex) {
             // 错选
             updateItemState(gridItem, itemState.chose);
             gridItem.classList.add("error");
+        } else if (!isSelected && !isCorrect) {
+            gridItem.classList.add("correct");
+            updateItemState(gridItem, itemState.normal);
         }
 
         grid.appendChild(gridItem);
@@ -1117,14 +1149,14 @@ function renderDetailsPage(pageIndex) {
     var btnNext = document.getElementById("btn-next-detail");
 
     if (btnPrev) {
-        if (pageIndex === 0) btnPrev.textContent = "返回答题结果";
-        else btnPrev.textContent = "上一页";
+        if (pageIndex === 0) btnPrev.classList.add("back");
+        else btnPrev.classList.remove("back");
     }
 
     if (btnNext) {
         if (pageIndex === AttentionGame.state.gameData.totalPages - 1)
-            btnNext.textContent = "返回答题结果";
-        else btnNext.textContent = "下一页";
+            btnNext.classList.add("back");
+        else btnNext.classList.remove("back");
     }
 }
 

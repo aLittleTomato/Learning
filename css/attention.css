@@ -9,6 +9,7 @@
     left: 50%;
     top: 50%;
     transform-origin: center;
+    overflow: visible;
 
     /* transform-origin: top left; */
 }
@@ -62,13 +63,30 @@ body {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
+#page-task {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ffffff 0% 60%, #5ca1ff 60% 100%);
+}
+#page-game {
+    cursor: pointer;
+    background: #fefefe;
+}
+#page-result {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
+}
+#page-details {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #5ca1ff 0% 20%, #ffffff 20% 100%);
+}
+
 /* 页面容器 */
 .page {
     position: absolute;
     display: none;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow: visible;
 }
 
 .page.active {
@@ -129,6 +147,18 @@ body {
     transform: scaleX(-1);
     object-fit: fill;
 }
+
+.page-task-mask {
+    position: absolute;
+    width: 100%;
+    /* height: 886px; */
+    height: 1213px;
+    left: 0px;
+    bottom: 200px;
+    transform: scale(-1, -1);
+    object-fit: fill;
+}
+
 .page-logo {
     position: absolute;
     width: 550px;
@@ -261,6 +291,23 @@ body {
     }
 }
 
+/* 右边中间一点 */
+.page-logo.bottom {
+    width: 687px;
+    height: 756px;
+    left: 210px;
+    bottom: -300px;
+    /* 设置变换锚点为底部中间 */
+    transform-origin: center bottom; /* x轴居中，y轴底部 */
+    animation: right1Appear 1s ease-out forwards,
+        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
+}
+.logo-flip {
+    transform: scaleX(-1);
+    width: 100%;
+    height: 100%;
+}
+
 .page-dialogBG {
     position: absolute;
     /* background-image: "../images/game1/welcome_txt_bg.png"; */
@@ -325,26 +372,6 @@ body {
 }
 .rule-item.e6 {
     background: url("../images/game1/b/result1/06.png");
-}
-
-/* 吉祥物 */
-.mascot {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mascot-placeholder {
-    font-size: 80px;
-    line-height: 1;
-}
-
-.mascot-small {
-    font-size: 32px;
-    line-height: 1;
 }
 
 /* 欢迎页 */
@@ -428,11 +455,41 @@ body {
     font-size: 55px;
 }
 
+.page-texts.task {
+    bottom: 670px;
+    line-height: 1.5;
+    font-size: 50px;
+}
+
 .page-texts .rule-text-green {
     color: #2ece2e;
 }
 .page-texts .rule-text-red {
     color: #ff5c5c;
+}
+
+/* 游戏页面 */
+.test-logo {
+    position: absolute;
+    width: 242px;
+    height: 242px;
+    left: 7px;
+    top: 0px;
+}
+.test-tip-bg {
+    position: absolute;
+    width: 522px;
+    height: 189px;
+    left: 212px;
+    top: 25px;
+}
+
+.page-texts.test-tip {
+    position: absolute;
+    font-size: 28px;
+    left: 260px;
+    top: 80px;
+    opacity: 1;
 }
 
 .line1 {
@@ -490,6 +547,11 @@ body {
 }
 .btn-bottom.long.try {
     background-image: url("../images/game1/goto_tutorial.png");
+}
+
+.btn-bottom.long.task {
+    background-image: url("../images/game1/start_game.png");
+    bottom: 450px;
 }
 
 /* 规则内容 */
@@ -564,9 +626,11 @@ body {
 .game-grid {
     display: grid;
     position: absolute;
-    gap: 8px;
-    margin: 20px auto;
+    column-gap: -2px;
+    row-gap: 5px;
     max-width: 100%;
+    padding: 0;
+    place-items: center;
 
     transform: translateX(calc(-50% + var(--slide-x, 0)));
     transition: transform 0.4s ease;
@@ -615,11 +679,15 @@ body {
 /* 初始状态 */
 .game-grid.active {
     --slide-x: 0;
+    opacity: 1;
+    z-index: 3;
 }
 
 .game-grid.hide {
     transition: none;
-    transform: translateX(100vw);
+    opacity: 0;
+    --slide-x: 100vw;
+    z-index: 1;
 }
 
 .game-grid.next {
@@ -628,10 +696,12 @@ body {
 
 .game-grid.slide-out {
     --slide-x: -100vw;
+    z-index: 5;
 }
 
 .game-grid.slide-in {
     --slide-x: 0;
+    z-index: 3;
 }
 
 .grid-item {
@@ -646,11 +716,12 @@ body {
     user-select: none;
     line-height: 1.05;
     flex-direction: column;
+    background-size: cover; /* 拉伸填充 */
 }
 
 .grid-item.small {
-    width: 88px;
-    height: 88px;
+    width: 96px;
+    height: 96px;
 }
 
 .grid-item:active {
@@ -675,10 +746,6 @@ body {
 .grid-item.disabled {
     pointer-events: none;
     opacity: 0.6;
-}
-
-.grid-item.omission {
-    background-color: #f1c40f;
 }
 
 /* 练习完成提示 */
@@ -718,22 +785,6 @@ body {
     color: #fff;
 }
 
-.game-timer {
-    font-size: 20px;
-    font-weight: 600;
-    color: #fff;
-    font-family: "Courier New", monospace;
-}
-
-.game-timer.warning {
-    color: #f39c12;
-}
-
-.game-timer.danger {
-    color: #e74c3c;
-    animation: timer-pulse 0.5s ease-in-out infinite;
-}
-
 @keyframes timer-pulse {
     0%,
     100% {
@@ -745,47 +796,103 @@ body {
     }
 }
 
-/* 进度条容器 */
-.progress-bar-container {
-    padding: 12px 20px;
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
 .progress-bar {
+    width: 666px;
+    height: 50px;
+    position: absolute;
+    left: 50px;
+    top: 268px;
     display: flex;
-    gap: 8px;
     justify-content: center;
     align-items: center;
-    flex: 1;
+    gap: 2px;
+    /* flex: 1; */
+    overflow: visible;
 }
 
 .progress-dot {
-    width: 40px;
-    height: 8px;
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.3);
+    width: 107px;
+    height: 75px;
+    background: url("../images/game1/processer_normal.png");
+    background-position: center;
+    background-size: cover;
     transition: all 0.3s ease;
+    overflow: visible;
+    margin-left: 0px;
+}
+
+.progress-dot:first-child {
+    margin-left: 0;
 }
 
 .progress-dot.active {
-    background-color: #3498db;
+    background-image: url("../images/game1/processer_current.png");
+    background-size: 120px 83px;
 }
 
 .progress-dot.correct {
-    background-color: #2ecc71;
+    background-image: url("../images/game1/processer_correct.png");
+    background-size: 120px 83px;
 }
 
 .progress-dot.error {
-    background-color: #e74c3c;
+    background-image: url("../images/game1/processer_error.png");
+    background-size: 120px 83px;
 }
 
 /* 游戏容器 */
 .game-container {
-    padding: 20px;
-    overflow: hidden;
-    /* max-height: calc(100vh - 200px); */
+    position: absolute;
+
     width: 665px;
     height: 794px;
+
+    left: 50%;
+    bottom: 270px;
+    transform: translateX(-50%);
+
+    overflow: visible;
+}
+
+.game-timer {
+    background: url("../images/game1/test_time_bg.png");
+    background-size: cover;
+
+    position: absolute;
+    left: 0px;
+    bottom: 20px;
+
+    width: 391px;
+    height: 213px;
+
+    font-size: 38px;
+    color: #5ca1ff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-timer.warning {
+    color: #f39c12;
+}
+
+.game-timer.danger {
+    color: #e74c3c;
+    animation: timer-pulse 0.5s ease-in-out infinite;
+}
+
+.btn-bottom.btn-next-game {
+    background-image: url("../images/game1/test_next_game.png");
+    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    width: 438px;
+    height: 251px;
+    right: -10px;
+    bottom: 0px;
+}
+
+.btn-bottom.btn-next-game.last {
+    background-image: url("../images/game1/next_page.png");
 }
 
 /* 游戏底部 */
@@ -806,12 +913,18 @@ body {
     display: block;
 }
 
-/* 结果卡片 */
+/* 结果界面 */
 .result-card {
-    background-color: #fff;
-    border-radius: 24px;
-    padding: 40px 30px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 两列 */
+    grid-template-rows: repeat(2, 1fr); /* 两行 */
+    justify-items: center; /* 水平居中子元素 */
+    align-items: center; /* 垂直居中子元素 */
+
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    top: 600px;
 }
 
 .result-badge {
@@ -826,36 +939,123 @@ body {
     margin-bottom: 30px;
 }
 
-.result-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
 .stat-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    margin-top: -70px;
+    width: 350px;
+    height: 228px;
+    background-size: contain;
 }
-
+/* 第一行元素不要被挤压 */
+.result-card > :nth-child(-n + 2) {
+    margin-top: 0;
+}
 .stat-label {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .stat-value {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
+    font-size: 45px;
+    font-weight: bold;
 }
 
-.result-actions {
-    display: flex;
-    gap: 12px;
+.stat-item.time {
+    background-image: url("../images/game1/stat_time.png");
+    color: #5ca1ff;
+}
+.stat-item.speed {
+    background-image: url("../images/game1/stat_speed.png");
+    color: #ea36ea;
+}
+.stat-item.focus {
+    background-image: url("../images/game1/stat_focus.png");
+    color: #e2592c;
+}
+.stat-item.accuracy {
+    background-image: url("../images/game1/stat_accuracy.png");
+    color: #2ece2e;
 }
 
-.result-actions .btn {
-    flex: 1;
+#stat-time {
+    color: #326ebf;
+}
+#stat-accuracy {
+    color: #009738;
+}
+#stat-speed {
+    color: #bf329c;
+}
+#stat-focus {
+    color: #d24d00;
+}
+.page-texts.result {
+    left: 42px;
+    top: 290px;
+}
+
+.page-logo.left1.result {
+    width: 440px;
+    height: 481px;
+    left: 300px;
+    top: 0px;
+}
+
+.page-rule-mask.result {
+    transform: scaleX(-1);
+}
+.btn-bottom.again {
+    background-image: url("../images/game1/btn_again.png");
+    bottom: 40px;
+}
+.btn-bottom.detail {
+    background-image: url("../images/game1/btn_detail.png");
+    bottom: 190px;
+}
+.details-container {
+    position: absolute;
+
+    width: 665px;
+    height: 794px;
+
+    left: 50%;
+    bottom: 270px;
+    transform: translateX(-50%);
+
+    overflow: visible;
+}
+
+/* 详情界面 */
+.btn-bottom.btn-prev {
+    background-image: url("../images/game1/last_page.png");
+    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    width: 438px;
+    height: 251px;
+    left: -10px;
+    bottom: 0px;
+}
+.btn-bottom.btn-prev.back {
+    background-image: url("../images/game1/btn_back.png");
+}
+
+.btn-bottom.btn-next {
+    background-image: url("../images/game1/btn_next_page.png");
+    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    width: 438px;
+    height: 251px;
+    right: -10px;
+    bottom: 0px;
+}
+.btn-bottom.btn-next.back {
+    background-image: url("../images/game1/btn_back.png");
+}
+
+.progress-bar.detail {
+    top: 300px;
 }
 
 .details-footer {
@@ -868,6 +1068,21 @@ body {
     backdrop-filter: blur(10px);
     display: flex;
     gap: 12px;
+}
+
+.page-detail-mask {
+    position: absolute;
+    width: 100%;
+    /* height: 886px; */
+    height: 821px;
+    left: 0px;
+    top: -170px;
+    object-fit: fill;
+}
+
+.page-texts.detail {
+    font-size: 60px;
+    top: 163px;
 }
 
 .details-footer .btn {
@@ -885,7 +1100,6 @@ body {
     }
 
     .game-container {
-        padding: 15px;
     }
 }
 

@@ -27,7 +27,8 @@ body {
     background-color: #f5f5f5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+    overflow: hidden;
 }
 
 #app {
@@ -247,7 +248,7 @@ body {
 
 /* 选中反馈动画 */
 .select-feedback {
-    animation: select-pulse 0.25s ease-in-out;
+    animation: select-pulse 0.15s ease-in-out;
 }
 
 @keyframes select-pulse {
@@ -264,7 +265,7 @@ body {
 
 /* 取消选中动画 */
 .deselect-feedback {
-    animation: deselect-shrink 0.25s ease-in-out;
+    animation: deselect-shrink 0.15s ease-in-out;
 }
 
 @keyframes deselect-shrink {
