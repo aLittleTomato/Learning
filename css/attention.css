@@ -1,45 +1,5 @@
 /* 注意力测试游戏样式 */
-.root {
-}
-
-.stage {
-    width: 750px;
-    height: 1437px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform-origin: center;
-    overflow: visible;
-
-    /* transform-origin: top left; */
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 设计尺寸为 750x1334 的响应式布局 */
-@media screen and (max-height: 1437px) {
-    body {
-        justify-content: flex-end;
-    }
-}
-
-@media screen and (min-height: 1437px) and (max-height: 1450px) {
-    body {
-        padding-top: calc((100vh - 1437px) / 2 - 15px);
-        padding-bottom: calc((100vh - 1437px) / 2 + 15px);
-    }
-}
-
-@media screen and (min-height: 1450px) {
-    body {
-        padding-top: calc((100vh - 1437px) / 2 - 25px);
-        padding-bottom: calc((100vh - 1437px) / 2 + 25px);
-    }
-}
+.root {}
 
 #page-welcome {
     cursor: pointer;
@@ -55,51 +15,35 @@ body {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
+
 #page-rules-2 {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
+
 #page-tutorial {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
+
 #page-task {
     cursor: pointer;
     background: linear-gradient(to bottom, #ffffff 0% 60%, #5ca1ff 60% 100%);
 }
+
 #page-game {
     cursor: pointer;
     background: #fefefe;
 }
+
 #page-result {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
+
 #page-details {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 20%, #ffffff 20% 100%);
-}
-
-/* 页面容器 */
-.page {
-    position: absolute;
-    display: none;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-.page.active {
-    display: block;
-}
-
-.page-content {
-    /* max-width: 600px; */
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    /* padding: 40px 20px; */
 }
 
 .page-welcome-bg {
@@ -137,6 +81,7 @@ body {
     bottom: 0px;
     object-fit: fill;
 }
+
 .page-tutorial-mask {
     position: absolute;
     width: 100%;
@@ -159,52 +104,17 @@ body {
     object-fit: fill;
 }
 
-.page-logo {
-    position: absolute;
-    width: 550px;
-    height: 605px;
-}
-
-.page-logo.right {
-    right: -340px;
-    top: 300px;
-    /* 设置变换锚点为底部中间 */
-    transform-origin: center bottom; /* x轴居中，y轴底部 */
-    animation: appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */ breath 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
-    /* background-image: "../images/game1/attention_logo.png"; */
-}
-/* 1. 出现动画：透明度0→1，旋转30°→45°，1秒 */
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: rotate(-15deg);
-    }
-    to {
-        opacity: 1;
-        transform: rotate(-30deg);
-    }
-}
-
-/* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
-@keyframes breath {
-    0%,
-    100% {
-        transform: translateY(0) rotate(-30deg);
-    }
-    50% {
-        transform: translateY(-10px) rotate(-30deg);
-    }
-}
-
 /* 右边中间一点 */
 .page-logo.right1 {
     right: -70px;
     top: -190px;
     /* 设置变换锚点为底部中间 */
-    transform-origin: center bottom; /* x轴居中，y轴底部 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
     animation: right1Appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
+        /* 出现动画，执行一次 */
+        right1Breath 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
 }
 
 @keyframes right1Appear {
@@ -212,6 +122,7 @@ body {
         opacity: 0;
         transform: rotate(-05deg);
     }
+
     to {
         opacity: 1;
         transform: rotate(-20deg);
@@ -220,10 +131,12 @@ body {
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes right1Breath {
+
     0%,
     100% {
         transform: translateY(0) rotate(-20deg);
     }
+
     50% {
         transform: translateY(-10px) rotate(-20deg);
     }
@@ -233,15 +146,20 @@ body {
     left: -380px;
     top: -60px;
     /* 设置变换锚点为底部中间 */
-    transform-origin: center bottom; /* x轴居中，y轴底部 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
     animation: leftAppear 1s ease-out forwards,
-        /* 出现动画，执行一次 */ rightBreath 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
+        /* 出现动画，执行一次 */
+        rightBreath 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
 }
+
 @keyframes leftAppear {
     from {
         opacity: 0;
         transform: rotate(15deg);
     }
+
     to {
         opacity: 1;
         transform: rotate(40deg);
@@ -250,10 +168,12 @@ body {
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes leftBreath {
+
     0%,
     100% {
         transform: translateY(0) rotate(40deg);
     }
+
     50% {
         transform: translateY(-10px) rotate(40deg);
     }
@@ -264,9 +184,12 @@ body {
     left: 50px;
     top: 0px;
     /* 设置变换锚点为底部中间 */
-    transform-origin: center bottom; /* x轴居中，y轴底部 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
     animation: leftAppear1 1s ease-out forwards,
-        /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
+        /* 出现动画，执行一次 */
+        leftBreath1 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
 }
 
 @keyframes leftAppear1 {
@@ -274,6 +197,7 @@ body {
         opacity: 0;
         transform: rotate(0deg);
     }
+
     to {
         opacity: 1;
         transform: rotate(15deg);
@@ -282,10 +206,12 @@ body {
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes leftBreath1 {
+
     0%,
     100% {
         transform: translateY(0) rotate(15deg);
     }
+
     50% {
         transform: translateY(-10px) rotate(15deg);
     }
@@ -298,10 +224,14 @@ body {
     left: 210px;
     bottom: -300px;
     /* 设置变换锚点为底部中间 */
-    transform-origin: center bottom; /* x轴居中，y轴底部 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
     animation: right1Appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite; /* 呼吸动画，1秒后开始循环 */
+        /* 出现动画，执行一次 */
+        right1Breath 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
 }
+
 .logo-flip {
     transform: scaleX(-1);
     width: 100%;
@@ -325,10 +255,13 @@ body {
     height: 430px;
     max-width: 100%;
 
-    grid-template-columns: repeat(3, 1fr); /* 三列 */
-    grid-template-rows: repeat(2, 1fr); /* 两行 */
+    grid-template-columns: repeat(3, 1fr);
+    /* 三列 */
+    grid-template-rows: repeat(2, 1fr);
+    /* 两行 */
 
-    left: 42px; /* ⭐ 水平居中 */
+    left: 42px;
+    /* ⭐ 水平居中 */
     top: 800px;
 }
 
@@ -336,21 +269,27 @@ body {
     width: 200px;
     height: 200px;
 }
+
 .rule-item.i1 {
     background: url("../images/game1/q/result1/01.png");
 }
+
 .rule-item.i2 {
     background: url("../images/game1/q/result1/02.png");
 }
+
 .rule-item.i3 {
     background: url("../images/game1/q/result1/03.png");
 }
+
 .rule-item.i4 {
     background: url("../images/game1/q/result1/04.png");
 }
+
 .rule-item.i5 {
     background: url("../images/game1/q/result1/05.png");
 }
+
 .rule-item.i6 {
     background: url("../images/game1/q/result1/06.png");
 }
@@ -358,18 +297,23 @@ body {
 .rule-item.e1 {
     background: url("../images/game1/q/result1/09.png");
 }
+
 .rule-item.e2 {
     background: url("../images/game1/q/result1/10.png");
 }
+
 .rule-item.e3 {
     background: url("../images/game1/q/result1/11.png");
 }
+
 .rule-item.e4 {
     background: url("../images/game1/b/result1/04.png");
 }
+
 .rule-item.e5 {
     background: url("../images/game1/b/result1/05.png");
 }
+
 .rule-item.e6 {
     background: url("../images/game1/b/result1/06.png");
 }
@@ -413,24 +357,6 @@ body {
     font-weight: 600;
 }
 
-.page-texts-title {
-    position: absolute;
-    text-align: left; /* 左对齐 */
-    color: #ffffff;
-    font-size: 90px;
-    font-weight: bold;
-    top: 72px;
-    left: 62px;
-}
-.page-texts {
-    position: absolute;
-    text-align: left; /* 左对齐 */
-    color: #000000;
-    font-size: 60px;
-    left: 42px;
-    opacity: 1;
-}
-
 .page-texts.out {
     animation: fadeOut 1s forwards;
     animation-delay: 2s;
@@ -438,9 +364,12 @@ body {
 }
 
 .page-texts.in {
-    opacity: 0; /* 初始显示 */
-    animation: fadeIn 1s forwards; /* 动画持续3秒，结束保持最终状态 */
-    animation-delay: 2s; /* 等待3秒后才开始动画 */
+    opacity: 0;
+    /* 初始显示 */
+    animation: fadeIn 1s forwards;
+    /* 动画持续3秒，结束保持最终状态 */
+    animation-delay: 2s;
+    /* 等待3秒后才开始动画 */
     top: 1072px;
 }
 
@@ -449,6 +378,7 @@ body {
     line-height: 0.95;
     letter-spacing: -1px;
 }
+
 .page-texts.rules {
     bottom: 670px;
     line-height: 1.5;
@@ -461,12 +391,7 @@ body {
     font-size: 50px;
 }
 
-.page-texts .rule-text-green {
-    color: #2ece2e;
-}
-.page-texts .rule-text-red {
-    color: #ff5c5c;
-}
+
 
 /* 游戏页面 */
 .test-logo {
@@ -476,6 +401,7 @@ body {
     left: 7px;
     top: 0px;
 }
+
 .test-tip-bg {
     position: absolute;
     width: 522px;
@@ -505,39 +431,28 @@ body {
     bottom: 40px;
 
     /* background-image: url("../images/game1/btn_next_page.png"); */
-    background-size: cover; /* 填满按钮 */
+    background-size: cover;
+    /* 填满按钮 */
     background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(0, 0, 0, 0); /* 保持透明 */
+    background-color: rgba(0, 0, 0, 0);
+    /* 保持透明 */
 }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 
 .btn-bottom {
     position: absolute;
     background-image: url("../images/game1/btn_next_step_long.png");
 
-    background-size: cover; /* 填满按钮 */
+    background-size: cover;
+    /* 填满按钮 */
     background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(0, 0, 0, 0); /* 保持透明 */
+    background-color: rgba(0, 0, 0, 0);
+    /* 保持透明 */
 }
+
 .btn-bottom.long {
     background-image: url("../images/game1/btn_next_step_long.png");
     width: 750px;
@@ -545,6 +460,7 @@ body {
     left: 0;
     bottom: 40px;
 }
+
 .btn-bottom.long.try {
     background-image: url("../images/game1/goto_tutorial.png");
 }
@@ -643,10 +559,13 @@ body {
     height: 430px;
     max-width: 100%;
 
-    grid-template-columns: repeat(3, 1fr); /* 三列 */
-    grid-template-rows: repeat(2, 1fr); /* 两行 */
+    grid-template-columns: repeat(3, 1fr);
+    /* 三列 */
+    grid-template-rows: repeat(2, 1fr);
+    /* 两行 */
 
-    left: 42px; /* ⭐ 水平居中 */
+    left: 42px;
+    /* ⭐ 水平居中 */
     top: 800px;
 }
 
@@ -716,7 +635,8 @@ body {
     user-select: none;
     line-height: 1.05;
     flex-direction: column;
-    background-size: cover; /* 拉伸填充 */
+    background-size: cover;
+    /* 拉伸填充 */
 }
 
 .grid-item.small {
@@ -786,6 +706,7 @@ body {
 }
 
 @keyframes timer-pulse {
+
     0%,
     100% {
         transform: scale(1);
@@ -884,7 +805,8 @@ body {
 
 .btn-bottom.btn-next-game {
     background-image: url("../images/game1/test_next_game.png");
-    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    background-size: 100% 100%;
+    /* 拉伸填满容器，横竖都拉伸 */
     width: 438px;
     height: 251px;
     right: -10px;
@@ -916,10 +838,14 @@ body {
 /* 结果界面 */
 .result-card {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 两列 */
-    grid-template-rows: repeat(2, 1fr); /* 两行 */
-    justify-items: center; /* 水平居中子元素 */
-    align-items: center; /* 垂直居中子元素 */
+    grid-template-columns: repeat(2, 1fr);
+    /* 两列 */
+    grid-template-rows: repeat(2, 1fr);
+    /* 两行 */
+    justify-items: center;
+    /* 水平居中子元素 */
+    align-items: center;
+    /* 垂直居中子元素 */
 
     position: absolute;
     width: 100%;
@@ -950,10 +876,12 @@ body {
     height: 228px;
     background-size: contain;
 }
+
 /* 第一行元素不要被挤压 */
-.result-card > :nth-child(-n + 2) {
+.result-card> :nth-child(-n + 2) {
     margin-top: 0;
 }
+
 .stat-label {
     font-size: 28px;
     font-weight: bold;
@@ -968,14 +896,17 @@ body {
     background-image: url("../images/game1/stat_time.png");
     color: #5ca1ff;
 }
+
 .stat-item.speed {
     background-image: url("../images/game1/stat_speed.png");
     color: #ea36ea;
 }
+
 .stat-item.focus {
     background-image: url("../images/game1/stat_focus.png");
     color: #e2592c;
 }
+
 .stat-item.accuracy {
     background-image: url("../images/game1/stat_accuracy.png");
     color: #2ece2e;
@@ -984,15 +915,19 @@ body {
 #stat-time {
     color: #326ebf;
 }
+
 #stat-accuracy {
     color: #009738;
 }
+
 #stat-speed {
     color: #bf329c;
 }
+
 #stat-focus {
     color: #d24d00;
 }
+
 .page-texts.result {
     left: 42px;
     top: 290px;
@@ -1008,14 +943,17 @@ body {
 .page-rule-mask.result {
     transform: scaleX(-1);
 }
+
 .btn-bottom.again {
     background-image: url("../images/game1/btn_again.png");
     bottom: 40px;
 }
+
 .btn-bottom.detail {
     background-image: url("../images/game1/btn_detail.png");
     bottom: 190px;
 }
+
 .details-container {
     position: absolute;
 
@@ -1032,24 +970,28 @@ body {
 /* 详情界面 */
 .btn-bottom.btn-prev {
     background-image: url("../images/game1/last_page.png");
-    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    background-size: 100% 100%;
+    /* 拉伸填满容器，横竖都拉伸 */
     width: 438px;
     height: 251px;
     left: -10px;
     bottom: 0px;
 }
+
 .btn-bottom.btn-prev.back {
     background-image: url("../images/game1/btn_back.png");
 }
 
 .btn-bottom.btn-next {
     background-image: url("../images/game1/btn_next_page.png");
-    background-size: 100% 100%; /* 拉伸填满容器，横竖都拉伸 */
+    background-size: 100% 100%;
+    /* 拉伸填满容器，横竖都拉伸 */
     width: 438px;
     height: 251px;
     right: -10px;
     bottom: 0px;
 }
+
 .btn-bottom.btn-next.back {
     background-image: url("../images/game1/btn_back.png");
 }
@@ -1099,8 +1041,7 @@ body {
         font-size: 16px;
     }
 
-    .game-container {
-    }
+    .game-container {}
 }
 
 @media screen and (min-width: 768px) {

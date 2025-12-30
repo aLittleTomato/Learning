@@ -101,12 +101,6 @@ var AttentionGame = (function () {
             nextPage.classList.add("active");
             // 更新游戏阶段
             updateGamePhase(nextPageId);
-
-            // 猴子探头动画
-            var mascot = nextPage.querySelector(".mascot");
-            if (mascot) {
-                Animation.mascotPeek(mascot);
-            }
         });
     }
 
@@ -175,11 +169,6 @@ var AttentionGame = (function () {
             currentPage.classList.remove("active");
             rulesPage.classList.add("active");
             updateGamePhase("page-rules-1");
-
-            var mascot = rulesPage.querySelector(".mascot");
-            if (mascot) {
-                Animation.mascotPeek(mascot);
-            }
         });
     }
 
