@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>数字记忆练习</title>
+        <link rel="stylesheet" href="../css/common.css" />
+        <link rel="stylesheet" href="../css/memory.css" />
+    </head>
+    <body>
+        <div id="app">
+            <div id="stage" class="stage">
+                <!-- P1: 欢迎页 -->
+                <div id="page-welcome" class="page active">
+                    <img
+                        class="page-welcome-bg"
+                        src="../images/game2/welcome_bg.png"
+                    />
+                    <img
+                        class="page-welcome-mask"
+                        src="../images/game2/welcom_mask.png"
+                    />
+                    <img
+                        class="page-logo right"
+                        src="../images/game2/memory_logo.png"
+                    />
+                    <img
+                        class="page-dialogBG"
+                        src="../images/game1/welcome_txt_bg.png"
+                    />
+                    <div class="page-content">
+                        <!-- 新增两行文本 -->
+                        <div class="page-texts-title">
+                            <p class="line2">欢迎来到<br />注意力小练习👋</p>
+                        </div>
+
+                        <div class="page-texts out">
+                            <p class="line1">你好呀</p>
+                            <p class="line2">准备好接受<br />我的挑战了吗</p>
+                        </div>
+                        <div class="page-texts in">
+                            <p class="line3">请跟随我<br />查看挑战规则</p>
+                        </div>
+                        <button
+                            class="btn btn-welcome"
+                            onclick="AttentionGame.nextPage()"
+                        ></button>
+                    </div>
+                </div>
+
+                <!-- P2: 正序规则说明 -->
+                <div id="page-forward-rules" class="page">
+                    <div class="page-content">
+                        <div class="rules-card">
+                            <div class="mascot-medium">🐑</div>
+                            <h2 class="rules-title">正序记忆规则</h2>
+                            <div class="rules-list">
+                                <div class="rule-item">
+                                    <div class="rule-icon">1</div>
+                                    <div class="rule-text">
+                                        数字会一个一个出现，请按出现顺序输入
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-icon">2</div>
+                                    <div class="rule-text">
+                                        从 3 位数字开始，答对后位数增加
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-icon">3</div>
+                                    <div class="rule-text">
+                                        每个数字停留 1 秒，请集中注意力
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-icon">4</div>
+                                    <div class="rule-text">
+                                        答错有 1 次复活机会
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                class="btn btn-primary"
+                                onclick="MemoryGame.startForwardPhase()"
+                            >
+                                知道了，开始挑战
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P3: 游戏主界面 - 数字展示阶段 -->
+                <div id="page-display" class="page">
+                    <div class="game-header">
+                        <div class="game-info">
+                            <span class="phase-label" id="phase-label"
+                                >正序记忆</span
+                            >
+                            <span class="level-label" id="level-label"
+                                >第 1 关 · 3 位数</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="display-container">
+                        <div class="number-circle" id="number-circle">
+                            <div class="number-display" id="number-display">
+                                准备
+                            </div>
+                        </div>
+                        <div class="progress-dots" id="progress-dots"></div>
+                    </div>
+                </div>
+
+                <!-- P4: 游戏主界面 - 输入阶段 -->
+                <div id="page-input" class="page">
+                    <div class="game-header">
+                        <div class="game-info">
+                            <span class="phase-label" id="phase-label-input"
+                                >正序记忆</span
+                            >
+                            <span class="level-label" id="level-label-input"
+                                >第 1 关 · 3 位数</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <div class="input-prompt" id="input-prompt">
+                            请输入刚才看到的数字
+                        </div>
+                        <div class="input-display" id="input-display"></div>
+
+                        <div class="keyboard">
+                            <div class="keyboard-row">
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(1)"
+                                >
+                                    1
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(2)"
+                                >
+                                    2
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(3)"
+                                >
+                                    3
+                                </button>
+                            </div>
+                            <div class="keyboard-row">
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(4)"
+                                >
+                                    4
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(5)"
+                                >
+                                    5
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(6)"
+                                >
+                                    6
+                                </button>
+                            </div>
+                            <div class="keyboard-row">
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(7)"
+                                >
+                                    7
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(8)"
+                                >
+                                    8
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(9)"
+                                >
+                                    9
+                                </button>
+                            </div>
+                            <div class="keyboard-row">
+                                <button
+                                    class="key-btn key-clear"
+                                    onclick="MemoryGame.clearInput()"
+                                >
+                                    清空
+                                </button>
+                                <button
+                                    class="key-btn"
+                                    onclick="MemoryGame.inputNumber(0)"
+                                >
+                                    0
+                                </button>
+                                <button
+                                    class="key-btn key-submit"
+                                    onclick="MemoryGame.submitAnswer()"
+                                >
+                                    确认
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P5: 正确反馈弹窗 -->
+                <div id="popup-correct" class="popup">
+                    <div
+                        class="popup-mask"
+                        onclick="MemoryGame.closeCorrectPopup()"
+                    ></div>
+                    <div class="popup-card">
+                        <div class="mascot-medium">🐑</div>
+                        <h3 class="popup-title">太棒了！</h3>
+                        <p class="popup-desc" id="correct-desc">
+                            接下来是 4 位数字挑战
+                        </p>
+                        <div
+                            class="record-badge"
+                            id="record-badge"
+                            style="display: none"
+                        >
+                            🎉 刷新纪录
+                        </div>
+                        <button
+                            class="btn btn-primary"
+                            onclick="MemoryGame.nextLevel()"
+                        >
+                            继续挑战
+                        </button>
+                    </div>
+                </div>
+
+                <!-- P6: 错误反馈弹窗（有复活机会） -->
+                <div id="popup-retry" class="popup">
+                    <div class="popup-mask"></div>
+                    <div class="popup-card">
+                        <div class="mascot-medium">🐑</div>
+                        <h3 class="popup-title">啊哦，失误了</h3>
+                        <p class="popup-desc">
+                            刚才的数字是：<span
+                                class="correct-answer"
+                                id="retry-correct-answer"
+                            ></span>
+                        </p>
+                        <p class="popup-hint">还有一次机会，让我们再试一次</p>
+                        <button
+                            class="btn btn-primary"
+                            onclick="MemoryGame.retryLevel()"
+                        >
+                            再来一次
+                        </button>
+                    </div>
+                </div>
+
+                <!-- P7: 倒序规则说明 -->
+                <div id="page-backward-rules" class="page">
+                    <div class="page-content">
+                        <div class="rules-card">
+                            <div class="mascot-medium">🐑</div>
+                            <h2 class="rules-title">进入第二阶段</h2>
+                            <h3 class="rules-subtitle">倒序记忆规则</h3>
+                            <div class="rules-list">
+                                <div class="rule-item">
+                                    <div class="rule-icon">📝</div>
+                                    <div class="rule-text">
+                                        看到 1-2-3，请输入 3-2-1
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-icon">🔄</div>
+                                    <div class="rule-text">
+                                        从 3 位数字重新开始
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-icon">💪</div>
+                                    <div class="rule-text">
+                                        同样有 1 次复活机会
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="phase-score">
+                                <p>
+                                    正序阶段成绩：<span id="forward-score"
+                                        >0</span
+                                    >
+                                    位
+                                </p>
+                            </div>
+                            <button
+                                class="btn btn-primary"
+                                onclick="MemoryGame.startBackwardPhase()"
+                            >
+                                开始倒序挑战
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P8: 结算页面 -->
+                <div id="page-result" class="page">
+                    <div class="page-content">
+                        <div class="result-card">
+                            <div class="mascot-large">🐑</div>
+                            <h2 class="result-title" id="result-title">
+                                记忆大师
+                            </h2>
+                            <p class="result-subtitle">挑战完成！</p>
+
+                            <div class="result-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">正序成绩</div>
+                                    <div class="stat-value" id="stat-forward">
+                                        0 位
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">倒序成绩</div>
+                                    <div class="stat-value" id="stat-backward">
+                                        0 位
+                                    </div>
+                                </div>
+                                <div class="stat-item stat-total">
+                                    <div class="stat-label">综合得分</div>
+                                    <div class="stat-value" id="stat-total">
+                                        0 分
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="result-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    onclick="MemoryGame.viewDetails()"
+                                >
+                                    查看作答详情
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="MemoryGame.restart()"
+                                >
+                                    再来一次
+                                </button>
+                                <button
+                                    class="btn btn-secondary"
+                                    onclick="MemoryGame.backToHome()"
+                                >
+                                    返回主页
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P9: 作答详情页面 -->
+                <div id="page-details" class="page">
+                    <div class="details-header">
+                        <h2 class="details-title">作答详情</h2>
+                    </div>
+
+                    <!-- 页签切换 -->
+                    <div class="details-tabs">
+                        <button
+                            class="tab-btn active"
+                            data-tab="forward"
+                            onclick="MemoryGame.switchTab('forward')"
+                        >
+                            正序记忆
+                        </button>
+                        <button
+                            class="tab-btn"
+                            data-tab="backward"
+                            onclick="MemoryGame.switchTab('backward')"
+                        >
+                            倒序记忆
+                        </button>
+                    </div>
+
+                    <div class="details-container">
+                        <table class="details-table" id="details-table">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>题目</th>
+                                    <th>你的作答</th>
+                                    <th>结果</th>
+                                </tr>
+                            </thead>
+                            <tbody id="details-tbody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="details-footer">
+                        <button
+                            class="btn btn-primary"
+                            onclick="MemoryGame.backToResult()"
+                        >
+                            返回结果
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/scale.js"></script>
+        <script src="../js/utils.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/api.js"></script>
+        <script src="../js/animation.js"></script>
+        <script src="../js/memory.js"></script>
+    </body>
+</html>
