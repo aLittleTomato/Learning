@@ -102,6 +102,7 @@
             <div id="page-input" class="page">
                 <img class="test-logo" src="../images/game2/input_logo.png" />
                 <img class="test-tip-bg" src="../images/game2/input_txt.png" />
+                <img class="input-line" src="../images/game2/input_line.png" />
 
                 <div class="page-content">
                     <div class="input-display" id="input-display"></div>
@@ -151,42 +152,127 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- P5: 正确反馈弹窗 -->
-            <div id="popup-correct" class="popup">
-                <div class="popup-mask" onclick="MemoryGame.closeCorrectPopup()"></div>
-                <div class="popup-card">
-                    <div class="mascot-medium">🐑</div>
-                    <h3 class="popup-title">太棒了！</h3>
-                    <p class="popup-desc" id="correct-desc">
-                        接下来是 4 位数字挑战
-                    </p>
-                    <div class="record-badge" id="record-badge" style="display: none">
-                        🎉 刷新纪录
+            <div id="popup-correct" class="page">
+                <img class="page-logo left1 selected success" src="../images/game2/memory_logo.png" />
+                <img class="page-mask-popup" src="../images/game2/burble_1.png" />
+                <div class="page-content">
+                    <div class="page-texts retry" id="ex-Last-Text">
+                        <p class="line2">太棒了 🎉</p>
+                        <p class="line2">恭喜你通过本关！</p>
+                        <p class="line2">接下来的展示将<span class="rule-text-red">多1个</span>数字，</p>
+                        <p class="line2">总共<span class="rule-text-red" id="correct-desc">4个</span>数字，</p>
+                        <p class="line2">准备好升级挑战了吗？</p>
                     </div>
-                    <button class="btn btn-primary" onclick="MemoryGame.nextLevel()">
-                        继续挑战
-                    </button>
+
+                    <div class="page-texts retry1" id="Last-Text">
+                        <p class="line2">我的天呐 🎉</p>
+                        <p class="line2">你居然一次记住了</p>
+                        <p class="line2"><span class="rule-text-red" id="max-num">4个</span>数字，</p>
+                        <p class="line2">你真是个小天才！</p>
+                    </div>
+
+                    <button class="btn btn-bottom long correct" onclick="MemoryGame.nextLevel()"></button>
                 </div>
             </div>
 
             <!-- P6: 错误反馈弹窗（有复活机会） -->
-            <div id="popup-retry" class="popup">
-                <div class="popup-mask"></div>
-                <div class="popup-card">
-                    <div class="mascot-medium">🐑</div>
-                    <h3 class="popup-title">啊哦，失误了</h3>
-                    <p class="popup-desc">
-                        刚才的数字是：<span class="correct-answer" id="retry-correct-answer"></span>
-                    </p>
-                    <p class="popup-hint">还有一次机会，让我们再试一次</p>
-                    <button class="btn btn-primary" onclick="MemoryGame.retryLevel()">
-                        再来一次
-                    </button>
+            <div id="popup-retry" class="page">
+                <img class="page-logo left1 selected failed" src="../images/game2/memory_logo.png" />
+                <img class="page-mask-popup" src="../images/game2/burble_1.png" />
+                <div class="page-content">
+                    <div class="page-texts retry">
+                        <p class="line2">啊哦，失误了 🤯</p>
+                        <p class="line2">我刚才展示的数字是：</p>
+                        <p class="line2"><span class="rule-text-red" id="retry-correct-answer"></span></p>
+                        <p class="line2">让我们再试一次</p>
+                        <p class="line2">注意这次的数字和刚才的</p>
+                        <p class="line2">不一样哦</p>
+                    </div>
+
+                    <button class="btn btn-bottom long retry" onclick="MemoryGame.retryLevel()"></button>
+                </div>
+
+            </div>
+
+            <div id="popup-goto-backward" class="page">
+                <img class="page-logo left1 selected failed" src="../images/game2/memory_logo.png" />
+                <img class="page-mask-popup" src="../images/game2/burble_1.png" />
+                <div class="page-content">
+                    <div class="page-texts retry">
+                        <p class="line2">啊哦，失误了 🤯</p>
+                        <p class="line2">我刚才展示的数字是：</p>
+                        <p class="line2"><span class="rule-text-red" id="retry-correct-answer-goto-back"></span></p>
+                        <p class="line2">别灰心，让我们来试试</p>
+                        <p class="line1">另一轮挑战，</p>
+                        <p class="line2">一起先来看看规则吧</p>
+                    </div>
+
+                    <button class="btn btn-bottom long gotoBackard" onclick="MemoryGame.nextPage()"></button>
+                </div>
+
+            </div>
+
+
+            <div id="page-backward-rule1" class="page">
+                <img class="full-bg" src="../images/game2/rule_bg.png" />
+                <img class="page-logo left" src="../images/game2/memory_logo.png" />
+                <img class="page-rule-mask" src="../images/game2/burble_2.png" />
+                <div class="page-content">
+                    <div class="page-texts rule1">
+                        <p class="line1">接下来，</p>
+                        <p class="line2">
+                            我们将进入<span class="rule-text-red">第二轮</span>挑战，
+                        </p>
+                        <p class="line1">本轮共有<span class="rule-text-red">13</span>关。</p>
+                        <p class="line2">和之前一样</p>
+                        <p class="line1">
+                            每关我会展示<span class="rule-text-red">一串数字</span>。
+                        </p>
+                        <p class="line2">但是你需要将数字按照与展</p>
+                        <p class="line2">示时<span class="rule-text-red">相反的顺序</span>输入。</p>
+                    </div>
+                    <button class="btn btn-bottom long rule1" onclick="MemoryGame.nextPage()"></button>
                 </div>
             </div>
 
+            <div id="page-backward-rule2" class="page">
+                <img class="full-bg" src="../images/game2/rule_bg.png" />
+                <img class="page-logo left" src="../images/game2/memory_logo.png" />
+                <img class="page-rule-mask" src="../images/game2/burble_2.png" />
+                <div class="page-content">
+                    <div class="page-texts rule1">
+                        <p class="line1">比如</p>
+                        <p class="line1">如果我要展示的数字是：</p>
+                        <p class="line1">1、2、3</p>
+                        <p class="line1">你需要输入的数字是</p>
+                        <p class="line1">
+                            <span class="rule-text-red">3、2、1</span>
+                        </p>
+                    </div>
+                    <button class="btn btn-bottom long rule1" onclick="MemoryGame.nextPage()"></button>
+                </div>
+            </div>
+
+            <div id="page-backward-rule3" class="page">
+                <img class="full-bg" src="../images/game2/rule_bg.png" />
+                <img class="page-logo left" src="../images/game2/memory_logo.png" />
+                <img class="page-rule-mask" src="../images/game2/burble_2.png" />
+                <div class="page-content">
+                    <div class="page-texts rule1">
+                        <p class="line1">请注意</p>
+                        <p class="line1">每一关的数字只<span class="rule-text-red">展示一次</span></p>
+                        <p class="line3">如果挑战失败</p>
+                        <p class="line4">你将有<span class="rule-text-red">一次</span>复活机会来完成当前关卡。</p>
+                        <p class="line3">如果复活机会用完还<span class="rule-text-red">未通过</span>当前关卡，</p>
+                        <p class="line4">你将<span class="rule-text-red">直接结束</span>本次练习。</p>
+                    </div>
+                    <button class="btn btn-bottom long rule1" onclick="MemoryGame.nextPage()"></button>
+                </div>
+            </div>
             <!-- P7: 倒序规则说明 -->
             <div id="page-backward-rules" class="page">
                 <div class="page-content">

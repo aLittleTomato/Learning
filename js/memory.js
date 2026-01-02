@@ -24,7 +24,7 @@ var MemoryGame = (function () {
     // 配置
     var config = {
         startLevel: 1, // 起始关卡（3位数）
-        maxLevel: 13, // 最高关卡（15位数）
+        maxLevel: 3, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 1, // 准备倒计时（秒）
@@ -77,6 +77,10 @@ var MemoryGame = (function () {
             "page-ready",
             "page-display",
             "page-input",
+            "page-backward-rule1",
+            "page-backward-rule2",
+            "page-backward-rule3",
+            "page-ready",
         ];
 
         var currentPage = getCurrentPage();
@@ -243,7 +247,7 @@ var MemoryGame = (function () {
                 numberDisplay.textContent = countdown;
             } else {
                 clearInterval(countdownInterval);
-                // 开始显示数字
+
                 displayNumbers();
             }
         }, 1500);
@@ -305,8 +309,11 @@ var MemoryGame = (function () {
         }
 
         // 页面切换
-        displayPage.classList.remove("active");
-        inputPage.classList.add("active");
+
+        Animation.gameToResultTransition(displayPage, inputPage, function () {
+            displayPage.classList.remove("active");
+            inputPage.classList.add("active");
+        });
     }
 
     /**
@@ -425,20 +432,35 @@ var MemoryGame = (function () {
             state.bestBackwardLevel = state.level;
         }
 
-        // 更新弹窗内容
-        var nextLevel = state.level + 1;
-        var nextDigitCount = nextLevel + 2;
-        var correctDesc = document.getElementById("correct-desc");
-        if (correctDesc) {
-            correctDesc.textContent =
-                "接下来是 " + nextDigitCount + " 位数字挑战";
+
+        var exLastPart = document.getElementById("ex-Last-Text");
+        var lastPart = document.getElementById("Last-Text");
+
+        exLastPart.style.display = 'none'
+        lastPart.style.display = 'none'
+        // 已经是最后一关
+        if (state.level >= config.maxLevel) {
+            var nextLevel = state.level + 1;
+            var nextDigitCount = nextLevel + 2;
+            var correctDesc = document.getElementById("max-num");
+            if (correctDesc) {
+                correctDesc.textContent =
+                    (config.maxLevel + 2) + "个";
+            }
+            lastPart.style.display = 'block'
+
+        }
+        else {
+            var nextLevel = state.level + 1;
+            var nextDigitCount = nextLevel + 2;
+            var correctDesc = document.getElementById("correct-desc");
+            if (correctDesc) {
+                correctDesc.textContent =
+                    nextDigitCount + "个";
+            }
+            exLastPart.style.display = 'block'
         }
 
-        // 显示/隐藏刷新纪录标签
-        var recordBadge = document.getElementById("record-badge");
-        if (recordBadge) {
-            recordBadge.style.display = isNewRecord ? "inline-block" : "none";
-        }
 
         // 显示弹窗
         var inputPage = document.getElementById("page-input");
@@ -453,8 +475,8 @@ var MemoryGame = (function () {
      */
     function nextLevel() {
         // 关闭弹窗
-        var popup = document.getElementById("popup-correct");
-        popup.classList.remove("active");
+        // var popup = document.getElementById("popup-correct");
+        // popup.classList.remove("active");
 
         // 检查是否达到最高关卡
         if (state.level >= config.maxLevel) {
@@ -472,13 +494,25 @@ var MemoryGame = (function () {
         // 进入下一关
         state.level++;
         state.retryUsed = false; // 重置复活机会
-
-        // 切换到展示页面
-        var displayPage = document.getElementById("page-display");
-        displayPage.classList.add("active");
-
-        // 开始新关卡
         startLevel();
+
+        var currentPage = getCurrentPage();
+
+        var nextPage = document.getElementById("page-display");
+        if (!nextPage) {
+            console.error("Next page element not found:", nextPageId);
+            return;
+        }
+
+        // 页面切换动画
+        Animation.pageTransition(currentPage, nextPage, function () {
+            // 更新当前页面
+            if (currentPage) {
+                currentPage.classList.remove("active");
+            }
+
+            nextPage.classList.add("active");
+        });
     }
 
     /**
@@ -493,7 +527,7 @@ var MemoryGame = (function () {
             // 无复活机会，结束当前阶段
             if (state.phase === "forward") {
                 // 进入倒序阶段
-                showBackwardRules();
+                showFailed();
             } else {
                 // 游戏结束
                 showResult();
@@ -559,6 +593,21 @@ var MemoryGame = (function () {
      * 显示倒序规则页面
      */
     function showBackwardRules() {
+        // 切换页面
+        var currentPage = getCurrentPage();
+        var rulesPage = document.getElementById("popup-goto-backward");
+
+        if (currentPage) {
+            Animation.pageTransition(currentPage, rulesPage, function () {
+                currentPage.classList.remove("active");
+                rulesPage.classList.add("active");
+            });
+        } else {
+            rulesPage.classList.add("active");
+        }
+    }
+
+    function showFailed() {
         // 更新正序成绩显示
         var forwardScore = document.getElementById("forward-score");
         if (forwardScore) {
@@ -566,9 +615,23 @@ var MemoryGame = (function () {
             forwardScore.textContent = digitCount;
         }
 
+        var correctAnswer;
+        if (state.phase === "forward") {
+            correctAnswer = state.currentNumbers.join("");
+        } else {
+            correctAnswer = state.currentNumbers.slice().reverse().join("");
+        }
+
+        var retryCorrectAnswer = document.getElementById(
+            "retry-correct-answer-goto-back"
+        );
+        if (retryCorrectAnswer) {
+            retryCorrectAnswer.textContent = correctAnswer;
+        }
+
         // 切换页面
-        var currentPage = document.querySelector(".page.active");
-        var rulesPage = document.getElementById("page-backward-rules");
+        var currentPage = getCurrentPage();
+        var rulesPage = document.getElementById("popup-goto-backward");
 
         if (currentPage) {
             Animation.pageTransition(currentPage, rulesPage, function () {
@@ -649,7 +712,7 @@ var MemoryGame = (function () {
         submitGameData();
 
         // 切换页面
-        var currentPage = document.querySelector(".page.active");
+        var currentPage = getCurrentPage();
         var resultPage = document.getElementById("page-result");
 
         if (currentPage) {
@@ -808,7 +871,7 @@ var MemoryGame = (function () {
         state.backwardMaxLevel = 0;
 
         // 切换到正序规则页面
-        var currentPage = document.querySelector(".page.active");
+        var currentPage = getCurrentPage();
         var rulesPage = document.getElementById("page-forward-rules");
 
         if (currentPage) {

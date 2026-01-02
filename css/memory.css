@@ -37,6 +37,21 @@
     background: #ffffff;
 }
 
+#popup-retry {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+}
+
+#popup-goto-backward {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+}
+
+#popup-correct {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+}
+
 .page-welcome-mask {
     position: absolute;
     width: 100%;
@@ -129,9 +144,19 @@
 }
 
 .page-texts.display {
-    top: 500px;
-    animation: fadeOut 1s forwards;
-    animation-delay: 2s;
+    top: 540px;
+    animation: fadeOut 0.6s forwards;
+    animation-delay: 1s;
+}
+
+.page-texts.retry {
+    top: 730px;
+    font-size: 55px;
+}
+
+.page-texts.retry1 {
+    top: 800px;
+    font-size: 55px;
 }
 
 .line1 {
@@ -195,6 +220,16 @@
     object-fit: fill;
 }
 
+.page-mask-popup {
+    position: absolute;
+    width: 100%;
+    height: 888px;
+    left: 0px;
+    bottom: 0px;
+    object-fit: fill;
+}
+
+
 .btn-bottom.long.rule1 {
     background-image: url("../images/game2/next_step.png");
     bottom: 40px;
@@ -202,6 +237,21 @@
 
 .btn-bottom.long.ready {
     background-image: url("../images/game2/start_game.png");
+    bottom: 40px;
+}
+
+.btn-bottom.long.retry {
+    background-image: url("../images/game2/retry.png");
+    bottom: 40px;
+}
+
+.btn-bottom.long.gotoBackard {
+    background-image: url("../images/game2/goto_backward.png");
+    bottom: 40px;
+}
+
+.btn-bottom.long.correct {
+    background-image: url("../images/game2/next_step.png");
     bottom: 40px;
 }
 
@@ -259,20 +309,78 @@
 
 
 
-/* 右边中间一点 */
 .page-logo.left1 {
     width: 775px;
     height: 856px;
     left: -330px;
     top: 80px;
-    /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
-    /* x轴居中，y轴底部 */
     animation: leftAppear1 1s ease-out forwards,
-        /* 出现动画，执行一次 */
         leftBreath1 4s ease-in-out 1s infinite;
-    /* 呼吸动画，1秒后开始循环 */
 }
+
+/* 右边中间一点 */
+.page-logo.left1.selected {
+    width: 831px;
+    height: 918px;
+    left: -320px;
+    top: 0px;
+}
+
+.page-logo.left1.selected.success {
+    animation:
+        leftBounce 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        leftBreath1 4s ease-in-out 600ms infinite;
+}
+
+
+.page-logo.left1.selected.failed {
+    animation:
+        leftShake 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        leftBreath1 4s ease-in-out 600ms infinite;
+}
+
+
+@keyframes leftBounce {
+    0% {
+        transform: translateY(0) scale(1) rotate(25deg);
+    }
+
+    30% {
+        transform: translateY(-18px) scale(1.05) rotate(25deg);
+    }
+
+    60% {
+        transform: translateY(0) scale(0.95) rotate(25deg);
+    }
+
+    100% {
+        transform: translateY(0) scale(1) rotate(25deg);
+    }
+}
+
+@keyframes leftShake {
+    0% {
+        transform: rotate(25deg);
+    }
+
+    25% {
+        transform: rotate(22deg);
+    }
+
+    50% {
+        transform: rotate(28deg);
+    }
+
+    75% {
+        transform: rotate(23deg);
+    }
+
+    100% {
+        transform: rotate(25deg);
+    }
+}
+
 
 @keyframes leftAppear1 {
     from {
@@ -410,7 +518,9 @@
 }
 
 .number-display.ready {
-    font-size: 150px;
+    font-size: 200px;
+    animation: fadeOut 0.6s forwards;
+    animation-delay: 1s;
 }
 
 /* 输入容器 */
@@ -429,6 +539,14 @@
     margin-bottom: 20px;
 }
 
+.input-line {
+    position: absolute;
+    width: 621px;
+    height: 7px;
+    top: 391px;
+    left: 65px;
+}
+
 .input-display {
     min-height: 90px;
     padding: 16px;
@@ -442,7 +560,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 300px;
+    top: 290px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -453,7 +571,7 @@
     width: 242px;
     height: 242px;
     left: 7px;
-    top: 0px;
+    top: 70px;
 }
 
 .test-tip-bg {
@@ -461,7 +579,7 @@
     width: 522px;
     height: 189px;
     left: 212px;
-    top: 25px;
+    top: 95px;
 }
 
 
@@ -471,8 +589,8 @@
     flex-direction: column;
     width: 620px;
     height: 838px;
-    left: 65px;
-    bottom: 50px;
+    left: 55px;
+    bottom: 150px;
     position: absolute;
 }
 
