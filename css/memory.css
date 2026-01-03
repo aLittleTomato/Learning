@@ -229,6 +229,15 @@
     object-fit: fill;
 }
 
+.page-mask-result {
+    position: absolute;
+    width: 100%;
+    height: 888px;
+    left: 0px;
+    bottom: 200px;
+    object-fit: fill;
+}
+
 
 .btn-bottom.long.rule1 {
     background-image: url("../images/game2/next_step.png");
@@ -324,6 +333,13 @@
     width: 831px;
     height: 918px;
     left: -320px;
+    top: 0px;
+}
+
+.page-logo.left1.result {
+    width: 497px;
+    height: 548px;
+    left: 220px;
     top: 0px;
 }
 
@@ -724,69 +740,6 @@
     }
 }
 
-/* 结算卡片 */
-.result-card {
-    text-align: center;
-    padding: 40px 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    width: 100%;
-}
-
-.result-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #ff6b6b;
-    margin-bottom: 8px;
-}
-
-.result-subtitle {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 30px;
-}
-
-.result-stats {
-    margin: 30px 0;
-}
-
-.stat-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    background-color: rgba(255, 107, 107, 0.05);
-    border-radius: 12px;
-    margin-bottom: 12px;
-}
-
-.stat-item.stat-total {
-    background: linear-gradient(135deg,
-            rgba(255, 107, 107, 0.1) 0%,
-            rgba(254, 202, 87, 0.1) 100%);
-    border: 2px solid #ff6b6b;
-}
-
-.stat-label {
-    font-size: 16px;
-    color: #666;
-    font-weight: 600;
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: 700;
-    color: #ff6b6b;
-}
-
-.result-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 30px;
-}
 
 /* 详情页面 */
 .details-header {
@@ -812,29 +765,37 @@
 .details-table {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
+
+    border-radius: 30px;
     overflow: hidden;
+
+    border: 6px solid #FFC4C6;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.details-table thead {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
-}
 
 .details-table th {
     padding: 12px 8px;
-    font-size: 14px;
+    font-size: 35px;
     font-weight: 600;
-    color: #fff;
+    color: #CC2224;
     text-align: center;
 }
 
 .details-table td {
     padding: 12px 8px;
-    font-size: 14px;
-    color: #333;
+    font-size: 35px;
+    color: #FF5C5F;
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.details-table td {
+    border-right: 4px solid #FFC4C6;
+}
+
+.details-table td:last-child {
+    border-right: none;
 }
 
 .details-table tbody tr:last-child td {
@@ -848,6 +809,97 @@
 .result-correct {
     color: #2ecc71;
     font-weight: 700;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -70px;
+    width: 350px;
+    height: 228px;
+    background-size: contain;
+}
+
+/* 第一行元素不要被挤压 */
+.result-card> :nth-child(-n + 2) {
+    margin-top: 0;
+}
+
+/* 结果界面 */
+.result-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 两列 */
+    grid-template-rows: repeat(2, 1fr);
+    /* 两行 */
+    justify-items: center;
+    /* 水平居中子元素 */
+    align-items: center;
+    /* 垂直居中子元素 */
+
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    top: 600px;
+}
+
+.stat-label {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.stat-value {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.stat-item.time {
+    background-image: url("../images/game1/stat_time.png");
+    color: #5ca1ff;
+}
+
+.stat-item.speed {
+    background-image: url("../images/game1/stat_speed.png");
+    color: #ea36ea;
+}
+
+.stat-item.focus {
+    background-image: url("../images/game1/stat_focus.png");
+    color: #e2592c;
+}
+
+.stat-item.accuracy {
+    background-image: url("../images/game1/stat_accuracy.png");
+    color: #2ece2e;
+}
+
+#stat-time {
+    color: #326ebf;
+}
+
+#stat-forward {
+    color: #009738;
+}
+
+#stat-backward {
+    color: #bf329c;
+}
+
+#stat-total {
+    color: #d24d00;
+}
+
+.btn-bottom.again {
+    background-image: url("../images/game2/play_again.png");
+    bottom: 40px;
+}
+
+.btn-bottom.detail {
+    background-image: url("../images/game2/view_details.png");
+    bottom: 190px;
 }
 
 .result-wrong {

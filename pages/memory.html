@@ -211,7 +211,7 @@
                         <p class="line2">一起先来看看规则吧</p>
                     </div>
 
-                    <button class="btn btn-bottom long gotoBackard" onclick="MemoryGame.nextPage()"></button>
+                    <button class="btn btn-bottom long gotoBackard" onclick="MemoryGame.showBackwardRules()"></button>
                 </div>
 
             </div>
@@ -265,10 +265,9 @@
                     <div class="page-texts rule1">
                         <p class="line1">请注意</p>
                         <p class="line1">每一关的数字只<span class="rule-text-red">展示一次</span></p>
-                        <p class="line3">如果挑战失败</p>
-                        <p class="line4">你将有<span class="rule-text-red">一次</span>复活机会来完成当前关卡。</p>
-                        <p class="line3">如果复活机会用完还<span class="rule-text-red">未通过</span>当前关卡，</p>
-                        <p class="line4">你将<span class="rule-text-red">直接结束</span>本次练习。</p>
+                        <p class="line3">如果挑战失败<br />你将有<span class="rule-text-red">一次</span>复活机会来完成当前关卡。</p>
+                        <p class="line3">如果复活机会用完还<span class="rule-text-red">未通过</span>当前关卡，<br />你将<span
+                                class="rule-text-red">直接结束</span>本次练习。</p>
                     </div>
                     <button class="btn btn-bottom long rule1" onclick="MemoryGame.nextPage()"></button>
                 </div>
@@ -313,49 +312,59 @@
                 </div>
             </div>
 
-            <!-- P8: 结算页面 -->
-            <div id="page-result" class="page">
+            <div id="page-ready-backward" class="page">
+                <img class="full-bg" src="../images/game2/rule_bg.png" />
+                <img class="page-logo left1" src="../images/game2/memory_logo.png" />
+                <img class="page-mask-ready" src="../images/game2/burble_3.png" />
                 <div class="page-content">
+                    <div class="page-texts ready">
+                        <p class="line2">准备好的话，<br />就让我们开始吧！</p>
+                    </div>
+                    <button class="btn btn-bottom long ready" onclick="MemoryGame.startBackwardPhase()"></button>
+                </div>
+            </div>
+
+
+            <div id="page-result" class="page">
+                <img class="page-logo left1 result" src="../images/game2/attention_logo.png" />
+                <img class="page-mask-result" src="../images/game2/burble_1.png" />
+                <div class="page-content">
+                    <div class="page-texts result">
+                        <p class="line2">挑战结束 🎉</p>
+                        <p class="line2">让我们看看作答结果吧</p>
+                    </div>
+
                     <div class="result-card">
-                        <div class="mascot-large">🐑</div>
-                        <h2 class="result-title" id="result-title">
-                            记忆大师
-                        </h2>
-                        <p class="result-subtitle">挑战完成！</p>
-
-                        <div class="result-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">正序成绩</div>
-                                <div class="stat-value" id="stat-forward">
-                                    0 位
-                                </div>
+                        <div class="stat-item time">
+                            <div class="stat-value" id="stat-time">
+                                00:00
                             </div>
-                            <div class="stat-item">
-                                <div class="stat-label">倒序成绩</div>
-                                <div class="stat-value" id="stat-backward">
-                                    0 位
-                                </div>
-                            </div>
-                            <div class="stat-item stat-total">
-                                <div class="stat-label">综合得分</div>
-                                <div class="stat-value" id="stat-total">
-                                    0 分
-                                </div>
-                            </div>
+                            <div class="stat-label">作答时间</div>
                         </div>
-
-                        <div class="result-actions">
-                            <button class="btn btn-secondary" onclick="MemoryGame.viewDetails()">
-                                查看作答详情
-                            </button>
-                            <button class="btn btn-primary" onclick="MemoryGame.restart()">
-                                再来一次
-                            </button>
-                            <button class="btn btn-secondary" onclick="MemoryGame.backToHome()">
-                                返回主页
-                            </button>
+                        <div class="stat-item accuracy">
+                            <div class="stat-value" id="stat-forward">
+                                0%
+                            </div>
+                            <div class="stat-label">正背完成数量</div>
+                        </div>
+                        <div class="stat-item speed">
+                            <div class="stat-value" id="stat-backward">
+                                0
+                            </div>
+                            <div class="stat-label">倒背完成数量</div>
+                        </div>
+                        <div class="stat-item focus">
+                            <div class="stat-value" id="stat-total">
+                                0
+                            </div>
+                            <div class="stat-label">总分</div>
                         </div>
                     </div>
+                    <button class="btn btn-bottom long detail" onclick="MemoryGame.viewDetails()">
+                    </button>
+                    <button class="btn btn-bottom long again" onclick="MemoryGame.restart()">
+                    </button>
+
                 </div>
             </div>
 

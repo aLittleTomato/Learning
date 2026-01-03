@@ -24,7 +24,7 @@ var MemoryGame = (function () {
     // 配置
     var config = {
         startLevel: 1, // 起始关卡（3位数）
-        maxLevel: 3, // 最高关卡（15位数）
+        maxLevel: 1, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 1, // 准备倒计时（秒）
@@ -80,7 +80,7 @@ var MemoryGame = (function () {
             "page-backward-rule1",
             "page-backward-rule2",
             "page-backward-rule3",
-            "page-ready",
+            "page-ready-backward",
         ];
 
         var currentPage = getCurrentPage();
@@ -202,31 +202,31 @@ var MemoryGame = (function () {
      * 更新游戏信息显示
      */
     function updateGameInfo() {
-        var digitCount = state.level + 2;
-        var phaseLabel = state.phase === "forward" ? "正序记忆" : "倒序记忆";
-        var levelLabel = "第 " + state.level + " 关 · " + digitCount + " 位数";
+        // var digitCount = state.level + 2;
+        // var phaseLabel = state.phase === "forward" ? "正序记忆" : "倒序记忆";
+        // var levelLabel = "第 " + state.level + " 关 · " + digitCount + " 位数";
 
-        // 更新展示页面的信息
-        var phaseLabelEl = document.getElementById("phase-label");
-        var levelLabelEl = document.getElementById("level-label");
-        if (phaseLabelEl) phaseLabelEl.textContent = phaseLabel;
-        if (levelLabelEl) levelLabelEl.textContent = levelLabel;
+        // // 更新展示页面的信息
+        // var phaseLabelEl = document.getElementById("phase-label");
+        // var levelLabelEl = document.getElementById("level-label");
+        // if (phaseLabelEl) phaseLabelEl.textContent = phaseLabel;
+        // if (levelLabelEl) levelLabelEl.textContent = levelLabel;
 
-        // 更新输入页面的信息
-        var phaseLabelInputEl = document.getElementById("phase-label-input");
-        var levelLabelInputEl = document.getElementById("level-label-input");
-        if (phaseLabelInputEl) phaseLabelInputEl.textContent = phaseLabel;
-        if (levelLabelInputEl) levelLabelInputEl.textContent = levelLabel;
+        // // 更新输入页面的信息
+        // var phaseLabelInputEl = document.getElementById("phase-label-input");
+        // var levelLabelInputEl = document.getElementById("level-label-input");
+        // if (phaseLabelInputEl) phaseLabelInputEl.textContent = phaseLabel;
+        // if (levelLabelInputEl) levelLabelInputEl.textContent = levelLabel;
 
-        // 更新输入提示
-        var inputPrompt = document.getElementById("input-prompt");
-        if (inputPrompt) {
-            if (state.phase === "forward") {
-                inputPrompt.textContent = "请输入刚才看到的数字";
-            } else {
-                inputPrompt.textContent = "请倒序输入刚才看到的数字";
-            }
-        }
+        // // 更新输入提示
+        // var inputPrompt = document.getElementById("input-prompt");
+        // if (inputPrompt) {
+        //     if (state.phase === "forward") {
+        //         inputPrompt.textContent = "请输入刚才看到的数字";
+        //     } else {
+        //         inputPrompt.textContent = "请倒序输入刚才看到的数字";
+        //     }
+        // }
     }
 
     /**
@@ -342,11 +342,12 @@ var MemoryGame = (function () {
      * 清空输入
      */
     function clearInput() {
-        state.userInput = "";
+        let str = state.userInput || "";
+        state.userInput = str.slice(0, -1);
 
         var inputDisplay = document.getElementById("input-display");
         if (inputDisplay) {
-            inputDisplay.textContent = "";
+            inputDisplay.textContent = state.userInput;
         }
     }
 
@@ -595,7 +596,7 @@ var MemoryGame = (function () {
     function showBackwardRules() {
         // 切换页面
         var currentPage = getCurrentPage();
-        var rulesPage = document.getElementById("popup-goto-backward");
+        var rulesPage = document.getElementById("page-backward-rule1");
 
         if (currentPage) {
             Animation.pageTransition(currentPage, rulesPage, function () {
@@ -655,8 +656,14 @@ var MemoryGame = (function () {
         state.retryUsed = false;
         state.backwardMaxLevel = 0;
 
+        var numberDisplay = document.getElementById("number-display");
+        if (!numberDisplay) return;
+
+        numberDisplay.className = "number-display ready";
+        numberDisplay.textContent = "准备";
+
         // 切换到游戏页面
-        var rulesPage = document.getElementById("page-backward-rules");
+        var rulesPage = getCurrentPage();
         var displayPage = document.getElementById("page-display");
 
         Animation.pageTransition(rulesPage, displayPage, function () {
@@ -935,6 +942,7 @@ var MemoryGame = (function () {
         backToHome: backToHome,
         state: state,
         nextPage: nextPage,
+        showBackwardRules: showBackwardRules,
     };
 })();
 
