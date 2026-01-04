@@ -19,12 +19,13 @@ var MemoryGame = (function () {
         bestForwardLevel: 0, // 历史最佳正序关卡
         bestBackwardLevel: 0, // 历史最佳倒序关卡
         currentDetailsTab: "forward", // 当前详情页签
+        timeCost: 0,
     };
 
     // 配置
     var config = {
         startLevel: 1, // 起始关卡（3位数）
-        maxLevel: 1, // 最高关卡（15位数）
+        maxLevel: 4, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 1, // 准备倒计时（秒）
@@ -150,6 +151,11 @@ var MemoryGame = (function () {
             return;
         }
 
+        var numberDisplay = document.getElementById("number-display");
+        if (!numberDisplay) return;
+
+        numberDisplay.textContent = "准备";
+
         var nextPage = document.getElementById(nextPageId);
         if (!nextPage) {
             console.error("Next page element not found:", nextPageId);
@@ -157,7 +163,6 @@ var MemoryGame = (function () {
         }
 
         Animation.pageTransition(currentPage, nextPage, function () {
-
             if (currentPage) {
                 currentPage.classList.remove("active");
             }
@@ -205,19 +210,16 @@ var MemoryGame = (function () {
         // var digitCount = state.level + 2;
         // var phaseLabel = state.phase === "forward" ? "正序记忆" : "倒序记忆";
         // var levelLabel = "第 " + state.level + " 关 · " + digitCount + " 位数";
-
         // // 更新展示页面的信息
         // var phaseLabelEl = document.getElementById("phase-label");
         // var levelLabelEl = document.getElementById("level-label");
         // if (phaseLabelEl) phaseLabelEl.textContent = phaseLabel;
         // if (levelLabelEl) levelLabelEl.textContent = levelLabel;
-
         // // 更新输入页面的信息
         // var phaseLabelInputEl = document.getElementById("phase-label-input");
         // var levelLabelInputEl = document.getElementById("level-label-input");
         // if (phaseLabelInputEl) phaseLabelInputEl.textContent = phaseLabel;
         // if (levelLabelInputEl) levelLabelInputEl.textContent = levelLabel;
-
         // // 更新输入提示
         // var inputPrompt = document.getElementById("input-prompt");
         // if (inputPrompt) {
@@ -260,7 +262,6 @@ var MemoryGame = (function () {
         var numberDisplay = document.getElementById("number-display");
 
         if (!numberDisplay) return;
-
 
         var currentIndex = 0;
 
@@ -307,6 +308,7 @@ var MemoryGame = (function () {
         if (inputDisplay) {
             inputDisplay.textContent = "";
         }
+        state.inputStartTime = Date.now();
 
         // 页面切换
 
@@ -365,6 +367,12 @@ var MemoryGame = (function () {
 
         // 判断答案
         var isCorrect = checkAnswer();
+        // 计算耗时（秒）
+        var timeCost = 0;
+        if (state.inputStartTime > 0) {
+            timeCost = Math.round((Date.now() - state.inputStartTime) / 1000);
+        }
+        state.timeCost += timeCost;
 
         // 记录历史
         var record = {
@@ -373,6 +381,7 @@ var MemoryGame = (function () {
             question: state.currentNumbers.join(""),
             answer: state.userInput,
             correct: isCorrect,
+            timeCost: timeCost,
         };
         state.history.push(record);
 
@@ -433,35 +442,29 @@ var MemoryGame = (function () {
             state.bestBackwardLevel = state.level;
         }
 
-
         var exLastPart = document.getElementById("ex-Last-Text");
         var lastPart = document.getElementById("Last-Text");
 
-        exLastPart.style.display = 'none'
-        lastPart.style.display = 'none'
+        exLastPart.style.display = "none";
+        lastPart.style.display = "none";
         // 已经是最后一关
         if (state.level >= config.maxLevel) {
             var nextLevel = state.level + 1;
             var nextDigitCount = nextLevel + 2;
             var correctDesc = document.getElementById("max-num");
             if (correctDesc) {
-                correctDesc.textContent =
-                    (config.maxLevel + 2) + "个";
+                correctDesc.textContent = config.maxLevel + 2 + "个";
             }
-            lastPart.style.display = 'block'
-
-        }
-        else {
+            lastPart.style.display = "block";
+        } else {
             var nextLevel = state.level + 1;
             var nextDigitCount = nextLevel + 2;
             var correctDesc = document.getElementById("correct-desc");
             if (correctDesc) {
-                correctDesc.textContent =
-                    nextDigitCount + "个";
+                correctDesc.textContent = nextDigitCount + "个";
             }
-            exLastPart.style.display = 'block'
+            exLastPart.style.display = "block";
         }
-
 
         // 显示弹窗
         var inputPage = document.getElementById("page-input");
@@ -542,11 +545,11 @@ var MemoryGame = (function () {
     function showRetryPopup() {
         // 更新弹窗内容
         var correctAnswer;
-        if (state.phase === "forward") {
-            correctAnswer = state.currentNumbers.join("");
-        } else {
-            correctAnswer = state.currentNumbers.slice().reverse().join("");
-        }
+        // if (state.phase === "forward") {
+        correctAnswer = state.currentNumbers.join("");
+        // } else {
+        //     correctAnswer = state.currentNumbers.slice().reverse().join("");
+        // }
 
         var retryCorrectAnswer = document.getElementById(
             "retry-correct-answer"
@@ -617,11 +620,11 @@ var MemoryGame = (function () {
         }
 
         var correctAnswer;
-        if (state.phase === "forward") {
-            correctAnswer = state.currentNumbers.join("");
-        } else {
-            correctAnswer = state.currentNumbers.slice().reverse().join("");
-        }
+        // if (state.phase === "forward") {
+        correctAnswer = state.currentNumbers.join("");
+        // } else {
+        //     correctAnswer = state.currentNumbers.slice().reverse().join("");
+        // }
 
         var retryCorrectAnswer = document.getElementById(
             "retry-correct-answer-goto-back"
@@ -634,14 +637,13 @@ var MemoryGame = (function () {
         var currentPage = getCurrentPage();
         var rulesPage = document.getElementById("popup-goto-backward");
 
-        if (currentPage) {
-            Animation.pageTransition(currentPage, rulesPage, function () {
-                currentPage.classList.remove("active");
-                rulesPage.classList.add("active");
-            });
-        } else {
-            rulesPage.classList.add("active");
-        }
+        currentPage.classList.remove("active");
+        rulesPage.classList.add("active");
+        // if (currentPage) {
+        //     Animation.pageTransition(currentPage, rulesPage, function () {});
+        // } else {
+        //     rulesPage.classList.add("active");
+        // }
     }
 
     /**
@@ -687,10 +689,12 @@ var MemoryGame = (function () {
         var totalScore = forwardDigits + backwardDigits;
 
         // 更新显示
+        var statTime = document.getElementById("stat-time");
         var statForward = document.getElementById("stat-forward");
         var statBackward = document.getElementById("stat-backward");
         var statTotal = document.getElementById("stat-total");
 
+        if (statTime) statTime.textContent = Utils.formatTime(state.timeCost);
         if (statForward) statForward.textContent = forwardDigits + " 位";
         if (statBackward) statBackward.textContent = backwardDigits + " 位";
         if (statTotal) statTotal.textContent = totalScore + " 分";
@@ -809,28 +813,36 @@ var MemoryGame = (function () {
             var record = filteredHistory[j];
             var tr = document.createElement("tr");
 
-            // 序号
+            // 位数
             var tdIndex = document.createElement("td");
-            tdIndex.textContent = j + 1;
+            tdIndex.textContent = record.level + 2;
+            tdIndex.className = "detail-number";
             tr.appendChild(tdIndex);
 
-            // 题目
+            // 数字序列
             var tdQuestion = document.createElement("td");
             tdQuestion.textContent = record.question;
             tr.appendChild(tdQuestion);
 
             // 作答
-            var tdAnswer = document.createElement("td");
-            tdAnswer.textContent = record.answer;
-            tr.appendChild(tdAnswer);
+            // var tdAnswer = document.createElement("td");
+            // tdAnswer.textContent = record.answer;
+            // tr.appendChild(tdAnswer);
 
             // 结果
-            var tdResult = document.createElement("td");
-            tdResult.textContent = record.correct ? "正确" : "错误";
-            tdResult.className = record.correct
-                ? "result-correct"
-                : "result-wrong";
-            tr.appendChild(tdResult);
+            // var tdResult = document.createElement("td");
+
+            // 耗时
+            var tdTime = document.createElement("td");
+            tdTime.textContent = record.timeCost;
+            tdTime.className = "time-cost";
+            tr.appendChild(tdTime);
+
+            // tdResult.textContent = record.correct ? "正确" : "错误";
+            // tdResult.className = record.correct
+            //     ? "result-correct"
+            //     : "result-wrong";
+            // tr.appendChild(tdResult);
 
             tbody.appendChild(tr);
 
@@ -856,11 +868,9 @@ var MemoryGame = (function () {
     function backToResult() {
         var detailsPage = document.getElementById("page-details");
         var resultPage = document.getElementById("page-result");
-
-        Animation.pageTransition(detailsPage, resultPage, function () {
-            detailsPage.classList.remove("active");
-            resultPage.classList.add("active");
-        });
+        detailsPage.classList.remove("active");
+        resultPage.classList.add("active");
+        // Animation.pageTransition(detailsPage, resultPage, function () {});
     }
 
     /**
@@ -876,10 +886,11 @@ var MemoryGame = (function () {
         state.history = [];
         state.forwardMaxLevel = 0;
         state.backwardMaxLevel = 0;
+        state.timeCost = 0;
 
         // 切换到正序规则页面
         var currentPage = getCurrentPage();
-        var rulesPage = document.getElementById("page-forward-rules");
+        var rulesPage = document.getElementById("page-ready");
 
         if (currentPage) {
             Animation.pageTransition(currentPage, rulesPage, function () {

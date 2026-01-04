@@ -29,7 +29,7 @@
 
 #page-display {
     cursor: pointer;
-    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+    background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
 #page-input {
@@ -39,17 +39,37 @@
 
 #popup-retry {
     cursor: pointer;
-    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+    background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
 #popup-goto-backward {
     cursor: pointer;
-    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+    background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
 #popup-correct {
     cursor: pointer;
-    background: linear-gradient(to bottom, #FF5C5F 0% 60%, #ffffff 60% 100%);
+    background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
+}
+
+#page-result {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
+}
+#page-details {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ff5c5f 0% 20%, #ffffff 20% 100%);
+}
+#page-content-rule1 {
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 80%,
+        #ffffff 80%,
+        #ffffff 100%
+    );
+    position: absolute;
+    inset: 0;
 }
 
 .page-welcome-mask {
@@ -77,7 +97,6 @@
 }
 
 @keyframes float {
-
     0%,
     100% {
         transform: translateY(0);
@@ -132,6 +151,9 @@
     top: 660px;
     font-size: 55px;
 }
+.page-texts.rule1.first {
+    top: 580px;
+}
 
 .page-texts.rule2 {
     top: 700px;
@@ -140,11 +162,11 @@
 
 .page-texts.ready {
     top: 950px;
-
 }
 
 .page-texts.display {
     top: 540px;
+    font-size: 55px;
     animation: fadeOut 0.6s forwards;
     animation-delay: 1s;
 }
@@ -158,6 +180,10 @@
     top: 800px;
     font-size: 55px;
 }
+.page-texts.result {
+    top: 430px;
+    font-size: 55px;
+}
 
 .line1 {
     margin-bottom: 25px;
@@ -168,7 +194,6 @@
     font-size: 40px;
     margin-bottom: 25px;
 }
-
 
 .btn-welcome {
     position: absolute;
@@ -187,11 +212,9 @@
     /* 保持透明 */
 }
 
-
 .page-texts-title {
     font-size: 90px;
 }
-
 
 .page-rule-mask {
     position: absolute;
@@ -201,7 +224,9 @@
     bottom: 0px;
     object-fit: fill;
 }
-
+.page-rule-mask.rule1 {
+    bottom: 70px;
+}
 .page-mask-ready {
     position: absolute;
     width: 100%;
@@ -234,10 +259,17 @@
     width: 100%;
     height: 888px;
     left: 0px;
-    bottom: 200px;
+    bottom: 300px;
     object-fit: fill;
 }
-
+.page-mask-details {
+    position: absolute;
+    width: 100%;
+    height: 260px;
+    left: 0px;
+    top: 150px;
+    object-fit: fill;
+}
 
 .btn-bottom.long.rule1 {
     background-image: url("../images/game2/next_step.png");
@@ -275,8 +307,7 @@
     width: 775px;
     height: 856px;
     animation: right1Appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        right1Breath 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
 }
 
 @keyframes right1Appear {
@@ -293,7 +324,6 @@
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes right1Breath {
-
     0%,
     100% {
         transform: translateY(0) rotate(-20deg);
@@ -311,12 +341,12 @@
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
     animation: leftAppear1 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        leftBreath1 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite;
 }
 
-
-
+.page-logo.left.rule1 {
+    top: 0px;
+}
 
 .page-logo.left1 {
     width: 775px;
@@ -343,19 +373,25 @@
     top: 0px;
 }
 
-.page-logo.left1.selected.success {
-    animation:
-        leftBounce 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-        leftBreath1 4s ease-in-out 600ms infinite;
+.page-logo.left2 {
+    width: 497px;
+    height: 548px;
+    left: 230px;
+    top: 0px;
+    transform-origin: center bottom;
+    animation: leftAppear2 1s ease-out forwards,
+        leftBreath2 4s ease-in-out 1s infinite;
 }
 
+.page-logo.left1.selected.success {
+    animation: leftBounce 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        leftBreath1 4s ease-in-out 600ms infinite;
+}
 
 .page-logo.left1.selected.failed {
-    animation:
-        leftShake 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+    animation: leftShake 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
         leftBreath1 4s ease-in-out 600ms infinite;
 }
-
 
 @keyframes leftBounce {
     0% {
@@ -397,7 +433,6 @@
     }
 }
 
-
 @keyframes leftAppear1 {
     from {
         opacity: 0;
@@ -412,7 +447,6 @@
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes leftBreath1 {
-
     0%,
     100% {
         transform: translateY(0) rotate(25deg);
@@ -423,6 +457,29 @@
     }
 }
 
+@keyframes leftAppear2 {
+    from {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(10deg);
+    }
+}
+
+/* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
+@keyframes leftBreath2 {
+    0%,
+    100% {
+        transform: translateY(0) rotate(10deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(10deg);
+    }
+}
 /* 规则卡片 */
 .rules-card {
     text-align: center;
@@ -530,7 +587,7 @@
 .number-display {
     font-size: 210px;
     font-weight: bold;
-    color: #FF5C5F;
+    color: #ff5c5f;
 }
 
 .number-display.ready {
@@ -569,7 +626,7 @@
     margin-bottom: 30px;
     font-size: 54px;
     font-weight: bold;
-    color: #FF5C5F;
+    color: #ff5c5f;
     text-align: center;
     letter-spacing: 8px;
     display: flex;
@@ -598,7 +655,6 @@
     top: 95px;
 }
 
-
 /* 数字键盘 */
 .keyboard {
     display: flex;
@@ -625,7 +681,7 @@
     border: none;
     background-size: cover;
     font-size: 74px;
-    color: #FF5C5F;
+    color: #ff5c5f;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -729,7 +785,6 @@
 }
 
 @keyframes bounce {
-
     0%,
     100% {
         transform: scale(1);
@@ -739,7 +794,6 @@
         transform: scale(1.1);
     }
 }
-
 
 /* 详情页面 */
 .details-header {
@@ -760,38 +814,51 @@
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    top: 450px;
+    /* border: 10px solid #ffc4c6;
+    border-radius: 80px; */
+
+    overflow: hidden; /* ⭐ 关键：裁剪 table */
 }
 
 .details-table {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.95);
 
-    border-radius: 30px;
+    border-radius: 80px;
     overflow: hidden;
 
-    border: 6px solid #FFC4C6;
+    border: 10px solid #ffc4c6;
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding-bottom: 30px;
+    padding-top: 30px;
 }
-
 
 .details-table th {
     padding: 12px 8px;
     font-size: 35px;
     font-weight: 600;
-    color: #CC2224;
+    color: #cc2224;
     text-align: center;
+}
+
+.details-table thead th {
+    background-color: rgba(255, 255, 255, 0.95); /* 和容器一致 */
+    position: relative;
+    z-index: 2; /* ⭐ 盖住竖线 */
 }
 
 .details-table td {
     padding: 12px 8px;
     font-size: 35px;
-    color: #FF5C5F;
+    color: #ff5c5f;
     text-align: center;
 }
 
 .details-table td {
-    border-right: 4px solid #FFC4C6;
+    border-right: 4px solid #ffc4c6;
 }
 
 .details-table td:last-child {
@@ -804,6 +871,16 @@
 
 .details-table tbody tr:nth-child(even) {
     background-color: rgba(255, 107, 107, 0.02);
+}
+
+.details-table {
+    border-collapse: collapse; /* ⭐ 必须 */
+    border-collapse: separate;
+    border-spacing: 0; /* 去掉单元格间距 */
+}
+
+.details-table .col-sep {
+    border-left: 4px solid #ffc4c6;
 }
 
 .result-correct {
@@ -824,7 +901,7 @@
 }
 
 /* 第一行元素不要被挤压 */
-.result-card> :nth-child(-n + 2) {
+.result-card > :nth-child(-n + 2) {
     margin-top: 0;
 }
 
@@ -901,7 +978,15 @@
     background-image: url("../images/game2/view_details.png");
     bottom: 190px;
 }
-
+.btn-detail {
+    position: absolute;
+    width: 93px;
+    height: 93px;
+    left: 50px;
+    top: 325px;
+    background-image: url("../images/game2/btn_detail.png");
+    bottom: 190px;
+}
 .result-wrong {
     color: #e74c3c;
     font-weight: 700;
@@ -910,46 +995,48 @@
 /* 页签切换样式 */
 .details-tabs {
     display: flex;
-    gap: 12px;
-    padding: 16px 20px;
-    background-color: rgba(255, 255, 255, 0.05);
+    position: absolute;
+    width: 100%;
+    left: 80px;
+    justify-content: center; /* ⭐ 关键：整体居中 */
+    position: absolute;
+    top: 300px;
 }
 
 .tab-btn {
-    flex: 1;
-    padding: 12px 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 15px;
-    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0;
+    background-image: url("../images/game2/forward_passive.png");
+    background-size: cover;
+    flex: none;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.tab-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+    flex: 0 0 253px;
+    height: 145px;
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
-    border-color: transparent;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    background-image: url("../images/game2/forward_active.png");
+}
+
+.tab-btn.back {
+    background-image: url("../images/game2/backward_passive.png");
+}
+
+.tab-btn.back.active {
+    background-image: url("../images/game2/backward_active.png");
 }
 
 .tab-btn:active {
     transform: scale(0.98);
 }
-
-.details-footer {
-    padding: 16px 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+.time-cost {
+    width: 150px;
 }
-
+.detail-number {
+    width: 150px;
+}
 /* 动画效果 */
 @keyframes numberAppear {
     0% {
