@@ -207,6 +207,12 @@ var Utils = (function () {
     function format2(num) {
         return num < 10 ? "0" + num : "" + num;
     }
+    // 1️⃣ 定义每个 page 的配置：x 值和上下颜色
+    var pageConfig = {
+        page1: { x: 50, colorTop: "#ffaaaa", colorBottom: "#aaffff" },
+        page2: { x: -30, colorTop: "#ffee00", colorBottom: "#00eeff" },
+        page3: { x: 0, colorTop: "#cccccc", colorBottom: "#333333" },
+    };
 
     // 导出公共方法
     return {
@@ -220,5 +226,66 @@ var Utils = (function () {
         throttle: throttle,
         storage: storage,
         format2: format2,
+        pageConfig: pageConfig,
     };
 })();
+
+// 2️⃣ 设置 app 背景函数（纯色块切分）
+function setAppBackgroundByPage(pageId) {
+    const config = Utils.pageConfig[pageId];
+    if (!config) return;
+
+    const { x, colorTop, colorBottom } = config;
+
+    const app = document.getElementById("app");
+    const stage = document.getElementById("stage");
+    const page = document.getElementById(pageId);
+    if (!app || !stage || !page) return;
+
+    // stage 在 app 中的居中位置
+    const appRect = app.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    const stageCenterY = stageRect.top + stageRect.height / 2;
+
+    // 分界线 Y 坐标
+    const splitY = stageCenterY - x; // 上正下负
+
+    // 转换为 app 高度百分比
+    const percentSplit = ((splitY - appRect.top) / appRect.height) * 100;
+
+    // 设置 app 背景：两个纯色块，sharp 切换
+    app.style.background = `linear-gradient(to bottom, 
+      ${colorTop} 0%, 
+      ${colorTop} ${percentSplit}%, 
+      ${colorBottom} ${percentSplit}%, 
+      ${colorBottom} 100%)`;
+}
+
+// 3️⃣ 监听 page 的 active 类变化
+function observePageActive() {
+    const pages = document.querySelectorAll(".page");
+    const app = document.getElementById("app");
+
+    if (!app || pages.length === 0) return;
+
+    pages.forEach((page) => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === "class") {
+                    const isActive = page.classList.contains("active");
+                    if (isActive) {
+                        setAppBackgroundByPage(page.id);
+                    }
+                }
+            });
+        });
+
+        observer.observe(page, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+    });
+}
+
+// 4️⃣ 初始化监听
+observePageActive();

@@ -3,6 +3,45 @@
  * 使用 ES5 语法
  */
 
+Utils.pageConfig = {
+    "page-welcome": { x: 50, colorTop: "#ff5c5f", colorBottom: "#306339" },
+    "page-rule-1": { x: -30, colorTop: "#c4e7fc", colorBottom: "#ffffff" },
+    "page-backward-rule1": {
+        x: -30,
+        colorTop: "#c4e7fc",
+        colorBottom: "#ffffff",
+    },
+    "page-backward-rule2": {
+        x: -30,
+        colorTop: "#c4e7fc",
+        colorBottom: "#ffffff",
+    },
+    "page-backward-rule3": {
+        x: -30,
+        colorTop: "#c4e7fc",
+        colorBottom: "#ffffff",
+    },
+    "page-display": { x: -30, colorTop: "#ff5c5f", colorBottom: "#ffffff" },
+    "popup-retry": { x: -30, colorTop: "#ff5c5f", colorBottom: "#ffffff" },
+    "popup-goto-backward": {
+        x: -30,
+        colorTop: "#ff5c5f",
+        colorBottom: "#ffffff",
+    },
+    "popup-correct": { x: -30, colorTop: "#ff5c5f", colorBottom: "#ffffff" },
+    "page-result": { x: -30, colorTop: "#ff5c5f", colorBottom: "#ffffff" },
+    "page-details": { x: -30, colorTop: "#ff5c5f", colorBottom: "#ffffff" },
+    "page-content-rule1": {
+        x: -30,
+        colorTop: "rgba(255, 0, 0, 0)",
+        colorBottom: "#ffffff",
+    },
+    "page-task": { x: 0, colorTop: "#ffffff", colorBottom: "#5ca1ff" },
+    "page-input": { x: 0, colorTop: "#ffffff", colorBottom: "#ffffff" },
+};
+
+setAppBackgroundByPage("page-welcome");
+
 var MemoryGame = (function () {
     "use strict";
 
@@ -25,7 +64,7 @@ var MemoryGame = (function () {
     // 配置
     var config = {
         startLevel: 1, // 起始关卡（3位数）
-        maxLevel: 4, // 最高关卡（15位数）
+        maxLevel: 1, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 1, // 准备倒计时（秒）

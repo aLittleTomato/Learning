@@ -1,6 +1,19 @@
 /**
  * 注意力测试游戏逻辑 - 使用 ES5 语法
  */
+Utils.pageConfig = {
+    "page-welcome": { x: 50, colorTop: "#5ca1ff", colorBottom: "#a3d26e" },
+    "page-mindset": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+    "page-rules-1": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+    "page-rules-2": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+    "page-tutorial": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+    "page-task": { x: 0, colorTop: "#ffffff", colorBottom: "#5ca1ff" },
+    "page-game": { x: 0, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-result": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+    "page-details": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
+};
+
+setAppBackgroundByPage("page-welcome");
 
 var AttentionGame = (function () {
     "use strict";
