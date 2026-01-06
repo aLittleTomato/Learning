@@ -26,13 +26,13 @@ var ConnectGame2 = (function () {
 
     // 配置
     var config = {
-        tutorialSequence: ["1", "A", "2", "B", "3", "C", "4", "D"], // 教程序列
+        tutorialSequence: ["1", "A", "2", "B"], // 教程序列
         gameNumbers: 13, // 游戏数字数量 (1-13)
         gameLetters: 12, // 游戏字母数量 (A-L)
-        nodeSize: 48, // 数字节点大小
+        nodeSize: 114, // 数字节点大小
         minSpacing: 16, // 最小间距（px）
-        lineColor: "#ff9a56", // 连线颜色
-        lineWidth: 3, // 连线宽度
+        lineColor: "#FFD4BD", // 连线颜色
+        lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
     };
 
@@ -104,7 +104,7 @@ var ConnectGame2 = (function () {
         console.log("Starting tutorial");
 
         // 切换页面
-        var welcomePage = document.getElementById("page-welcome");
+        var welcomePage = Utils.getCurrentPage();
         var tutorialPage = document.getElementById("page-tutorial");
 
         if (!welcomePage || !tutorialPage) return;
@@ -150,7 +150,7 @@ var ConnectGame2 = (function () {
         console.log("Starting game");
 
         // 切换页面
-        var tutorialPage = document.getElementById("page-tutorial");
+        var tutorialPage = Utils.getCurrentPage();
         var gamePage = document.getElementById("page-game");
 
         if (!tutorialPage || !gamePage) return;
@@ -231,19 +231,22 @@ var ConnectGame2 = (function () {
         var containerHeight = state.container.clientHeight;
         var nodeSize = config.nodeSize;
         var minSpacing = config.minSpacing;
+        var radius = nodeSize / 2;
+        var minDist = nodeSize + minSpacing;
 
         // 计算有效区域（减去边距）
         var effectiveWidth = containerWidth - nodeSize - minSpacing * 2;
         var effectiveHeight = containerHeight - nodeSize - minSpacing * 2;
 
-        // 生成随机位置
         for (var i = 0; i < state.sequence.length; i++) {
             var target = state.sequence[i];
+
+            // 使用优化后的 generateRandomPosition
             var position = generateRandomPosition(
                 effectiveWidth,
                 effectiveHeight,
-                nodeSize,
-                minSpacing
+                radius,
+                minDist
             );
 
             state.numbers.push({
@@ -258,50 +261,65 @@ var ConnectGame2 = (function () {
 
     /**
      * 生成随机位置（避免重叠）
+     * radius: 圆半径
+     * minDist: 最小圆心距
      */
-    function generateRandomPosition(width, height, nodeSize, minSpacing) {
-        var maxAttempts = 100;
+    function generateRandomPosition(width, height, radius, minDist) {
+        var maxAttempts = 1000;
         var attempts = 0;
 
+        // 1️⃣ 随机尝试
         while (attempts < maxAttempts) {
             var x = Math.random() * width;
             var y = Math.random() * height;
 
-            // 检查是否与已有节点重叠
-            var overlapping = false;
-            for (var i = 0; i < state.numbers.length; i++) {
-                var node = state.numbers[i];
+            var overlapping = state.numbers.some((node) => {
                 var dx = x - node.x;
                 var dy = y - node.y;
-                var distance = Math.sqrt(dx * dx + dy * dy);
+                return Math.sqrt(dx * dx + dy * dy) < minDist;
+            });
 
-                if (distance < nodeSize + minSpacing) {
-                    overlapping = true;
-                    break;
-                }
-            }
-
-            if (!overlapping) {
-                return { x: x, y: y };
-            }
-
+            if (!overlapping) return { x, y };
             attempts++;
         }
 
-        // 如果尝试多次仍然重叠，使用网格布局
-        var gridSize = Math.ceil(Math.sqrt(state.sequence.length));
-        var cellWidth = width / gridSize;
-        var cellHeight = height / gridSize;
-        var index = state.numbers.length;
-        var row = Math.floor(index / gridSize);
-        var col = index % gridSize;
+        // 2️⃣ fallback：随机遍历整个画布候选点，步长 2px
+        var step = 2;
+        var candidates = [];
+        for (var y = radius; y <= height - radius; y += step) {
+            for (var x = radius; x <= width - radius; x += step) {
+                candidates.push({ x, y });
+            }
+        }
 
-        return {
-            x: col * cellWidth + cellWidth / 2 - nodeSize / 2,
-            y: row * cellHeight + cellHeight / 2 - nodeSize / 2,
-        };
+        // 洗牌，随机遍历
+        shuffle(candidates);
+
+        for (var i = 0; i < candidates.length; i++) {
+            var x = candidates[i].x;
+            var y = candidates[i].y;
+
+            var overlapping = state.numbers.some((node) => {
+                var dx = x - node.x;
+                var dy = y - node.y;
+                return Math.sqrt(dx * dx + dy * dy) < minDist;
+            });
+
+            if (!overlapping) return { x, y };
+        }
+
+        // 3️⃣ 如果真的没有空位
+        console.warn("画布满了，无法放置更多圆");
+        return { x: width / 2, y: height / 2 };
     }
 
+    // Fisher–Yates 洗牌
+    function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
     /**
      * 渲染数字节点
      */
@@ -466,7 +484,7 @@ var ConnectGame2 = (function () {
         showErrorAnimation(target);
 
         // 显示错误提示
-        showErrorToast("请按顺序点击 " + state.currentTarget);
+        showErrorToast("请按顺序点击 " + state.currentTarget + " 😉");
     }
 
     /**
@@ -617,7 +635,7 @@ var ConnectGame2 = (function () {
         if (state.mode === "tutorial") {
             // 教程完成，进入游戏
             setTimeout(function () {
-                startGame();
+                showReady();
             }, 500);
         } else {
             // 游戏完成，显示结算页面
@@ -628,11 +646,41 @@ var ConnectGame2 = (function () {
     }
 
     /**
+     * 显示倒序规则页面
+     */
+    function showReady() {
+        // 切换页面
+        var currentPage = Utils.getCurrentPage();
+        var rulesPage = document.getElementById("page-task");
+
+        if (currentPage) {
+            Animation.pageTransition(currentPage, rulesPage, function () {
+                // currentPage.classList.remove("active");
+                // rulesPage.classList.add("active");
+            });
+        } else {
+            rulesPage.classList.add("active");
+        }
+    }
+
+    function calculateMinPause() {
+        var minPause = 999999;
+
+        for (var i = 0; i < state.history.length; i++) {
+            var record = state.history[i];
+            var timeCost = parseFloat(record.timeCost);
+            if (timeCost < minPause) {
+                minPause = timeCost;
+            }
+        }
+
+        return minPause.toFixed(1);
+    }
+    /**
      * 显示结算页面
      */
     function showResult() {
         console.log("Showing result");
-
         // 切换页面
         var gamePage = document.getElementById("page-game");
         var resultPage = document.getElementById("page-result");
@@ -649,11 +697,12 @@ var ConnectGame2 = (function () {
             100
         ).toFixed(0);
         var maxPause = calculateMaxPause();
-
+        var minPause = calculateMinPause();
         // 显示统计数据
-        var timeElement = document.getElementById("result-time");
-        var accuracyElement = document.getElementById("result-accuracy");
-        var maxPauseElement = document.getElementById("result-max-pause");
+        var timeElement = document.getElementById("stat-blue");
+        var accuracyElement = document.getElementById("stat-green");
+        var maxPauseElement = document.getElementById("stat-purple");
+        var minPauseElement = document.getElementById("stat-orange");
 
         if (timeElement) {
             timeElement.textContent = totalTime + "s";
@@ -662,7 +711,10 @@ var ConnectGame2 = (function () {
             accuracyElement.textContent = accuracy + "%";
         }
         if (maxPauseElement) {
-            maxPauseElement.textContent = maxPause + "s";
+            maxPauseElement.textContent = maxPause + "秒";
+        }
+        if (minPauseElement) {
+            minPauseElement.textContent = minPause + "秒";
         }
 
         // 上报数据
@@ -814,19 +866,16 @@ var ConnectGame2 = (function () {
             var tdTarget = document.createElement("td");
             tdTarget.textContent = record.target;
             tr.appendChild(tdTarget);
-
-            // 耗时
-            var tdTime = document.createElement("td");
-            tdTime.textContent = record.timeCost + "s";
-            tdTime.className = "time-cost";
-            tr.appendChild(tdTime);
-
             // 错误次数
             var tdError = document.createElement("td");
             tdError.textContent = record.errorCount;
-            tdError.className =
-                record.errorCount === 0 ? "error-count zero" : "error-count";
             tr.appendChild(tdError);
+
+            // 耗时
+            var tdTime = document.createElement("td");
+            tdTime.textContent = record.timeCost;
+            tdTime.className = "time-cost";
+            tr.appendChild(tdTime);
 
             tbody.appendChild(tr);
 
@@ -908,6 +957,49 @@ var ConnectGame2 = (function () {
             "../index.html?token=" + (Config.get("user.token") || "");
     }
 
+    function getNextPageId() {
+        var pageSequence = [
+            "page-welcome",
+            "page-rule-1",
+            "page-rule-2",
+            "page-tutorial",
+            "page-task",
+            "page-game",
+            "page-result",
+        ];
+
+        var currentPage = Utils.getCurrentPage();
+        if (!currentPage) {
+            return pageSequence[0];
+        }
+
+        var currentIndex = pageSequence.indexOf(currentPage.id);
+        if (currentIndex === -1 || currentIndex === pageSequence.length - 1) {
+            return null;
+        }
+
+        return pageSequence[currentIndex + 1];
+    }
+
+    function nextPage() {
+        var currentPage = Utils.getCurrentPage();
+        var nextPageId = getNextPageId();
+
+        if (!nextPageId) {
+            console.error("No next page found");
+            return;
+        }
+
+        var nextPage = document.getElementById(nextPageId);
+        if (!nextPage) {
+            console.error("Next page element not found:", nextPageId);
+            return;
+        }
+
+        // 页面切换动画
+        Animation.pageTransition(currentPage, nextPage);
+    }
+
     // 导出公共方法
     return {
         init: init,
@@ -920,6 +1012,7 @@ var ConnectGame2 = (function () {
         confirmExit: confirmExit,
         backToHome: backToHome,
         state: state,
+        nextPage: nextPage,
     };
 })();
 

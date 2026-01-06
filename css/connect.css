@@ -30,43 +30,30 @@
     /* padding: 40px 20px; */
 }
 
-/* 吉祥物样式 */
-.mascot-container {
-    margin-bottom: 32px;
+#page-tutorial {
+    cursor: pointer;
+    background: #ffffff;
+}
+#page-game {
+    cursor: pointer;
+    background: #ffffff;
 }
 
-.mascot {
-    font-size: 120px;
-    animation: float 3s ease-in-out infinite;
+#page-task {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ffffff 0% 40%, #fd9156 40% 100%);
+    background-repeat: no-repeat;
 }
 
-.mascot.happy {
-    animation: bounce 0.6s ease-in-out 2;
+#page-result {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #fd9156 0% 40%, #ffffff 40% 100%);
+    background-repeat: no-repeat;
 }
-
-.mascot-small {
-    font-size: 32px;
-    margin-right: 12px;
-}
-
-@keyframes float {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-@keyframes bounce {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
+#page-details {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #fd9156 0% 40%, #ffffff 40% 100%);
+    background-repeat: no-repeat;
 }
 
 .btn-welcome {
@@ -194,6 +181,10 @@
     font-size: 50px;
 }
 
+.page-texts.c2 {
+    top: 400px;
+}
+
 .page-texts.ready {
     top: 950px;
 }
@@ -240,6 +231,10 @@
     left: 50px;
     top: 820px;
     object-fit: fill;
+}
+
+.page-rule-tutorial.c2 {
+    top: 840px;
 }
 
 .page-logo.right1 {

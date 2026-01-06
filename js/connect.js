@@ -41,7 +41,7 @@ var ConnectGame = (function () {
     // 配置
     var config = {
         tutorialNumbers: 4, // 教程数字数量
-        gameNumbers: 8, // 游戏数字数量
+        gameNumbers: 25, // 游戏数字数量
         nodeSize: 114, // 数字节点大小
         minSpacing: 16, // 最小间距（px）
         lineColor: "#FFD4BD", // 连线颜色
@@ -188,7 +188,6 @@ var ConnectGame = (function () {
      */
     function generateNumbers() {
         state.numbers = [];
-
         if (!state.container) return;
 
         var containerWidth = state.container.clientWidth;
@@ -196,23 +195,25 @@ var ConnectGame = (function () {
         var nodeSize = config.nodeSize;
         var minSpacing = config.minSpacing;
 
-        // 计算有效区域（减去边距）
-        var effectiveWidth = containerWidth - nodeSize - minSpacing * 2;
-        var effectiveHeight = containerHeight - nodeSize - minSpacing * 2;
+        var radius = nodeSize / 2;
+        var minDist = nodeSize + minSpacing;
 
-        // 生成随机位置
+        // 有效区域（保证圆不出界）
+        var effectiveWidth = containerWidth - radius * 2;
+        var effectiveHeight = containerHeight - radius * 2;
+
         for (var i = 1; i <= state.maxNumber; i++) {
             var position = generateRandomPosition(
                 effectiveWidth,
                 effectiveHeight,
-                nodeSize,
-                minSpacing
+                radius,
+                minDist
             );
 
             state.numbers.push({
                 number: i,
-                x: position.x + minSpacing,
-                y: position.y + minSpacing,
+                x: position.x + radius,
+                y: position.y + radius,
                 connected: false,
             });
         }
@@ -221,47 +222,82 @@ var ConnectGame = (function () {
     /**
      * 生成随机位置（避免重叠）
      */
-    function generateRandomPosition(width, height, nodeSize, minSpacing) {
-        var maxAttempts = 100;
+    function generateRandomPosition(width, height, radius, minDist) {
+        var maxAttempts = 1000;
         var attempts = 0;
 
         while (attempts < maxAttempts) {
             var x = Math.random() * width;
             var y = Math.random() * height;
 
-            // 检查是否与已有节点重叠
             var overlapping = false;
+
             for (var i = 0; i < state.numbers.length; i++) {
                 var node = state.numbers[i];
-                var dx = x - node.x;
-                var dy = y - node.y;
+
+                // ⭐ 坐标统一：node.x/y 是圆心
+                var dx = x + radius - node.x;
+                var dy = y + radius - node.y;
                 var distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < nodeSize + minSpacing) {
+                if (distance < minDist) {
                     overlapping = true;
                     break;
                 }
             }
 
             if (!overlapping) {
-                return { x: x, y: y };
+                return { x, y };
             }
 
             attempts++;
         }
 
-        // 如果尝试多次仍然重叠，使用网格布局
-        var gridSize = Math.ceil(Math.sqrt(state.maxNumber));
-        var cellWidth = width / gridSize;
-        var cellHeight = height / gridSize;
-        var index = state.numbers.length;
-        var row = Math.floor(index / gridSize);
-        var col = index % gridSize;
+        // 2️⃣ fallback：随机遍历整个画布
+        // 生成所有可能圆心候选点
+        var step = 2; // 每次移动 2px
+        var candidates = [];
+        for (var y = radius; y <= height - radius; y += step) {
+            for (var x = radius; x <= width - radius; x += step) {
+                candidates.push({ x, y });
+            }
+        }
 
-        return {
-            x: col * cellWidth + cellWidth / 2 - nodeSize / 2,
-            y: row * cellHeight + cellHeight / 2 - nodeSize / 2,
-        };
+        // 打乱顺序，随机遍历
+        shuffle(candidates);
+
+        for (var i = 0; i < candidates.length; i++) {
+            var x = candidates[i].x;
+            var y = candidates[i].y;
+            var overlapping = false;
+
+            for (var j = 0; j < state.numbers.length; j++) {
+                var node = state.numbers[j];
+                var dx = x - node.x;
+                var dy = y - node.y;
+                var distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < minDist) {
+                    overlapping = true;
+                    break;
+                }
+            }
+
+            if (!overlapping) {
+                return { x, y };
+            }
+        }
+
+        // 3️⃣ 如果真的没有空位
+        console.warn("画布满了，无法放置更多圆");
+        return { x: width / 2, y: height / 2 };
+    }
+
+    // Fisher–Yates 洗牌
+    function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
     }
 
     /**
@@ -270,10 +306,10 @@ var ConnectGame = (function () {
     function renderNumbers() {
         if (!state.container) return;
 
-        // 清空容器
         state.container.innerHTML = "";
 
-        // 渲染每个数字节点
+        var radius = config.nodeSize / 2;
+
         for (var i = 0; i < state.numbers.length; i++) {
             var node = state.numbers[i];
             var nodeElement = document.createElement("div");
@@ -284,10 +320,11 @@ var ConnectGame = (function () {
             }
 
             nodeElement.textContent = node.number;
-            nodeElement.style.left = node.x + "px";
-            nodeElement.style.top = node.y + "px";
 
-            // 绑定点击事件
+            // ⭐ 关键修正：圆心 → 左上角
+            nodeElement.style.left = node.x - radius + "px";
+            nodeElement.style.top = node.y - radius + "px";
+
             nodeElement.onclick = (function (number) {
                 return function () {
                     onNumberClick(number);
@@ -451,10 +488,10 @@ var ConnectGame = (function () {
 
         // 计算节点中心点
         var nodeSize = config.nodeSize;
-        var fromX = fromNode.x + nodeSize / 2;
-        var fromY = fromNode.y + nodeSize / 2;
-        var toX = toNode.x + nodeSize / 2;
-        var toY = toNode.y + nodeSize / 2;
+        var fromX = fromNode.x;
+        var fromY = fromNode.y;
+        var toX = toNode.x;
+        var toY = toNode.y;
 
         // 绘制线条
         state.ctx.beginPath();
