@@ -16,14 +16,14 @@
             <div id="stage" class="stage">
                 <!-- P1: 欢迎页 -->
                 <div id="page-welcome" class="page active">
-                    <img class="full-bg" src="../images/game2/welcome_bg.png" />
+                    <img class="full-bg" src="../images/game3/welcome_bg.png" />
                     <img
                         class="page-welcome-mask"
-                        src="../images/game2/welcom_mask.png"
+                        src="../images/game3/welcom_mask.png"
                     />
                     <img
                         class="page-logo right"
-                        src="../images/game2/memory_logo.png"
+                        src="../images/game3/big_logo.png"
                     />
                     <img
                         class="page-dialogBG"
@@ -47,14 +47,17 @@
                 </div>
 
                 <div id="page-rule-1" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
                     <img
-                        class="page-logo left"
-                        src="../images/game2/memory_logo.png"
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo left rule"
+                        src="../images/game3/big_logo.png"
                     />
                     <img
                         class="page-rule-mask"
-                        src="../images/game2/burble_2.png"
+                        src="../images/game3/burble_2.png"
                     />
                     <div class="page-content">
                         <div class="page-texts rule1">
@@ -73,37 +76,41 @@
                             <p class="line2">快又准地将它们连起来。</p>
                         </div>
 
-                        <img
-                            class="rule2-example"
-                            src="../images/game2/memory_logo.png"
-                        />
-
                         <button
                             class="btn btn-bottom long startTutorial"
                             onclick="ConnectGame.nextPage()"
-                        ></button>
+                        >
+                            下一步 👉
+                        </button>
                     </div>
                 </div>
                 <div id="page-rule-2" class="page">
                     <img
-                        class="page-logo right1"
-                        src="../images/game1/attention_logo.png"
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
                     />
                     <img
-                        class="page-rule-mask"
-                        src="../images/game1/normal_bg.png"
+                        class="page-logo right1"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img class="full-bg" src="../images/game3/burble_1.png" />
+                    <img
+                        class="page-rule-tutorial"
+                        src="../images/game3/tutorial.png"
                     />
                     <div class="page-content">
-                        <div class="page-texts rule1">
+                        <div class="page-texts rule2">
                             <p class="line2">比如，下面出现了3个数字</p>
-                            <p class="line2">我没需要快速按照“1、2、3”</p>
+                            <p class="line2">我们需要快速按照“1、2、3”</p>
                             <p class="line2">的顺序点击，</p>
-                            <p class="line2">将它们连起来就算成功</p>
+                            <p class="line2">将它们连起来就算挑战成功</p>
                         </div>
                         <button
                             class="btn btn-bottom long rule1"
                             onclick="ConnectGame.showTutorial()"
-                        ></button>
+                        >
+                            先来试一试 👉
+                        </button>
                     </div>
                 </div>
 
@@ -111,12 +118,16 @@
                 <div id="page-tutorial" class="page">
                     <img
                         class="test-logo"
-                        src="../images/game2/input_logo.png"
+                        src="../images/game3/input_logo.png"
                     />
                     <img
                         class="test-tip-bg"
-                        src="../images/game2/input_txt.png"
+                        src="../images/game3/input_txt.png"
                     />
+                    <div class="page-texts test-tip">
+                        <p class="line2">请按照从小到大的顺序，</p>
+                        <p class="line2">快速点击下方的数字来连线吧。</p>
+                    </div>
 
                     <div class="game-area">
                         <canvas
@@ -134,34 +145,16 @@
                 <div id="page-game" class="page">
                     <img
                         class="test-logo"
-                        src="../images/game2/input_logo.png"
+                        src="../images/game3/input_logo.png"
                     />
                     <img
                         class="test-tip-bg"
-                        src="../images/game2/input_txt.png"
+                        src="../images/game3/input_txt.png"
                     />
-                    <div class="game-header">
-                        <div class="header-left">
-                            <button
-                                class="btn-back"
-                                onclick="ConnectGame.confirmExit()"
-                            >
-                                <span>←</span>
-                            </button>
-                        </div>
-                        <div class="header-center">
-                            <div class="timer-display">
-                                <span class="timer-icon">⏱</span>
-                                <span id="timer-text">00:00.0</span>
-                            </div>
-                        </div>
-                        <div class="header-right">
-                            <div class="target-hint">
-                                寻找数字：<span id="target-number">1</span>
-                            </div>
-                        </div>
+                    <div class="page-texts test-tip">
+                        <p class="line2">请按照从小到大的顺序，</p>
+                        <p class="line2">快速点击下方的数字来连线吧。</p>
                     </div>
-
                     <div class="game-area">
                         <canvas id="game-canvas" class="game-canvas"></canvas>
                         <div id="game-numbers" class="numbers-container"></div>
@@ -171,53 +164,45 @@
                 <div id="page-task" class="page">
                     <img
                         class="page-task-mask"
-                        src="../images/game1/normal_bg.png"
+                        src="../images/game3/burble_3.png"
                     />
-                    <div class="logo-flip">
-                        <img
-                            class="page-logo bottom"
-                            src="../images/game1/attention_logo.png"
-                        />
-                    </div>
+                    <img
+                        class="page-logo bottom"
+                        src="../images/game3/big_logo.png"
+                    />
 
                     <div class="page-content">
                         <div class="page-texts task">
                             <p class="line2">太棒了 🎉</p>
-                            <p class="line2">你已经能准确找到所有</p>
-                            <p class="line2">符合要求的字母了。</p>
+                            <p class="line2">你已经顺利通过热身练习。</p>
                             <p
                                 class="line2"
                                 style="height: 0.7em; margin: 0"
                             ></p>
-                            <p class="line2">接下来</p>
-                            <p class="line2">我们将进入7关正式挑战</p>
-                            <p class="line2">
-                                每关<span class="rule-text-red">限时70秒</span>,
-                            </p>
-                            <p class="line2">倒计时结束将自动进入下一关</p>
+                            <p class="line2">接下来，</p>
+                            <p class="line2">我们将进入正式挑战，</p>
                             <p
                                 class="line2"
                                 style="height: 0.7em; margin: 0"
                             ></p>
 
-                            <p class="line2">提前完成可手动进入下一关</p>
+                            <p class="line2">准备好开始了吗？</p>
                         </div>
                         <button
                             class="btn btn-bottom long task"
                             onclick="ConnectGame.startGame()"
-                        ></button>
+                        >
+                            我准备好了，开始挑战 🏎️
+                        </button>
                     </div>
                 </div>
 
                 <div id="page-result" class="page">
                     <img
-                        class="page-logo left2 result"
-                        src="../images/game2/memory_logo.png"
+                        class="page-logo left2"
+                        src="../images/game3/big_logo.png"
                     />
-                    <img
-                        class="page-mask-result"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <img class="full-bg" src="../images/game3/burble_4.png" />
                     <div class="page-content">
                         <div class="page-texts result">
                             <p class="line2">挑战结束 🎉</p>
@@ -247,19 +232,21 @@
                         <button
                             class="btn btn-bottom long detail"
                             onclick="ConnectGame.viewDetails()"
-                        ></button>
+                        >
+                            查看作答详情
+                        </button>
                         <button
                             class="btn btn-bottom long again"
                             onclick="ConnectGame.restart()"
-                        ></button>
+                        >
+                            再玩一次 ✨
+                        </button>
                     </div>
                 </div>
 
                 <!-- P5: 作答详情页 -->
                 <div id="page-details" class="page">
-                    <div class="details-header">
-                        <h2 class="details-title">作答详情</h2>
-                    </div>
+                    <img class="full-bg" src="../images/game3/burble_5.png" />
 
                     <div class="details-container">
                         <table class="details-table" id="details-table">
@@ -274,14 +261,12 @@
                         </table>
                     </div>
 
-                    <div class="details-footer">
-                        <button
-                            class="btn btn-primary"
-                            onclick="ConnectGame.backToResult()"
-                        >
-                            返回结果
-                        </button>
-                    </div>
+                    <button
+                        class="btn btn-bottom long"
+                        onclick="ConnectGame.backToResult()"
+                    >
+                        返回
+                    </button>
                 </div>
 
                 <!-- 错误提示 Toast -->

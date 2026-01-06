@@ -25,8 +25,6 @@
 
 .page-content {
     /* max-width: 600px; */
-    margin: 0 auto;
-    text-align: center;
     width: 100%;
     height: 100%;
     /* padding: 40px 20px; */
@@ -73,7 +71,7 @@
 
 .btn-welcome {
     position: absolute;
-    background-image: url("../images/game2/btn_next_step.png");
+    background-image: url("../images/game3/btn_welcome.png");
     width: 361px;
     height: 231px;
     left: 413px;
@@ -86,12 +84,58 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+/* 右边中间一点 */
+.page-logo.bottom {
+    width: 819px;
+    height: 857px;
+    left: -150px;
+    bottom: -300px;
+    /* 设置变换锚点为底部中间 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
+    animation: leftAppear1 1s ease-out forwards,
+        /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
+}
+
+.page-logo.left2 {
+    width: 708px;
+    height: 742px;
+    left: 0px;
+    top: -120px;
+    transform-origin: center bottom;
+    animation: leftAppear2 1s ease-out forwards,
+        leftBreath2 4s ease-in-out 1s infinite;
+}
+@keyframes leftAppear2 {
+    from {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(10deg);
+    }
+}
+
+/* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
+@keyframes leftBreath2 {
+    0%,
+    100% {
+        transform: translateY(0) rotate(10deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(10deg);
+    }
+}
 .page-welcome-mask {
     position: absolute;
     width: 100%;
-    height: 886px;
+    height: 881px;
     left: 0px;
-    top: -70px;
+    top: 0px;
     object-fit: fill;
 }
 
@@ -105,25 +149,58 @@
     object-fit: fill;
 }
 
+.full-bg.rule {
+    height: 844px;
+    position: absolute;
+    top: -100px;
+}
+
+.page-task-mask {
+    position: absolute;
+    width: 100%;
+    /* height: 886px; */
+    height: 1106px;
+    left: 0px;
+    top: -150px;
+    object-fit: fill;
+}
+
+.btn-bottom.long {
+    background-image: url("../images/game3/btn_long.png");
+}
+.btn-bottom.long.task {
+    bottom: 650px;
+}
+
+.page-logo.left.rule {
+    top: 0px;
+}
+
 .page-texts.welcome {
     top: 960px;
 }
 
 .page-texts.rule1 {
-    top: 660px;
+    top: 680px;
     font-size: 55px;
 }
+
 .page-texts.rule1.first {
     top: 580px;
 }
 
 .page-texts.rule2 {
-    top: 700px;
-    font-size: 55px;
+    top: 500px;
+    font-size: 50px;
 }
 
 .page-texts.ready {
     top: 950px;
+}
+
+.page-texts.task {
+    font-size: 50px;
+    top: 100px;
 }
 
 .page-texts.display {
@@ -154,6 +231,65 @@
     left: 0px;
     bottom: 0px;
     object-fit: fill;
+}
+
+.page-rule-tutorial {
+    position: absolute;
+    width: 650;
+    height: 386px;
+    left: 50px;
+    top: 820px;
+    object-fit: fill;
+}
+
+.page-logo.right1 {
+    right: -270px;
+    top: 0px;
+    /* 设置变换锚点为底部中间 */
+    transform-origin: center bottom;
+    /* x轴居中，y轴底部 */
+    animation: right1Appear 1s ease-out forwards,
+        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
+    /* 呼吸动画，1秒后开始循环 */
+}
+@keyframes right1Appear {
+    from {
+        opacity: 0;
+        transform: rotate(-05deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(-20deg);
+    }
+}
+
+/* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
+@keyframes right1Breath {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-20deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-20deg);
+    }
+}
+
+.page-texts.test-tip {
+    position: absolute;
+    font-size: 28px;
+    left: 280px;
+    top: 150px;
+    opacity: 1;
+}
+
+.test-tip-bg {
+    position: absolute;
+    width: 522px;
+    height: 189px;
+    left: 212px;
+    top: 95px;
 }
 
 .test-logo {
@@ -320,21 +456,18 @@
 /* 数字节点 */
 .number-node {
     position: absolute;
-    width: 48px;
-    height: 48px;
+    width: 114px;
+    height: 114px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    font-weight: 700;
-    color: #666;
-    background-color: #fff;
-    border: 3px solid #ddd;
-    border-radius: 50%;
+    font-size: 54px;
+    font-weight: bold;
+    color: #fd9156;
     cursor: pointer;
     user-select: none;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-image: url("../images/game3/number_normal.png");
 }
 
 .number-node:active {
@@ -342,14 +475,17 @@
 }
 
 .number-node.connected {
-    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
-    border-color: #ff6b6b;
+    /* background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%); */
+    /* border-color: #ff6b6b; */
     color: #fff;
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    /* box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); */
+    background-image: url("../images/game3/number_connented.png");
 }
 
 .number-node.error {
     animation: shake 0.4s ease-in-out;
+    background-image: url("../images/game3/number_error.png");
+    color: #ff5c5c;
 }
 
 @keyframes shake {
@@ -453,7 +589,6 @@
     top: 600px;
 }
 .btn-bottom.detail {
-    background-image: url("../images/game2/view_details.png");
     bottom: 190px;
 }
 
@@ -496,9 +631,9 @@
     overflow-y: auto;
     position: absolute;
     width: 666px;
-    height: 1060px;
+    height: 960px;
     left: 42px;
-    top: 200px;
+    top: 250px;
     border-radius: 80px;
     border: 10px solid #ffd4bd;
 

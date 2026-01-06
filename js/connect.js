@@ -3,6 +3,20 @@
  * 使用 ES5 语法
  */
 
+Utils.pageConfig = {
+    "page-welcome": { x: 50, colorTop: "#FD9156", colorBottom: "#a3d26e" },
+    "page-mindset": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+    "page-rules-1": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+    "page-rules-2": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+    "page-tutorial": { x: -30, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-task": { x: 0, colorTop: "#ffffff", colorBottom: "#FD9156" },
+    "page-game": { x: 0, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-result": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+    "page-details": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+};
+
+setAppBackgroundByPage("page-welcome");
+
 var ConnectGame = (function () {
     "use strict";
 
@@ -28,10 +42,10 @@ var ConnectGame = (function () {
     var config = {
         tutorialNumbers: 4, // 教程数字数量
         gameNumbers: 8, // 游戏数字数量
-        nodeSize: 48, // 数字节点大小
+        nodeSize: 114, // 数字节点大小
         minSpacing: 16, // 最小间距（px）
-        lineColor: "#ff9a56", // 连线颜色
-        lineWidth: 3, // 连线宽度
+        lineColor: "#FFD4BD", // 连线颜色
+        lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
     };
 
@@ -60,9 +74,10 @@ var ConnectGame = (function () {
 
         if (!currentPage || !tutorialPage) return;
 
-        Animation.pageTransition(currentPage, tutorialPage, function () {
-            initTutorial();
-        });
+        currentPage.classList.remove("active");
+        tutorialPage.classList.add("active");
+        initTutorial();
+        // Animation.pageTransition(currentPage, tutorialPage, function () {});
     }
 
     /**

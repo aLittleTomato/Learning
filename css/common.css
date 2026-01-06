@@ -95,6 +95,7 @@ body {
 }
 
 .page-content {
+    position: absolute;
     /* max-width: 600px; */
     margin: 0 auto;
     text-align: center;
@@ -505,7 +506,33 @@ body {
     }
 }
 
+@keyframes leftAppear1 {
+    from {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(15deg);
+    }
+}
+
+/* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
+@keyframes leftBreath1 {
+    0%,
+    100% {
+        transform: translateY(0) rotate(15deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(15deg);
+    }
+}
+
 .btn-bottom {
+    font-family: "MyFont", sans-serif;
+
     position: absolute;
     background-image: url("../images/game1/btn_next_step_long.png");
 
@@ -523,6 +550,9 @@ body {
     height: 173px;
     left: 0;
     bottom: 40px;
+    font-weight: bold;
+    font-size: 45px;
+    color: #ffffff;
 }
 
 .full-bg {
