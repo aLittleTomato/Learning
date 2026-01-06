@@ -107,11 +107,11 @@ var AttentionGame = (function () {
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
-            if (currentPage) {
-                currentPage.classList.remove("active");
-            }
+            // if (currentPage) {
+            //     currentPage.classList.remove("active");
+            // }
 
-            nextPage.classList.add("active");
+            // nextPage.classList.add("active");
             // 更新游戏阶段
             updateGamePhase(nextPageId);
         });
@@ -179,8 +179,8 @@ var AttentionGame = (function () {
         var rulesPage = document.getElementById("page-rules-1");
 
         Animation.pageTransition(currentPage, rulesPage, function () {
-            currentPage.classList.remove("active");
-            rulesPage.classList.add("active");
+            // currentPage.classList.remove("active");
+            // rulesPage.classList.add("active");
             updateGamePhase("page-rules-1");
         });
     }
@@ -200,8 +200,8 @@ var AttentionGame = (function () {
         renderTutorialGrid();
 
         Animation.pageTransition(currentPage, tutorialPage, function () {
-            currentPage.classList.remove("active");
-            tutorialPage.classList.add("active");
+            // currentPage.classList.remove("active");
+            // tutorialPage.classList.add("active");
             updateGamePhase("page-tutorial");
         });
     }
@@ -1061,8 +1061,8 @@ AttentionGame.viewDetails = function () {
     var detailsPage = document.getElementById("page-details");
 
     Animation.pageTransition(resultPage, detailsPage, function () {
-        resultPage.classList.remove("active");
-        detailsPage.classList.add("active");
+        // resultPage.classList.remove("active");
+        // detailsPage.classList.add("active");
 
         // 渲染进度条
         renderProgressBar(

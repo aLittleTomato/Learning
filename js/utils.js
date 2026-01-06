@@ -214,6 +214,10 @@ var Utils = (function () {
         page3: { x: 0, colorTop: "#cccccc", colorBottom: "#333333" },
     };
 
+    function getCurrentPage() {
+        return document.querySelector(".page.active");
+    }
+
     // 导出公共方法
     return {
         getUrlParam: getUrlParam,
@@ -227,6 +231,7 @@ var Utils = (function () {
         storage: storage,
         format2: format2,
         pageConfig: pageConfig,
+        getCurrentPage: getCurrentPage,
     };
 })();
 

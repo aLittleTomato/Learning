@@ -91,11 +91,10 @@ var MemoryGame = (function () {
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
-            if (currentPage) {
-                currentPage.classList.remove("active");
-            }
-
-            nextPage.classList.add("active");
+            // if (currentPage) {
+            //     currentPage.classList.remove("active");
+            // }
+            // nextPage.classList.add("active");
         });
     }
 
@@ -164,8 +163,8 @@ var MemoryGame = (function () {
         var rulesPage = document.getElementById("page-forward-rules");
 
         Animation.pageTransition(welcomePage, rulesPage, function () {
-            welcomePage.classList.remove("active");
-            rulesPage.classList.add("active");
+            // welcomePage.classList.remove("active");
+            // rulesPage.classList.add("active");
         });
     }
 
@@ -202,10 +201,10 @@ var MemoryGame = (function () {
         }
 
         Animation.pageTransition(currentPage, nextPage, function () {
-            if (currentPage) {
-                currentPage.classList.remove("active");
-            }
-            nextPage.classList.add("active");
+            // if (currentPage) {
+            //     currentPage.classList.remove("active");
+            // }
+            // nextPage.classList.add("active");
             // 开始第一关
             startLevel();
         });
@@ -550,11 +549,10 @@ var MemoryGame = (function () {
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
-            if (currentPage) {
-                currentPage.classList.remove("active");
-            }
-
-            nextPage.classList.add("active");
+            // if (currentPage) {
+            //     currentPage.classList.remove("active");
+            // }
+            // nextPage.classList.add("active");
         });
     }
 
@@ -642,8 +640,8 @@ var MemoryGame = (function () {
 
         if (currentPage) {
             Animation.pageTransition(currentPage, rulesPage, function () {
-                currentPage.classList.remove("active");
-                rulesPage.classList.add("active");
+                // currentPage.classList.remove("active");
+                // rulesPage.classList.add("active");
             });
         } else {
             rulesPage.classList.add("active");
@@ -708,8 +706,8 @@ var MemoryGame = (function () {
         var displayPage = document.getElementById("page-display");
 
         Animation.pageTransition(rulesPage, displayPage, function () {
-            rulesPage.classList.remove("active");
-            displayPage.classList.add("active");
+            // rulesPage.classList.remove("active");
+            // displayPage.classList.add("active");
 
             // 开始第一关
             startLevel();
@@ -767,8 +765,8 @@ var MemoryGame = (function () {
 
         if (currentPage) {
             Animation.pageTransition(currentPage, resultPage, function () {
-                currentPage.classList.remove("active");
-                resultPage.classList.add("active");
+                // currentPage.classList.remove("active");
+                // resultPage.classList.add("active");
             });
         } else {
             resultPage.classList.add("active");
@@ -824,8 +822,8 @@ var MemoryGame = (function () {
         var detailsPage = document.getElementById("page-details");
 
         Animation.pageTransition(resultPage, detailsPage, function () {
-            resultPage.classList.remove("active");
-            detailsPage.classList.add("active");
+            // resultPage.classList.remove("active");
+            // detailsPage.classList.add("active");
         });
     }
 
@@ -933,8 +931,8 @@ var MemoryGame = (function () {
 
         if (currentPage) {
             Animation.pageTransition(currentPage, rulesPage, function () {
-                currentPage.classList.remove("active");
-                rulesPage.classList.add("active");
+                // currentPage.classList.remove("active");
+                // rulesPage.classList.add("active");
             });
         } else {
             rulesPage.classList.add("active");

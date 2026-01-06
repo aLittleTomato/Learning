@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>连线小游戏2</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/connect2.css">
+</head>
+<body>
+    <div id="app" class="game-container">
+        <!-- P1: 欢迎页 -->
+        <div id="page-welcome" class="page active">
+            <div class="page-content">
+                <div class="mascot-container">
+                    <div class="mascot">🐘</div>
+                </div>
+                
+                <h1 class="welcome-title">欢迎来到连线小练习 2</h1>
+                <p class="welcome-desc">准备好接受挑战，数字字母交替连接！</p>
+                
+                <button class="btn btn-primary btn-large" onclick="ConnectGame2.showTutorial()">
+                    开始挑战
+                </button>
+            </div>
+        </div>
+
+        <!-- P2: 新手引导页 -->
+        <div id="page-tutorial" class="page">
+            <div class="game-header">
+                <div class="header-left">
+                    <button class="btn-back" onclick="ConnectGame2.backToWelcome()">
+                        <span>←</span>
+                    </button>
+                </div>
+                <div class="header-center">
+                    <h2>新手引导</h2>
+                </div>
+                <div class="header-right"></div>
+            </div>
+            
+            <div class="tutorial-tip">
+                <div class="mascot-small">🐘</div>
+                <div class="tip-text">试着按顺序连接 1, A, 2, B, 3, C, 4, D...</div>
+            </div>
+            
+            <div class="game-area">
+                <canvas id="tutorial-canvas" class="game-canvas"></canvas>
+                <div id="tutorial-numbers" class="numbers-container"></div>
+            </div>
+        </div>
+
+        <!-- P3: 游戏主界面 -->
+        <div id="page-game" class="page">
+            <div class="game-header">
+                <div class="header-left">
+                    <button class="btn-back" onclick="ConnectGame2.confirmExit()">
+                        <span>←</span>
+                    </button>
+                </div>
+                <div class="header-center">
+                    <div class="timer-display">
+                        <span class="timer-icon">⏱</span>
+                        <span id="timer-text">00:00.0</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="target-hint">
+                        寻找：<span id="target-number">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <canvas id="game-canvas" class="game-canvas"></canvas>
+                <div id="game-numbers" class="numbers-container"></div>
+            </div>
+        </div>
+
+        <!-- P4: 结算页 -->
+        <div id="page-result" class="page">
+            <div class="page-content">
+                <div class="mascot-container">
+                    <div class="mascot happy">🐘</div>
+                </div>
+                
+                <h1 class="result-title">恭喜你！挑战成功！</h1>
+                
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">完成时间</div>
+                        <div class="stat-value" id="result-time">0.0s</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">正确率</div>
+                        <div class="stat-value" id="result-accuracy">0%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">最大停顿</div>
+                        <div class="stat-value" id="result-max-pause">0.0s</div>
+                    </div>
+                </div>
+                
+                <div class="result-actions">
+                    <button class="btn btn-secondary" onclick="ConnectGame2.viewDetails()">查看作答详情</button>
+                    <button class="btn btn-primary" onclick="ConnectGame2.restart()">再玩一次</button>
+                    <button class="btn btn-secondary" onclick="ConnectGame2.backToHome()">返回主页</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- P5: 作答详情页 -->
+        <div id="page-details" class="page">
+            <div class="details-header">
+                <h2 class="details-title">作答详情</h2>
+            </div>
+            
+            <div class="details-container">
+                <table class="details-table" id="details-table">
+                    <thead>
+                        <tr>
+                            <th>节点</th>
+                            <th>耗时</th>
+                            <th>错误次数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="details-tbody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="details-footer">
+                <button class="btn btn-primary" onclick="ConnectGame2.backToResult()">返回结果</button>
+            </div>
+        </div>
+
+        <!-- 错误提示 Toast -->
+        <div id="error-toast" class="error-toast">
+            <span id="error-message">请按顺序点击</span>
+        </div>
+    </div>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/animation.js"></script>
+    <script src="../js/scale.js"></script>
+    <script src="../js/connect2.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* 页面基础样式 */
@@ -24,12 +25,12 @@
 }
 
 .page-content {
-    /* max-width: 600px; */
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    /* padding: 40px 20px; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
 }
 
 /* 吉祥物样式 */
@@ -69,107 +70,6 @@
     50% {
         transform: scale(1.2);
     }
-}
-
-.btn-welcome {
-    position: absolute;
-    background-image: url("../images/game2/btn_next_step.png");
-    width: 361px;
-    height: 231px;
-    left: 413px;
-    bottom: 20px;
-
-    background-size: cover;
-    /* 填满按钮 */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.page-welcome-mask {
-    position: absolute;
-    width: 100%;
-    height: 886px;
-    left: 0px;
-    top: -70px;
-    object-fit: fill;
-}
-
-.page-dialogBG {
-    position: absolute;
-    /* background-image: "../images/game1/welcome_txt_bg.png"; */
-    width: 750px;
-    height: 641px;
-    left: 0px;
-    bottom: 0px;
-    object-fit: fill;
-}
-
-.page-texts.welcome {
-    top: 960px;
-}
-
-.page-texts.rule1 {
-    top: 660px;
-    font-size: 55px;
-}
-.page-texts.rule1.first {
-    top: 580px;
-}
-
-.page-texts.rule2 {
-    top: 700px;
-    font-size: 55px;
-}
-
-.page-texts.ready {
-    top: 950px;
-}
-
-.page-texts.display {
-    top: 540px;
-    font-size: 55px;
-    animation: fadeOut 0.6s forwards;
-    animation-delay: 1s;
-}
-
-.page-texts.retry {
-    top: 730px;
-    font-size: 55px;
-}
-
-.page-texts.retry1 {
-    top: 800px;
-    font-size: 55px;
-}
-.page-texts.result {
-    top: 430px;
-    font-size: 55px;
-}
-
-.page-rule-mask {
-    position: absolute;
-    width: 100%;
-    height: 1077px;
-    left: 0px;
-    bottom: 0px;
-    object-fit: fill;
-}
-
-.test-logo {
-    position: absolute;
-    width: 242px;
-    height: 242px;
-    left: 7px;
-    top: 70px;
-}
-
-.test-tip-bg {
-    position: absolute;
-    width: 522px;
-    height: 189px;
-    left: 212px;
-    top: 95px;
 }
 
 /* 欢迎页样式 */
@@ -252,6 +152,7 @@
     font-size: 18px;
     font-weight: 700;
     color: #fff;
+    font-family: "Arial", monospace;
 }
 
 /* 目标提示 */
@@ -288,10 +189,8 @@
 /* 游戏区域 */
 .game-area {
     flex: 1;
-    position: absolute;
-    top: 300px;
-    width: 100%;
-    height: 1000px;
+    position: relative;
+    margin: 16px;
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     overflow: hidden;
@@ -300,6 +199,7 @@
 /* Canvas 画布 */
 .game-canvas {
     position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
@@ -352,6 +252,18 @@
     animation: shake 0.4s ease-in-out;
 }
 
+/* 字母节点特殊样式 */
+.number-node.letter {
+    background: linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%);
+    border-color: #56ab91;
+    color: #fff;
+}
+
+.number-node.letter.connected {
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+    border-color: #ff6b6b;
+}
+
 @keyframes shake {
     0%,
     100% {
@@ -374,16 +286,13 @@
     text-align: center;
 }
 
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: -70px;
-    width: 350px;
-    height: 228px;
-    background-size: contain;
+.result-stats {
+    width: 100%;
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
 }
 
 .stat-item {
@@ -394,78 +303,17 @@
     text-align: center;
 }
 
-.stat-item.blue {
-    background-image: url("../images/game1/stat_time.png");
-    color: #5ca1ff;
-}
-
-.stat-item.purple {
-    background-image: url("../images/game1/stat_speed.png");
-    color: #ea36ea;
-}
-
-.stat-item.orange {
-    background-image: url("../images/game1/stat_focus.png");
-    color: #e2592c;
-}
-
-.stat-item.green {
-    background-image: url("../images/game1/stat_accuracy.png");
-    color: #2ece2e;
-}
-
-#stat-blue {
-    color: #326ebf;
-}
-
-#stat-green {
-    color: #009738;
-}
-
-#stat-purple {
-    color: #bf329c;
-}
-
-#stat-orange {
-    color: #d24d00;
-}
-
-/* 第一行元素不要被挤压 */
-.result-card > :nth-child(-n + 2) {
-    margin-top: 0;
-}
-
-/* 结果界面 */
-.result-card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* 两列 */
-    grid-template-rows: repeat(2, 1fr);
-    /* 两行 */
-    justify-items: center;
-    /* 水平居中子元素 */
-    align-items: center;
-    /* 垂直居中子元素 */
-
-    position: absolute;
-    width: 100%;
-    height: 500px;
-    top: 600px;
-}
-.btn-bottom.detail {
-    background-image: url("../images/game2/view_details.png");
-    bottom: 190px;
-}
-
 .stat-label {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
 }
 
 .stat-value {
     font-size: 32px;
     font-weight: 700;
     color: #fff;
+    font-family: "Arial", monospace;
 }
 
 .result-actions {
@@ -494,76 +342,51 @@
 .details-container {
     flex: 1;
     overflow-y: auto;
-    position: absolute;
-    width: 666px;
-    height: 1060px;
-    left: 42px;
-    top: 200px;
-    border-radius: 80px;
-    border: 10px solid #ffd4bd;
+    padding: 16px;
+}
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-}
-.details-container::-webkit-scrollbar {
-    display: none;
-}
 .details-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     border-radius: 12px;
-    /* overflow: hidden; */
-    overflow: visible;
+    overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding-bottom: 100px;
 }
 
 .details-table thead {
-    background-color: #fff;
-    height: 120px;
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .details-table th {
-    font-size: 35px;
+    padding: 12px 8px;
+    font-size: 14px;
     font-weight: 600;
-    color: #cc6622;
+    color: #fff;
     text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 10; /* ⭐ 必须高于 tbody */
-    background-color: #ffffff;
-    /* ⭐ 关键：横向向两侧扩展，盖住缝隙 */
-    box-shadow: inset 20px 0 0 #fff, inset -20px 0 0 #fff, 0 6px 0 #fff;
 }
 
 .details-table td {
     padding: 12px 8px;
-    font-size: 35px;
-    color: #fd9156;
+    font-size: 14px;
+    color: #333;
     text-align: center;
-
-    width: 33.3333%;
-    text-align: center;
-    padding: 8px 0;
-    box-sizing: border-box;
-}
-
-.details-table tbody::after {
-    content: "";
-    display: block;
-    height: 30px; /* 你想要的 padding-bottom */
-}
-/* 竖线：给除最后一列以外的 td */
-.details-table td:not(:last-child) {
-    border-right: 3px solid #ffd4bd;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .time-cost {
     color: #667eea;
     font-weight: 600;
+    font-family: "Arial", monospace;
+}
+
+.error-count {
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+.error-count.zero {
+    color: #2ecc71;
 }
 
 .details-footer {
@@ -574,34 +397,29 @@
 
 /* 错误提示 Toast */
 .error-toast {
-    position: absolute;
-    width: 660px;
-    height: 89px;
-    left: 45px;
-    bottom: 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background-color: #ff5e5e;
+    padding: 16px 24px;
+    background-color: rgba(231, 76, 60, 0.95);
     color: #fff;
-    font-size: 40px;
+    font-size: 16px;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     opacity: 0;
     transition: all 0.3s ease;
-
-    /* ⭐ 文字居中 */
-    display: flex;
-    align-items: center; /* 垂直居中 */
-    justify-content: center; /* 水平居中 */
 }
 
 .error-toast.show {
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }
 
 /* 按钮样式 */
-/* .btn {
+.btn {
     width: 100%;
     padding: 16px 32px;
     border: none;
@@ -630,7 +448,7 @@
 .btn-large {
     padding: 20px 48px;
     font-size: 18px;
-} */
+}
 
 /* 响应式调整 */
 @media screen and (max-width: 375px) {
