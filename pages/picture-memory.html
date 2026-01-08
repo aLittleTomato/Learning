@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>图片记忆游戏</title>
+        <link rel="stylesheet" href="../css/common.css" />
+        <link rel="stylesheet" href="../css/connect.css" />
+        <link rel="stylesheet" href="../css/picture-memory.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- 欢迎页 -->
+            <div id="stage" class="stage">
+                <div id="page-welcome" class="page active">
+                    <img class="full-bg" src="../images/game3/welcome_bg.png" />
+                    <img
+                        class="page-welcome-mask"
+                        src="../images/game3/welcom_mask.png"
+                    />
+                    <img
+                        class="page-logo right"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img
+                        class="page-dialogBG"
+                        src="../images/game2/welcome_txt_bg.png"
+                    />
+
+                    <!-- 新增两行文本 -->
+                    <div class="page-texts-title">
+                        <p class="line2">欢迎来到<br />连连看小练习</p>
+                    </div>
+
+                    <div class="page-texts welcome">
+                        <p class="line1">你好呀,</p>
+                        <p class="line2">准备好挑战成为</p>
+                        <p class="line2">数字记忆达人了吗？</p>
+                    </div>
+                    <button
+                        class="btn btn-welcome"
+                        onclick="PictureMemoryGame.nextPage()"
+                    ></button>
+                </div>
+
+                <div id="page-rule-1" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo left rule"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img
+                        class="page-rule-mask"
+                        src="../images/game3/burble_2.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule1">
+                            <p class="line1">让我们来看看规则吧</p>
+                            <p class="line2">接下来,</p>
+                            <p class="line1">你将看到一些数字，</p>
+                            <p class="line2">
+                                请从“1”开始<span class="rule-text-yellow"
+                                    >按照从小</span
+                                >
+                            </p>
+                            <p class="line2">
+                                <span class="rule-text-yellow">到大的顺序</span
+                                >点击数字,又
+                            </p>
+                            <p class="line2">快又准地将它们连起来。</p>
+                        </div>
+
+                        <button
+                            class="btn btn-bottom long startTutorial"
+                            onclick="PictureMemoryGame.nextPage()"
+                        >
+                            下一步 👉
+                        </button>
+                    </div>
+                </div>
+                <div id="page-rule-2" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo right1"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img class="full-bg" src="../images/game3/burble_1.png" />
+                    <img
+                        class="page-rule-tutorial"
+                        src="../images/game3/tutorial.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule2">
+                            <p class="line2">比如，下面出现了3个数字</p>
+                            <p class="line2">我们需要快速按照“1、2、3”</p>
+                            <p class="line2">的顺序点击，</p>
+                            <p class="line2">将它们连起来就算挑战成功</p>
+                        </div>
+                        <button
+                            class="btn btn-bottom long rule1"
+                            onclick="PictureMemoryGame.startWarmup()"
+                        >
+                            先来试一试 👉
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 准备页 -->
+                <div id="page-prepare" class="page">
+                    <img
+                        class="page-logo left1"
+                        src="../images/game2/memory_logo.png"
+                    />
+                    <img
+                        class="page-mask-display"
+                        src="../images/game2/burble_1.png"
+                    />
+
+                    <div class="page-content">
+                        <div class="page-texts display">
+                            <p class="line2">准备开始！</p>
+                        </div>
+                        <div class="number-circle" id="number-circle">
+                            <div class="number-display" id="number-display">
+                                准备
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 答题页（正式测试）-->
+                <div id="page-test" class="page">
+                    <img
+                        class="test-logo"
+                        src="../images/game3/input_logo.png"
+                    />
+                    <img
+                        class="test-tip-bg"
+                        src="../images/game3/input_txt.png"
+                    />
+                    <div class="page-texts test-tip">
+                        <p class="line2">请按照从小到大的顺序，</p>
+                        <p class="line2">快速点击下方的数字来连线吧。</p>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-track" id="test-progress-fill">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span id="test-progress" class="progress-text"
+                            >第 1 / 50 张</span
+                        >
+                    </div>
+                    <div class="picture-container">
+                        <img
+                            id="test-picture"
+                            src=""
+                            alt="图片"
+                            class="game-picture"
+                        />
+                    </div>
+                    <div class="button-container">
+                        <button
+                            id="test-btn"
+                            class="btn btn-bottom long answer"
+                            onclick="PictureMemoryGame.clickAnswer()"
+                        >
+                            这张图片出现过
+                        </button>
+                        <div id="warmup-error" class="error-toast">
+                            <span id="warmup-error-text"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="page-task" class="page">
+                    <img
+                        class="page-task-mask"
+                        src="../images/game3/burble_3.png"
+                    />
+                    <img
+                        class="page-logo bottom"
+                        src="../images/game3/big_logo.png"
+                    />
+
+                    <div class="page-content">
+                        <div class="page-texts task">
+                            <p class="line2">太棒了 🎉</p>
+                            <p class="line2">你已经顺利通过热身练习。</p>
+                            <p
+                                class="line2"
+                                style="height: 0.7em; margin: 0"
+                            ></p>
+                            <p class="line2">接下来，</p>
+                            <p class="line2">我们将进入正式挑战，</p>
+                            <p
+                                class="line2"
+                                style="height: 0.7em; margin: 0"
+                            ></p>
+
+                            <p class="line2">准备好开始了吗？</p>
+                        </div>
+                        <button
+                            class="btn btn-bottom long task"
+                            onclick="PictureMemoryGame.startTest()"
+                        >
+                            我准备好了，开始挑战 🏎️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 结算页 -->
+                <div id="page-result" class="page">
+                    <img
+                        class="page-logo left2"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img class="full-bg" src="../images/game3/burble_4.png" />
+                    <div class="page-content">
+                        <div class="page-texts result">
+                            <p class="line2">挑战结束 🎉</p>
+                            <p class="line2">让我们看看作答结果吧!</p>
+                        </div>
+
+                        <div class="result-card">
+                            <div class="stat-item blue">
+                                <div class="stat-value" id="stat-blue">
+                                    00:00
+                                </div>
+                                <div class="stat-label">作答时间</div>
+                            </div>
+                            <div class="stat-item green">
+                                <div class="stat-value" id="stat-green">0%</div>
+                                <div class="stat-label">正确率</div>
+                            </div>
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple">0</div>
+                                <div class="stat-label">最长中断时间</div>
+                            </div>
+                            <div class="stat-item orange">
+                                <div class="stat-value" id="stat-orange">0</div>
+                                <div class="stat-label">最短中断时间</div>
+                            </div>
+                        </div>
+                        <button
+                            class="btn btn-bottom long detail"
+                            onclick="PictureMemoryGame.viewDetails()"
+                        >
+                            查看作答详情
+                        </button>
+                        <button
+                            class="btn btn-bottom long again"
+                            onclick="PictureMemoryGame.restart()"
+                        >
+                            再玩一次 ✨
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 作答详情页 -->
+                <div id="page-details" class="page">
+                    <div class="details-header">
+                        <button
+                            class="btn btn-detail"
+                            onclick="PictureMemoryGame.backToResult()"
+                        ></button>
+
+                        <span id="details-progress" class="details-progress"
+                            >1/50</span
+                        >
+                        <button
+                            class="btn-list"
+                            onclick="PictureMemoryGame.showList()"
+                        >
+                            题目列表
+                        </button>
+                    </div>
+
+                    <div class="picture-container">
+                        <img
+                            id="details-picture"
+                            src=""
+                            alt="图片"
+                            class="game-picture"
+                        />
+                    </div>
+                    <div class="picture-info">
+                        <p id="picture-history" class="picture-history"></p>
+                    </div>
+
+                    <button
+                        id="btn-prev"
+                        class="btn-nav"
+                        onclick="PictureMemoryGame.prevQuestion()"
+                    >
+                        上一题
+                    </button>
+                    <button
+                        id="btn-next"
+                        class="btn-nav right"
+                        onclick="PictureMemoryGame.nextQuestion()"
+                    >
+                        下一题
+                    </button>
+                </div>
+
+                <!-- 题目列表弹窗 -->
+                <div id="list-popup" class="popup">
+                    <!-- <div
+                        class="popup-overlay"
+                        onclick="PictureMemoryGame.hideList()"
+                    ></div> -->
+                    <div class="popup-content">
+                        <div class="popup-header">
+                            <span id="popup-accuracy" class="popup-accuracy"
+                                >0%</span
+                            >
+                            <span class="popup-title">总正确率</span>
+                        </div>
+                        <div id="question-grid" class="question-grid">
+                            <!-- 动态生成50个题目按钮 -->
+                        </div>
+                    </div>
+                    <div
+                        class="popup-overlay front"
+                        onclick="PictureMemoryGame.hideList()"
+                    ></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/utils.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/api.js"></script>
+        <script src="../js/animation.js"></script>
+        <script src="../js/scale.js"></script>
+        <script src="../js/picture-memory.js"></script>
+    </body>
+</html>

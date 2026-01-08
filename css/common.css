@@ -16,7 +16,10 @@
 body {
     font-family: "MyFont", sans-serif;
 }
-
+button {
+    border: none;
+    font-family: "MyFont", -apple-system, sans-serif;
+}
 img {
     overflow: visible;
     /* border: 5px solid red !important; */

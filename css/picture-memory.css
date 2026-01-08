@@ -1,0 +1,434 @@
+.page-texts.welcome {
+    top: 960px;
+}
+
+.page-welcome-mask {
+    position: absolute;
+    width: 100%;
+    height: 881px;
+    left: 0px;
+    top: 0px;
+    object-fit: fill;
+}
+
+.page-dialogBG {
+    position: absolute;
+    /* background-image: "../images/game1/welcome_txt_bg.png"; */
+    width: 750px;
+    height: 641px;
+    left: 0px;
+    bottom: 0px;
+    object-fit: fill;
+}
+
+.btn-welcome {
+    position: absolute;
+    background-image: url("../images/game3/btn_welcome.png");
+    width: 361px;
+    height: 231px;
+    left: 413px;
+    bottom: 20px;
+
+    background-size: cover;
+    /* 填满按钮 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.number-circle {
+    position: absolute;
+    width: 608px;
+    display: flex;
+    height: 608px;
+    background-image: url("../images/game2/display_circle.png");
+    align-items: center;
+    top: 750px;
+    left: 71px;
+    justify-content: center;
+}
+
+.number-display {
+    font-size: 210px;
+    font-weight: bold;
+    color: #ff5c5f;
+}
+
+.number-display.ready {
+    font-size: 200px;
+    animation: fadeOut 0.6s forwards;
+    animation-delay: 1s;
+}
+
+.page-mask-display {
+    position: absolute;
+    width: 100%;
+    height: 1085px;
+    left: 0px;
+    bottom: 0px;
+    object-fit: fill;
+}
+
+.page-logo.left1 {
+    width: 775px;
+    height: 856px;
+    left: -330px;
+    top: 80px;
+    transform-origin: center bottom;
+    animation: leftAppear1 1s ease-out forwards,
+        leftBreath1 4s ease-in-out 1s infinite;
+}
+
+.test-logo {
+    position: absolute;
+    width: 242px;
+    height: 242px;
+    left: 7px;
+    top: 70px;
+}
+
+.test-tip-bg {
+    position: absolute;
+    width: 522px;
+    height: 189px;
+    left: 212px;
+    top: 95px;
+}
+
+.page-texts.test-tip {
+    position: absolute;
+    font-size: 28px;
+    left: 280px;
+    top: 150px;
+    opacity: 1;
+}
+.progress-bar {
+    position: absolute;
+    width: 660px;
+    height: 70px;
+    background-color: #ebebeb;
+    border-radius: 35px;
+    left: 45px;
+    top: 300px;
+}
+
+/* 外层轨道 */
+.progress-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #baf0af;
+    border-radius: 35px;
+}
+
+/* 内层填充（比外层小） */
+.progress-fill {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    width: calc(100% - 6px); /* JS 控制 */
+    background-color: #37c65b;
+    border-radius: 35px;
+    transition: width 0.3s ease;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.progress-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    color: #000;
+    font-size: 40px;
+    font-weight: bold;
+    pointer-events: none; /* 防止挡点击 */
+}
+
+.picture-container {
+    position: absolute;
+    width: 666px;
+    height: 593px;
+    left: 42px;
+    border: 5px solid #b9f0ae;
+    border-radius: 35px;
+    top: 400px;
+}
+
+.game-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.btn-bottom.long {
+    background-image: url("../images/game3/btn_long.png");
+}
+
+.error-toast {
+    position: absolute;
+    width: 660px;
+    height: 89px;
+    left: 45px;
+    bottom: 40px;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: #ff5e5e;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+    border-radius: 50px;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+
+    /* ⭐ 文字居中 */
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.error-toast.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-back,
+.btn-list {
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    width: 272px;
+    height: 102px;
+    position: absolute;
+    top: 200px;
+    left: 400px;
+
+    border: 4px solid #b9f0ae;
+    background-color: #37c65b;
+    border-radius: 50px;
+}
+
+.btn-back:hover,
+.btn-list:hover {
+    background: #f1f8f4;
+    transform: translateY(-1px);
+}
+
+.details-progress {
+    /* ⭐ 文字居中 */
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+
+    font-size: 40px;
+    font-weight: bold;
+
+    width: 190px;
+    height: 102px;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+
+    border: 4px solid #37c65b;
+    border-radius: 50px;
+}
+
+.details-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.picture-info {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.picture-history {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #666666;
+    text-align: center;
+}
+
+.details-nav {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.btn-nav {
+    position: absolute;
+    background-image: url("../images/game3/btn_welcome.png");
+    width: 361px;
+    height: 231px;
+    left: 43px;
+    bottom: 20px;
+
+    background-size: cover;
+    /* 填满按钮 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-nav.right {
+    left: auto;
+    right: 43px;
+}
+
+.btn-detail {
+    position: absolute;
+    width: 93px;
+    height: 93px;
+    left: 50px;
+    top: 200px;
+    background-image: url("../images/game2/btn_detail.png");
+    bottom: 190px;
+}
+
+/* 题目列表弹窗 */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.popup.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-overlay.front {
+    background: rgba(0, 0, 0, 0);
+}
+
+.popup-content {
+    position: relative;
+    background: white;
+    border-radius: 35px;
+    animation: popupEnter 0.3s ease;
+
+    width: 666px;
+    height: 1320px;
+    border: 8px solid #37c65b;
+    border-radius: 100px;
+}
+
+@keyframes popupEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.question-grid {
+    position: absolute;
+    left: 96px;
+    top: 216px;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 474px;
+    height: 970px;
+    gap: 31px;
+}
+
+.question-item {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+
+    border: 4px solid #82e782;
+    background-color: #2ece2e;
+    border-radius: 50px;
+
+    font-size: 35px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.question-item.correct {
+    background: #4caf50;
+    color: white;
+}
+
+.question-item.wrong {
+    background: #ff5c5f;
+    border: 4px solid #ffc4c6;
+}
+
+.question-item:hover {
+    transform: scale(1.1);
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: absolute;
+    width: 311px;
+    height: 119px;
+    left: 172px;
+    top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 6px solid #82e782;
+    border-radius: 60px;
+}
+
+.popup-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #2ece2e;
+}
+
+.popup-accuracy {
+    font-size: 40px;
+    color: #009738;
+    font-weight: bold;
+    line-height: 1;
+    font-weight: normal;
+}
