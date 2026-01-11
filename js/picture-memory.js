@@ -376,11 +376,17 @@ var PictureMemoryGame = (function () {
         var totalTime = Math.floor((Date.now() - state.startTime) / 1000);
         document.getElementById("stat-blue").textContent = totalTime + "秒";
         document.getElementById("stat-green").textContent =
-            stats.accuracy.toFixed(1) + "%";
+            stats.accuracy.toFixed(0) + "%";
         document.getElementById("stat-purple").textContent =
-            stats.missRate.toFixed(1) + "%";
+            stats.missRate.toFixed(0) + "%";
         document.getElementById("stat-orange").textContent =
-            stats.falseRate.toFixed(1) + "%";
+            stats.falseRate.toFixed(0) + "%";
+
+        let green1Text =
+            stats.falseRate.toFixed(0) != 0
+                ? (stats.missRate / stats.falseRate).toFixed(0)
+                : 0;
+        document.getElementById("stat-green1").textContent = green1Text + "%";
 
         // 根据正确率显示称号
         var title = "记忆新手";
@@ -501,11 +507,14 @@ var PictureMemoryGame = (function () {
         // 显示出现记录
         var historyText = "";
         var appearRounds = state.appearedPictures[record.pictureId];
+        var item = document.getElementById("picture-history");
         if (appearRounds.length === 1) {
             historyText = "这张图片在之前没有重复出现";
+            item.classList.add("hide");
         } else {
             historyText =
                 "这张图片在第 " + appearRounds.join("、") + " 题出现过";
+            item.classList.remove("hide");
         }
         document.getElementById("picture-history").textContent = historyText;
 

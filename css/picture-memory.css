@@ -1,7 +1,26 @@
+#page-prepare {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #37c85b 0% 50%, #fff 50% 100%);
+    background-repeat: no-repeat;
+}
+
+#page-task {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #fff 0% 50%, #37c85b 50% 100%);
+    background-repeat: no-repeat;
+}
+#page-result {
+    background: linear-gradient(to bottom, #37c85b 0% 50%, #fff 50% 100%);
+}
+#page-details {
+    background: linear-gradient(to bottom, #37c85b 0% 50%, #fff 50% 100%);
+}
 .page-texts.welcome {
     top: 960px;
 }
-
+.page-texts.rule1 {
+    font-size: 60px;
+}
 .page-welcome-mask {
     position: absolute;
     width: 100%;
@@ -23,7 +42,7 @@
 
 .btn-welcome {
     position: absolute;
-    background-image: url("../images/game3/btn_welcome.png");
+    background-image: url("../images/game5/btn_welcome.png");
     width: 361px;
     height: 231px;
     left: 413px;
@@ -41,7 +60,7 @@
     width: 608px;
     display: flex;
     height: 608px;
-    background-image: url("../images/game2/display_circle.png");
+    background-image: url("../images/game5/display_circle.png");
     align-items: center;
     top: 750px;
     left: 71px;
@@ -51,7 +70,7 @@
 .number-display {
     font-size: 210px;
     font-weight: bold;
-    color: #ff5c5f;
+    color: #37c85b;
 }
 
 .number-display.ready {
@@ -63,17 +82,49 @@
 .page-mask-display {
     position: absolute;
     width: 100%;
-    height: 1085px;
+    height: 1055px;
     left: 0px;
     bottom: 0px;
     object-fit: fill;
 }
+.page-logo {
+    width: 452px;
+    height: 835px;
+}
 
 .page-logo.left1 {
-    width: 775px;
-    height: 856px;
-    left: -330px;
-    top: 80px;
+    width: 609px;
+    height: 1126px;
+    left: -30px;
+    top: -330px;
+    transform-origin: center bottom;
+    animation: leftAppear1 1s ease-out forwards,
+        leftBreath1 4s ease-in-out 1s infinite;
+}
+.page-logo.left2 {
+    width: 452px;
+    height: 835px;
+    left: 220px;
+    top: -210px;
+}
+
+.page-logo.right {
+    width: 452px;
+    height: 835px;
+    top: 280px;
+}
+
+.page-logo.left.rule {
+    top: -200px;
+    left: -350px;
+}
+
+.page-logo.bottom {
+    width: 609px;
+    height: 1126px;
+    left: -70px;
+    top: auto;
+    bottom: -320px;
     transform-origin: center bottom;
     animation: leftAppear1 1s ease-out forwards,
         leftBreath1 4s ease-in-out 1s infinite;
@@ -81,8 +132,8 @@
 
 .test-logo {
     position: absolute;
-    width: 242px;
-    height: 242px;
+    width: 218px;
+    height: 218px;
     left: 7px;
     top: 70px;
 }
@@ -92,7 +143,7 @@
     width: 522px;
     height: 189px;
     left: 212px;
-    top: 95px;
+    top: 85px;
 }
 
 .page-texts.test-tip {
@@ -164,21 +215,21 @@
 }
 
 .btn-bottom.long {
-    background-image: url("../images/game3/btn_long.png");
+    background-image: url("../images/game5/btn_long.png");
 }
 
 .error-toast {
     position: absolute;
-    width: 660px;
-    height: 89px;
+    width: 666px;
+    height: 116px;
     left: 45px;
-    bottom: 40px;
+    bottom: 68px;
     transform: translate(-50%, -50%) scale(0);
     background-color: #ff5e5e;
     color: #fff;
     font-size: 40px;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 58px;
     z-index: 1000;
     opacity: 0;
     transition: all 0.3s ease;
@@ -201,8 +252,7 @@
     margin-bottom: 20px;
 }
 
-.btn-back,
-.btn-list {
+.btn-back {
     font-size: 40px;
     color: #fff;
     cursor: pointer;
@@ -218,7 +268,22 @@
     background-color: #37c65b;
     border-radius: 50px;
 }
+.btn-list {
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
+    position: absolute;
+    top: 187px;
+    left: 400px;
+}
+.btn-list {
+    background-image: url("../images/game5/btn_list.png");
+    background-size: cover;
+    width: 302px;
+    height: 132px;
+}
 .details-progress {
     /* ⭐ 文字居中 */
     display: flex;
@@ -234,8 +299,9 @@
     top: 200px;
     left: 200px;
 
-    border: 4px solid #37c65b;
+    border: 6px solid #37c65b;
     border-radius: 50px;
+    color: #37c65b;
 }
 
 .details-content {
@@ -247,20 +313,26 @@
 }
 
 .picture-info {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 20px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: absolute;
+    width: 666px;
+    height: 116px;
+    left: 45px;
+    bottom: 268px;
+    background-color: #ff5e5e;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+    border-radius: 58px;
+    transition: all 0.3s ease;
+
+    /* ⭐ 文字居中 */
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
 }
 
-.picture-history {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #666666;
-    text-align: center;
+.picture-info.hide {
+    display: none;
 }
 
 .details-nav {
@@ -271,10 +343,10 @@
 
 .btn-nav {
     position: absolute;
-    background-image: url("../images/game3/btn_welcome.png");
+    background-image: url("../images/game5/btn-short.png");
     width: 361px;
-    height: 231px;
-    left: 43px;
+    height: 223px;
+    left: 0px;
     bottom: 20px;
 
     background-size: cover;
@@ -282,11 +354,13 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: rgba(0, 0, 0, 0);
+    font-size: 40px;
+    color: #fff;
 }
 
 .btn-nav.right {
     left: auto;
-    right: 43px;
+    right: 0px;
 }
 
 .btn-detail {
@@ -295,7 +369,8 @@
     height: 93px;
     left: 50px;
     top: 200px;
-    background-image: url("../images/game2/btn_detail.png");
+    background-image: url("../images/game5/btn_detail.png");
+    background-size: cover;
     bottom: 190px;
 }
 
@@ -323,6 +398,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 .popup-overlay.front {
@@ -337,8 +413,11 @@
 
     width: 666px;
     height: 1320px;
-    border: 8px solid #37c65b;
+    border: 8px solid #b9f0ae;
     border-radius: 100px;
+
+    z-index: 2;
+    pointer-events: auto; /* ⭐ 关键 */
 }
 
 @keyframes popupEnter {
@@ -425,4 +504,48 @@
     font-weight: bold;
     line-height: 1;
     font-weight: normal;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -20px;
+    width: 350px;
+    height: 179px;
+    background-size: 100% 100%;
+    text-align: center;
+    padding: 0px;
+}
+
+.stat-item.blue {
+    background-image: url("../images/game5/stat_time.png");
+    color: #5ca1ff;
+}
+
+.stat-item.purple {
+    background-image: url("../images/game5/stat_speed.png");
+    color: #e24fe2;
+}
+
+.stat-item.orange {
+    background-image: url("../images/game5/stat_focus.png");
+    color: #e2592c;
+}
+
+.stat-item.green {
+    background-image: url("../images/game5/stat_accuracy.png");
+    color: #2ece2e;
+}
+
+.page-texts.result {
+    top: 350px;
+    font-size: 55px;
+}
+.full-bg.result {
+    height: 1437px;
+    position: absolute;
+    top: 120px;
 }

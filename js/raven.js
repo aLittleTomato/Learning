@@ -223,7 +223,7 @@ var RavenGame = (function () {
      * 下一题
      */
     function nextQuestion() {
-        if (state.currentQuestion < 59) {
+        if (state.currentQuestion < 3) {
             state.currentQuestion++;
             renderQuestion();
         } else {
