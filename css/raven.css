@@ -1,0 +1,912 @@
+/**
+ * 瑞文推理游戏样式
+ * 使用绿色系配色，营造轻松氛围
+ */
+
+#page-result {
+    cursor: pointer;
+    background: linear-gradient(to bottom, #5eb8e8 0% 40%, #ffffff 40% 100%);
+    background-repeat: no-repeat;
+}
+#page-details {
+    background: linear-gradient(to bottom, #5eb8e8 0% 40%, #ffffff 40% 100%);
+}
+/* 欢迎页 */
+.welcome-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+.page-logo {
+    position: absolute;
+    width: 450px;
+    height: 660px;
+}
+.page-logo.right {
+    right: -280px;
+}
+
+.page-logo.left.rule {
+    top: -50px;
+    left: -320px;
+}
+
+.page-logo.left2 {
+    width: 389px;
+    height: 573px;
+    left: 250px;
+    top: -60px;
+}
+
+.mascot {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.btn-bottom.long {
+    background-image: url("../images/game4/btn_long.png");
+}
+
+.page-texts.rule1 {
+    top: 620px;
+}
+
+.page-texts.rule2 {
+    top: 670px;
+    font-size: 57px;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.welcome-content h1 {
+    font-size: 32px;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #66bb6a;
+    margin-bottom: 30px;
+}
+
+.info-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-box p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #424242;
+    margin: 10px 0;
+}
+
+/* 规则说明页 */
+.rules-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.rules-content h2 {
+    font-size: 28px;
+    color: #2e7d32;
+    margin-bottom: 30px;
+}
+
+.rules-list {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rule-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.rule-text {
+    flex: 1;
+    text-align: left;
+}
+
+.rule-text h3 {
+    font-size: 18px;
+    color: #2e7d32;
+    margin-bottom: 5px;
+}
+
+.rule-text p {
+    font-size: 14px;
+    color: #616161;
+    line-height: 1.6;
+}
+
+/* 答题页 */
+.game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #4caf50;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.progress-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.btn-list {
+    background-image: url("../images/game4/btn-list.png");
+    border: none;
+    width: 302px;
+    height: 132px;
+    cursor: pointer;
+    position: absolute;
+    top: 100px;
+    left: 400px;
+}
+
+.question-container {
+    position: relative;
+    border-radius: 35px;
+
+    width: 666px;
+    height: 593px;
+    top: 354px;
+    left: 42px;
+
+    border: 5px solid #aed9f1;
+}
+.question-container.detail {
+    top: 270px;
+}
+.question-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #5fb8e7;
+    font-size: 35px;
+    font-weight: bold;
+
+    width: 80px;
+    height: 80px;
+    border: 5px solid #5fb8e7;
+    border-radius: 40px;
+    /* ⭐ 文字居中 */
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.question-image {
+    width: 497px;
+    height: 537px;
+    border-radius: 8px;
+    display: block;
+    position: absolute;
+    left: 84px;
+    top: 28px;
+}
+
+.hint-text {
+    text-align: center;
+    font-size: 16px;
+    color: #424242;
+    margin-bottom: 20px;
+}
+
+.options-container {
+    display: grid;
+    row-gap: 32px;
+    column-gap: 124px;
+
+    grid-template-columns: repeat(var(--cols), 110px);
+    grid-template-rows: repeat(2, 110px);
+
+    position: absolute;
+    left: 87px;
+    top: 988px;
+    width: 575px;
+    height: 250px;
+}
+.options-container.detail {
+    top: 948px;
+}
+.options-container.eight {
+    column-gap: 46px;
+}
+
+.option-item {
+    aspect-ratio: 1;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 43px;
+    font-weight: bold;
+    color: #5fb8e7;
+
+    width: 110px;
+    height: 110px;
+    border: 5px solid #aed9f1;
+    border-radius: 55px;
+}
+
+.option-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.option-item.selected {
+    color: #fff;
+    background-color: #5eb7e5;
+}
+.option-item.correct {
+    color: #fff;
+    border-color: #82e782;
+    background-color: #2ece2e;
+}
+
+.option-item.error {
+    color: #fff;
+    border-color: #ffc4c6;
+    background-color: #ff5c5f;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.btn-nav {
+    position: absolute;
+    background-image: url("../images/game4/btn-short.png");
+    width: 361px;
+    height: 231px;
+    left: 0px;
+    bottom: -20px;
+    padding-top: 10px;
+
+    font-size: 40px;
+    color: #fff;
+
+    background-size: cover;
+    /* 填满按钮 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-nav.right {
+    left: auto;
+    right: 0px;
+}
+
+.btn-nav:disabled {
+    display: none;
+}
+
+/* 结算页 */
+.result-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.result-content h2 {
+    font-size: 28px;
+    color: #2e7d32;
+    margin-bottom: 30px;
+}
+
+.factor-stats {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.factor-name {
+    font-size: 16px;
+    color: #424242;
+}
+
+.factor-accuracy {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.result-buttons {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.details-progress {
+    font-size: 40px;
+    font-weight: bold;
+    color: #5eb8e8;
+    border: 5px solid #5eb8e8;
+    width: 190px;
+    height: 102px;
+    position: absolute;
+    border-radius: 50px;
+    left: 200px;
+    top: 110px;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.details-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.details-question {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.answer-info {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.answer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.answer-row:last-child {
+    border-bottom: none;
+}
+
+.answer-label {
+    font-size: 16px;
+    color: #757575;
+}
+
+.answer-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #424242;
+}
+
+.answer-value.correct {
+    color: #4caf50;
+}
+
+.answer-value.wrong {
+    color: #f44336;
+}
+
+/* 题目列表弹窗 */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup.active {
+    display: flex;
+}
+
+.popup-content {
+    background: white;
+
+    width: 666px;
+    height: 1279px;
+    border: 13px solid #aed9f1;
+    border-radius: 100px;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* ⭐ 关键：按圆角裁剪子内容 */
+}
+/* Chrome / Safari / 新 Edge */
+.popup-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.popup-header h3 {
+    font-size: 20px;
+    color: #2e7d32;
+    margin: 0;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #757575;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.popup-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    /* Firefox */
+    scrollbar-width: none;
+    touch-action: pan-y;
+    /* IE / Edge 旧版 */
+    -ms-overflow-style: none;
+}
+
+.list-accuracy {
+    font-size: 25px;
+    font-weight: bold;
+    color: #2ece2e;
+    margin-left: 144px;
+    margin-top: 20px;
+    text-align: center;
+    width: 311px;
+    height: 119px;
+    border: 6px solid #82e782;
+    border-radius: 60px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.list-accuracy-num {
+    font-weight: bold;
+    font-size: 40px;
+    color: #009738;
+    line-height: 1;
+}
+
+.factor-list {
+    /* 动态生成内容 */
+}
+
+.factor-group {
+    margin-bottom: 25px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.factor-header {
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 80px;
+}
+
+.factor-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #326ebf;
+    border: 5px solid #a1c9ff;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60px;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.factor-acc {
+    font-size: 25px;
+    font-weight: bold;
+    color: #009738;
+    border: 5px solid #82e782;
+    border-radius: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60px;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.question-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.question-cell {
+    aspect-ratio: 1;
+    background-color: #fff;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: bold;
+    color: #5fb8e7;
+
+    width: 80px;
+    height: 80px;
+    border: 5px solid #aed9f1;
+    border-radius: 55px;
+}
+
+.question-cell:hover {
+    transform: scale(1.1);
+}
+
+.question-cell.correct {
+    background: #2ece2e;
+    color: white;
+    border-color: #82e782;
+}
+
+.question-cell.wrong {
+    background: #ff5c5f;
+    color: white;
+    border-color: #ffc4c6;
+}
+
+.question-cell.unanswered {
+    background: #ff5c5f;
+    color: white;
+    border-color: #ffc4c6;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+.btn-secondary {
+    background: white;
+    color: #4caf50;
+    border: 2px solid #4caf50;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #4caf50;
+    color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .options-container {
+        grid-template-columns: repeat(var(--cols), 110px);
+    }
+}
+
+.progress-bar {
+    position: absolute;
+    width: 660px;
+    height: 70px;
+    background-color: #ebebeb;
+    border-radius: 35px;
+    left: 45px;
+    top: 250px;
+    overflow: hidden;
+}
+
+/* 外层轨道 */
+.progress-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #d1eeff;
+    border-radius: 35px;
+}
+.progress-track.less {
+    border-radius: 0px;
+}
+
+/* 内层填充（比外层小） */
+.progress-fill {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    width: calc(100% - 6px); /* JS 控制 */
+    background-color: #5eb7e7;
+    border-radius: 35px;
+    transition: width 0.3s ease;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.progress-fill.less {
+    border-radius: 0px;
+    left: auto;
+    padding-left: 0px;
+}
+
+.progress-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    color: #000;
+    font-size: 40px;
+    font-weight: bold;
+    pointer-events: none; /* 防止挡点击 */
+}
+
+.test-logo {
+    position: absolute;
+    width: 242px;
+    height: 222px;
+    left: 7px;
+    top: 30px;
+}
+
+.test-tip-bg {
+    position: absolute;
+    width: 522px;
+    height: 189px;
+    left: 212px;
+    top: 45px;
+}
+.page-texts.test-tip {
+    position: absolute;
+    font-size: 27px;
+    left: 273px;
+    top: 100px;
+    opacity: 1;
+}
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -20px;
+    width: 341px;
+    height: 149px;
+    background-size: 100% 100%;
+    text-align: center;
+    padding: 0px;
+}
+
+.stat-item.blue {
+    background-image: url("../images/game4/stat_time.png");
+    color: #5ca1ff;
+}
+
+.stat-item.purple {
+    background-image: url("../images/game4/stat_speed.png");
+    color: #e24fe2;
+}
+
+.stat-item.orange {
+    background-image: url("../images/game4/stat_focus.png");
+    color: #e2592c;
+}
+
+.stat-item.green {
+    background-image: url("../images/game4/stat_accuracy.png");
+    color: #2ece2e;
+}
+
+#stat-blue {
+    color: #326ebf;
+}
+
+#stat-green {
+    color: #009738;
+}
+
+#stat-purple {
+    color: #bf329c;
+}
+
+#stat-orange {
+    color: #d24d00;
+}
+
+/* 第一行元素不要被挤压 */
+/* .result-card1 > :nth-child(-n + 2) {
+    margin-top: 0;
+} */
+
+/* 结果界面 */
+.result-card1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 两列 */
+    grid-template-rows: repeat(4, 1fr); /* 四行 */
+    justify-items: center;
+    /* 水平居中子元素 */
+    align-items: center;
+    /* 垂直居中子元素 */
+
+    position: absolute;
+    left: 25px;
+    width: 700px;
+    height: 500px;
+    top: 550px;
+}
+
+.page-texts.result {
+    top: 260px;
+    font-size: 55px;
+}
+.btn-bottom.detail {
+    bottom: 190px;
+}
+
+.stat-label {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.btn-welcome {
+    position: absolute;
+    background-image: url("../images/game4/btn_welcome.png");
+    width: 361px;
+    height: 231px;
+    left: 413px;
+    bottom: 20px;
+    color: #fff;
+    font-size: 45px;
+
+    background-size: cover;
+    /* 填满按钮 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.page-result-mask {
+    position: absolute;
+    width: 100%;
+    height: 1362px;
+    left: 0px;
+    bottom: -50px;
+    object-fit: fill;
+}
+
+.btn-detail {
+    position: absolute;
+    width: 93px;
+    height: 93px;
+    left: 60px;
+    top: 115px;
+    background-image: url("../images/game4/btn_detail.png");
+    bottom: 190px;
+    background-size: cover;
+}
+.popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-overlay.front {
+    background: rgba(0, 0, 0, 0);
+}

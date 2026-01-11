@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>瑞文推理游戏</title>
+        <link rel="stylesheet" href="../css/common.css" />
+        <link rel="stylesheet" href="../css/connect.css" />
+        <link rel="stylesheet" href="../css/raven.css" />
+    </head>
+    <body>
+        <div id="app" class="raven-game">
+            <div id="stage" class="stage">
+                <div id="page-welcome" class="page active">
+                    <img class="full-bg" src="../images/game4/welcome_bg.png" />
+                    <!-- <img
+                        class="page-welcome-mask"
+                        src="../images/game3/welcom_mask.png"
+                    /> -->
+                    <img
+                        class="page-logo right"
+                        src="../images/game4/big_logo.png"
+                    />
+                    <img
+                        class="page-dialogBG"
+                        src="../images/game2/welcome_txt_bg.png"
+                    />
+
+                    <!-- 新增两行文本 -->
+                    <div class="page-texts-title">
+                        <p class="line2">欢迎来到<br />推理小练习</p>
+                    </div>
+
+                    <div class="page-texts welcome">
+                        <p class="line1">你好呀,</p>
+                        <p class="line2">准备好挑战成为</p>
+                        <p class="line2">推理大师了吗？</p>
+                    </div>
+                    <button
+                        class="btn btn-welcome"
+                        onclick="RavenGame.nextPage()"
+                    >
+                        下一步
+                    </button>
+                </div>
+
+                <div id="page-rule-1" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game4/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo left rule"
+                        src="../images/game4/big_logo.png"
+                    />
+                    <img
+                        class="page-rule-mask"
+                        src="../images/game4/burble_2.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule1">
+                            <p class="line1">接下来，</p>
+                            <p class="line2">
+                                你将看到<span class="rule-text-blue">60张</span
+                                >有部分残缺
+                            </p>
+                            <p class="line1">的图片，</p>
+                            <p class="line2">请发挥你的推理能力，找</p>
+                            <p class="line2">一找线索，选出每张图片</p>
+                            <p class="line2">
+                                对应的
+                                <span class="rule-text-blue">缺少的部分</span>。
+                            </p>
+                        </div>
+
+                        <button
+                            class="btn btn-bottom long startTutorial"
+                            onclick="RavenGame.nextPage()"
+                        >
+                            下一步 👉
+                        </button>
+                    </div>
+                </div>
+                <div id="page-rule-2" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game4/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo left rule"
+                        src="../images/game4/big_logo.png"
+                    />
+                    <img
+                        class="page-rule-mask"
+                        src="../images/game4/burble_2.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule2">
+                            <p class="line2">
+                                作答过程中，你可以<span class="rule-text-blue"
+                                    >返回</span
+                                >
+                            </p>
+                            <p class="line2">
+                                <span class="rule-text-blue">上一题</span
+                                >进行选项修改。请
+                            </p>
+                            <p class="line2">注意整体完成时间将会被</p>
+                            <p class="line1">记录。</p>
+                            <p class="line2">准备好了吗？</p>
+                            <p class="line2">让我们开始吧</p>
+                        </div>
+
+                        <button
+                            class="btn btn-bottom long startTutorial"
+                            onclick="RavenGame.startGame()"
+                        >
+                            我准备好了，开始挑战 🏎️
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 答题页 -->
+                <div id="page-game" class="page">
+                    <img
+                        class="test-logo"
+                        src="../images/game4/input_logo.png"
+                    />
+                    <img
+                        class="test-tip-bg"
+                        src="../images/game4/input_txt.png"
+                    />
+                    <div class="page-texts test-tip">
+                        <p class="line2">请从下列选项中找出对应缺少的部</p>
+                        <p class="line2">分，选择后才可以进入下一题哦。</p>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-track" id="test-progress-fill">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span id="test-progress" class="progress-text"
+                            >第 1 / 50 张</span
+                        >
+                    </div>
+
+                    <!-- 题目图片 -->
+                    <div class="question-container">
+                        <img
+                            id="question-image"
+                            class="question-image"
+                            src=""
+                            alt="题目"
+                        />
+                        <div class="question-label" id="question-label">A1</div>
+                    </div>
+
+                    <!-- 答案选项 -->
+                    <div id="options-container" class="options-container">
+                        <!-- 动态生成选项 -->
+                    </div>
+
+                    <button
+                        id="btn-prev"
+                        class="btn-nav"
+                        onclick="RavenGame.prevQuestion()"
+                    >
+                        上一题
+                    </button>
+                    <button
+                        id="btn-next"
+                        class="btn-nav right"
+                        onclick="RavenGame.nextQuestion()"
+                    >
+                        下一题
+                    </button>
+                </div>
+
+                <!-- 结算页 -->
+                <div id="page-result" class="page">
+                    <img
+                        class="page-logo left2"
+                        src="../images/game4/big_logo.png"
+                    />
+                    <img
+                        class="page-result-mask"
+                        src="../images/game4/burble_4.png"
+                    />
+
+                    <div class="page-content">
+                        <div class="page-texts result">
+                            <p class="line2">恭喜你 🎉</p>
+                            <p class="line2">完成了全部挑战</p>
+                            <p class="line2">你真是推理大师！👏</p>
+                        </div>
+
+                        <div class="result-card1">
+                            <div class="stat-item blue">
+                                <div class="stat-value" id="stat-blue">
+                                    00:00
+                                </div>
+                                <div class="stat-label">作答时间</div>
+                            </div>
+                            <div class="stat-item green">
+                                <div class="stat-value" id="stat-green">0%</div>
+                                <div class="stat-label">正确率</div>
+                            </div>
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple-A">
+                                    0
+                                </div>
+                                <div class="stat-label">A因子正确率</div>
+                            </div>
+
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple-B">
+                                    0
+                                </div>
+                                <div class="stat-label">B因子正确率</div>
+                            </div>
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple-C">
+                                    0
+                                </div>
+                                <div class="stat-label">C因子正确率</div>
+                            </div>
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple-D">
+                                    0
+                                </div>
+                                <div class="stat-label">D因子正确率</div>
+                            </div>
+                            <div class="stat-item purple">
+                                <div class="stat-value" id="stat-purple-E">
+                                    0
+                                </div>
+                                <div class="stat-label">E因子正确率</div>
+                            </div>
+                        </div>
+                        <button
+                            class="btn btn-bottom long detail"
+                            onclick="RavenGame.viewDetails()"
+                        >
+                            查看作答详情
+                        </button>
+                        <button
+                            class="btn btn-bottom long again"
+                            onclick="RavenGame.restart()"
+                        >
+                            再玩一次 ✨
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 作答详情页 -->
+                <div id="page-details" class="page">
+                    <img class="full-bg" src="../images/game4/burble_5.png" />
+
+                    <button
+                        class="btn btn-detail"
+                        onclick="RavenGame.backToResult()"
+                    ></button>
+                    <div class="details-progress" id="details-progress">
+                        1/60
+                    </div>
+                    <button
+                        class="btn-list"
+                        onclick="RavenGame.showQuestionList()"
+                    ></button>
+
+                    <div class="question-container detail">
+                        <img
+                            id="details-image"
+                            class="question-image"
+                            src=""
+                            alt="题目"
+                        />
+                        <div class="question-label" id="details-label">A1</div>
+                    </div>
+                    <!-- 答案选项 -->
+                    <div
+                        id="question-container"
+                        class="options-container detail"
+                    >
+                        <!-- 动态生成选项 -->
+                    </div>
+                    <!-- 导航按钮 -->
+                    <button
+                        id="btn-prev-deteil"
+                        class="btn-nav"
+                        onclick="RavenGame.prevDetail()"
+                    >
+                        上一题
+                    </button>
+                    <button
+                        id="btn-next-deteil"
+                        class="btn-nav right"
+                        onclick="RavenGame.nextDetail()"
+                    >
+                        下一题
+                    </button>
+                </div>
+
+                <!-- 题目列表弹窗 -->
+                <div id="question-list-popup" class="popup">
+                    <div
+                        class="popup-overlay front"
+                        onclick="RavenGame.hideQuestionList()"
+                    ></div>
+                    <div class="popup-content">
+                        <div class="popup-body">
+                            <div class="list-accuracy">
+                                <span
+                                    id="list-accuracy"
+                                    class="list-accuracy-num"
+                                    >--</span
+                                >
+                                总正确率
+                            </div>
+                            <div id="factor-list" class="factor-list">
+                                <!-- 动态生成因子列表 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/utils.js"></script>
+        <script src="../js/config.js"></script>
+        <script src="../js/api.js"></script>
+        <script src="../js/animation.js"></script>
+        <script src="../js/scale.js"></script>
+        <script src="../js/raven.js"></script>
+    </body>
+</html>

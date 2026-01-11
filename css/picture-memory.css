@@ -219,12 +219,6 @@
     border-radius: 50px;
 }
 
-.btn-back:hover,
-.btn-list:hover {
-    background: #f1f8f4;
-    transform: translateY(-1px);
-}
-
 .details-progress {
     /* ⭐ 文字居中 */
     display: flex;

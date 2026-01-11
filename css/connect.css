@@ -514,12 +514,11 @@
     margin-top: -70px;
     width: 350px;
     height: 228px;
-    background-size: contain;
+    background-size: cover;
 }
 
 .stat-item {
     background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -595,7 +594,6 @@
 .stat-value {
     font-size: 32px;
     font-weight: 700;
-    color: #fff;
 }
 
 .result-actions {
