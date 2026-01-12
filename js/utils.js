@@ -218,6 +218,21 @@ var Utils = (function () {
         return document.querySelector(".page.active");
     }
 
+    const Sounds = {
+        click: new Audio("../sound/buttonClick.mp3"),
+        success: new Audio("../sound/congrats.mp3"),
+        error: new Audio("../sound/errorSound.mp3"),
+        number: new Audio("../sound/numberAppear.mp3"),
+        countdown: new Audio("../sound/countdown.mp3"),
+    };
+
+    function playSound(name) {
+        const s = Sounds[name];
+        if (!s) return;
+        s.currentTime = 0;
+        s.play();
+    }
+
     // 导出公共方法
     return {
         getUrlParam: getUrlParam,
@@ -232,6 +247,7 @@ var Utils = (function () {
         format2: format2,
         pageConfig: pageConfig,
         getCurrentPage: getCurrentPage,
+        playSound: playSound,
     };
 })();
 

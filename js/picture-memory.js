@@ -86,6 +86,7 @@ var PictureMemoryGame = (function () {
      * 开始热身阶段
      */
     function startWarmup() {
+        Utils.playSound("click");
         state.isWarmup = true;
         state.phase = "prepare";
         prepareGame(config.warmup);
@@ -95,6 +96,7 @@ var PictureMemoryGame = (function () {
      * 开始正式测试
      */
     function startTest() {
+        Utils.playSound("click");
         state.isWarmup = false;
         state.phase = "prepare";
         prepareGame(config.test);
@@ -181,10 +183,13 @@ var PictureMemoryGame = (function () {
         var count = config.countdownTime;
 
         countdownEl.textContent = count;
+        Utils.playSound("countdown");
 
         var timer = setInterval(function () {
             count--;
             if (count > 0) {
+                Utils.playSound("countdown");
+
                 countdownEl.textContent = count;
                 // 添加缩放动画
                 countdownEl.style.transform = "scale(0.5)";
@@ -204,6 +209,8 @@ var PictureMemoryGame = (function () {
      * 开始游戏
      */
     function startGame() {
+        Utils.playSound("click");
+
         if (state.isWarmup) {
             state.phase = "warmup";
             showPage("page-test");
@@ -296,6 +303,7 @@ var PictureMemoryGame = (function () {
     function clickAnswer() {
         // 清除自动跳过计时器
         clearTimeout(state.pictureTimer);
+        Utils.playSound("click");
 
         // 禁用按钮
         var btnEl = document.getElementById("test-btn");
@@ -343,6 +351,7 @@ var PictureMemoryGame = (function () {
     function showResult() {
         state.phase = "result";
         showPage("page-result");
+        Utils.playSound("success");
 
         // 计算统计数据
         var stats = calculateStats();
@@ -462,6 +471,7 @@ var PictureMemoryGame = (function () {
         state.currentDetailsIndex = 0;
         showPage("page-details");
         renderDetails();
+        Utils.playSound("click");
     }
 
     /**
@@ -504,6 +514,7 @@ var PictureMemoryGame = (function () {
      */
     function prevQuestion() {
         if (state.currentDetailsIndex > 0) {
+            Utils.playSound("click");
             state.currentDetailsIndex--;
             renderDetails();
         }
@@ -514,6 +525,7 @@ var PictureMemoryGame = (function () {
      */
     function nextQuestion() {
         if (state.currentDetailsIndex < state.history.length - 1) {
+            Utils.playSound("click");
             state.currentDetailsIndex++;
             renderDetails();
         }
@@ -525,6 +537,7 @@ var PictureMemoryGame = (function () {
     function showList() {
         var popup = document.getElementById("list-popup");
         popup.classList.add("active");
+        Utils.playSound("click");
 
         // 计算正确率
         var stats = calculateStats();
@@ -574,6 +587,7 @@ var PictureMemoryGame = (function () {
      */
     function backToResult() {
         state.phase = "result";
+        Utils.playSound("click");
         showPage("page-result");
     }
 
@@ -581,6 +595,7 @@ var PictureMemoryGame = (function () {
      * 重新开始
      */
     function restart() {
+        Utils.playSound("click");
         state.phase = "welcome";
         state.currentRound = 0;
         state.history = [];
@@ -601,6 +616,7 @@ var PictureMemoryGame = (function () {
     function showError(clicked, shouldClick) {
         var errorEl = document.getElementById("warmup-error");
         var errorText = document.getElementById("warmup-error-text");
+        Utils.playSound("error");
 
         if (clicked && !shouldClick) {
             errorText.textContent = "这张图片没有重复出现哦";
@@ -661,7 +677,7 @@ var PictureMemoryGame = (function () {
             console.error("Next page element not found:", nextPageId);
             return;
         }
-
+        Utils.playSound("click");
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage);
     }

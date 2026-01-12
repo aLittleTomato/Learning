@@ -102,6 +102,7 @@ var ConnectGame2 = (function () {
      */
     function showTutorial() {
         console.log("Starting tutorial");
+        Utils.playSound("click");
 
         // 切换页面
         var welcomePage = Utils.getCurrentPage();
@@ -148,6 +149,7 @@ var ConnectGame2 = (function () {
      */
     function startGame() {
         console.log("Starting game");
+        Utils.playSound("click");
 
         // 切换页面
         var tutorialPage = Utils.getCurrentPage();
@@ -553,6 +555,7 @@ var ConnectGame2 = (function () {
     function showErrorToast(message) {
         var toast = document.getElementById("error-toast");
         var messageElement = document.getElementById("error-message");
+        Utils.playSound("error");
 
         if (!toast || !messageElement) return;
 
@@ -681,6 +684,7 @@ var ConnectGame2 = (function () {
      */
     function showResult() {
         console.log("Showing result");
+        Utils.playSound("success");
         // 切换页面
         var gamePage = document.getElementById("page-game");
         var resultPage = document.getElementById("page-result");
@@ -782,7 +786,7 @@ var ConnectGame2 = (function () {
      */
     function viewDetails() {
         console.log("Viewing details");
-
+        Utils.playSound("click");
         // 切换页面
         var resultPage = document.getElementById("page-result");
         var detailsPage = document.getElementById("page-details");
@@ -901,6 +905,7 @@ var ConnectGame2 = (function () {
     function backToResult() {
         var detailsPage = document.getElementById("page-details");
         var resultPage = document.getElementById("page-result");
+        Utils.playSound("click");
 
         if (!detailsPage || !resultPage) return;
 
@@ -913,6 +918,7 @@ var ConnectGame2 = (function () {
      */
     function restart() {
         console.log("Restarting game");
+        Utils.playSound("click");
 
         // 切换到游戏页面
         var resultPage = document.getElementById("page-result");
@@ -989,7 +995,7 @@ var ConnectGame2 = (function () {
             console.error("No next page found");
             return;
         }
-
+        Utils.playSound("click");
         var nextPage = document.getElementById(nextPageId);
         if (!nextPage) {
             console.error("Next page element not found:", nextPageId);

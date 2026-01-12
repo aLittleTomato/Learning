@@ -104,6 +104,8 @@ var AttentionGame = (function () {
             return;
         }
 
+        Utils.playSound("click");
+
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
@@ -193,7 +195,7 @@ var AttentionGame = (function () {
 
         var currentPage = getCurrentPage();
         var tutorialPage = document.getElementById("page-tutorial");
-
+        Utils.playSound("click");
         // 生成练习题目
         generateTutorialItems();
         // 渲染练习网格
@@ -339,6 +341,9 @@ var AttentionGame = (function () {
         img.classList.add("hide");
         imgE.classList.add("hide");
 
+        if (!corrent) {
+            Utils.playSound("error");
+        }
         let tempImg = corrent ? img : imgE;
         tempImg.classList.remove("hide");
         tempImg.classList.add("show");
@@ -356,7 +361,7 @@ var AttentionGame = (function () {
     function handleTutorialItemClick(element) {
         var index = parseInt(element.getAttribute("tutorial-index"));
         var item = state.tutorialData.items[index];
-
+        Utils.playSound("click");
         var isSelected = state.tutorialData.selected.indexOf(index) !== -1;
 
         if (isSelected) {
@@ -470,6 +475,8 @@ if (document.readyState === "loading") {
  * 开始正式游戏
  */
 AttentionGame.startMainGame = function () {
+    Utils.playSound("click");
+
     console.log("Starting main game...");
 
     var currentPage = AttentionGame.getCurrentPage
@@ -625,7 +632,7 @@ function handleGameItemClick(element) {
     console.log("item点击Index：" + index);
     var isSelected = pageData.selected.indexOf(index) !== -1;
     console.log("item点击isSelected：" + isSelected);
-
+    Utils.playSound("click");
     if (isSelected) {
         // 取消选中
         pageData.selected = pageData.selected.filter(function (i) {
@@ -693,7 +700,7 @@ AttentionGame.nextGamePage = function () {
     if (AttentionGame.timers.gameTimer) {
         clearInterval(AttentionGame.timers.gameTimer);
     }
-
+    Utils.playSound("click");
     var pageIndex = AttentionGame.state.gameData.currentPage;
     var pageData = AttentionGame.state.gameData.pages[pageIndex];
 
@@ -822,7 +829,7 @@ function calculatePageResult(pageIndex) {
 /**
  * 显示结果页面
  */
-function showResult() {
+function showResult(needSound = true) {
     console.log("Showing result...");
 
     // 计算总体结果
@@ -834,6 +841,7 @@ function showResult() {
 
     // if (fromDeail)
     // gamePage = document.getElementById('page-details');
+    if (needSound) Utils.playSound("success");
 
     var resultPage = document.getElementById("page-result");
 
@@ -1054,7 +1062,7 @@ function updateProgressBarStatus(progressBarId) {
  */
 AttentionGame.viewDetails = function () {
     console.log("Viewing details...");
-
+    Utils.playSound("click");
     AttentionGame.state.detailsPage = 0;
 
     var resultPage = document.getElementById("page-result");
@@ -1166,11 +1174,13 @@ function renderDetailsPage(pageIndex) {
  * 上一页详情
  */
 AttentionGame.prevDetailPage = function () {
+    Utils.playSound("click");
+
     if (AttentionGame.state.detailsPage > 0) {
         AttentionGame.state.detailsPage--;
         renderDetailsPage(AttentionGame.state.detailsPage);
     } else {
-        showResult();
+        showResult(false);
     }
 };
 
@@ -1178,6 +1188,7 @@ AttentionGame.prevDetailPage = function () {
  * 下一页详情
  */
 AttentionGame.nextDetailPage = function () {
+    Utils.playSound("click");
     if (
         AttentionGame.state.detailsPage <
         AttentionGame.state.gameData.totalPages - 1
@@ -1185,7 +1196,7 @@ AttentionGame.nextDetailPage = function () {
         AttentionGame.state.detailsPage++;
         renderDetailsPage(AttentionGame.state.detailsPage);
     } else {
-        showResult();
+        showResult(false);
     }
 };
 

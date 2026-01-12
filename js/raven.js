@@ -117,6 +117,8 @@ var RavenGame = (function () {
     function startGame() {
         var currentPage = Utils.getCurrentPage();
         if (currentPage) currentPage.classList.remove("active");
+        Utils.playSound("click");
+
         state.startTime = Date.now();
         state.currentQuestion = 0;
         showPage("game");
@@ -176,6 +178,7 @@ var RavenGame = (function () {
             // 绑定点击事件
             (function (value) {
                 option.onclick = function () {
+                    Utils.playSound("click");
                     selectAnswer(value);
                 };
             })(i);
@@ -225,6 +228,7 @@ var RavenGame = (function () {
      * 下一题
      */
     function nextQuestion() {
+        Utils.playSound("click");
         if (state.currentQuestion < state.totalQuestion - 1) {
             state.currentQuestion++;
             renderQuestion();
@@ -238,6 +242,7 @@ var RavenGame = (function () {
      */
     function prevQuestion() {
         if (state.currentQuestion > 0) {
+            Utils.playSound("click");
             state.currentQuestion--;
             renderQuestion();
         }
@@ -271,6 +276,7 @@ var RavenGame = (function () {
      * 完成游戏
      */
     function finishGame() {
+        Utils.playSound("success");
         state.endTime = Date.now();
         calculateStats();
         showPage("result");
@@ -380,6 +386,7 @@ var RavenGame = (function () {
         state.currentQuestion = 0;
         showPage("details");
         renderDetail();
+        Utils.playSound("click");
     }
 
     /**
@@ -453,6 +460,7 @@ var RavenGame = (function () {
      */
     function prevDetail() {
         if (state.currentQuestion > 0) {
+            Utils.playSound("click");
             state.currentQuestion--;
             renderDetail();
         }
@@ -463,6 +471,7 @@ var RavenGame = (function () {
      */
     function nextDetail() {
         if (state.currentQuestion < state.totalQuestion - 1) {
+            Utils.playSound("click");
             state.currentQuestion++;
             renderDetail();
         }
@@ -472,6 +481,7 @@ var RavenGame = (function () {
      * 显示题目列表
      */
     function showQuestionList() {
+        Utils.playSound("click");
         var popup = document.getElementById("question-list-popup");
         popup.classList.add("active");
         initQuestionList();
@@ -607,6 +617,7 @@ var RavenGame = (function () {
                     // 点击跳转到该题
                     (function (index) {
                         cell.onclick = function () {
+                            Utils.playSound("click");
                             state.currentQuestion = index;
                             hideQuestionList();
                             if (state.phase === "game") {
@@ -631,12 +642,14 @@ var RavenGame = (function () {
      */
     function backToResult() {
         showPage("result");
+        Utils.playSound("click");
     }
 
     /**
      * 重新开始
      */
     function restart() {
+        Utils.playSound("click");
         // 重置答案
         for (var i = 0; i < 60; i++) {
             state.answers[i] = null;
@@ -691,7 +704,7 @@ var RavenGame = (function () {
             console.error("Next page element not found:", nextPageId);
             return;
         }
-
+        Utils.playSound("click");
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage);
     }

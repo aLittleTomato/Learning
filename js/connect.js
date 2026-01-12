@@ -67,6 +67,7 @@ var ConnectGame = (function () {
      */
     function showTutorial() {
         console.log("Starting tutorial");
+        Utils.playSound("click");
 
         // 切换页面
         var currentPage = Utils.getCurrentPage();
@@ -112,6 +113,7 @@ var ConnectGame = (function () {
      */
     function startGame() {
         console.log("Starting game");
+        Utils.playSound("click");
 
         // 切换页面
         var tutorialPage = Utils.getCurrentPage();
@@ -339,6 +341,8 @@ var ConnectGame = (function () {
      * 数字节点点击事件
      */
     function onNumberClick(number) {
+        Utils.playSound("click");
+
         console.log("Clicked number:", number);
 
         // 增加总尝试次数
@@ -531,6 +535,7 @@ var ConnectGame = (function () {
     function showErrorToast(message) {
         var toast = document.getElementById("error-toast");
         var messageElement = document.getElementById("error-message");
+        Utils.playSound("error");
 
         if (!toast || !messageElement) return;
 
@@ -628,6 +633,7 @@ var ConnectGame = (function () {
      */
     function showResult() {
         console.log("Showing result");
+        Utils.playSound("success");
 
         // 切换页面
         var gamePage = document.getElementById("page-game");
@@ -744,7 +750,7 @@ var ConnectGame = (function () {
      */
     function viewDetails() {
         console.log("Viewing details");
-
+        Utils.playSound("click");
         // 切换页面
         var resultPage = document.getElementById("page-result");
         var detailsPage = document.getElementById("page-details");
@@ -863,6 +869,7 @@ var ConnectGame = (function () {
     function backToResult() {
         var detailsPage = document.getElementById("page-details");
         var resultPage = document.getElementById("page-result");
+        Utils.playSound("click");
 
         if (!detailsPage || !resultPage) return;
 
@@ -875,6 +882,7 @@ var ConnectGame = (function () {
      */
     function restart() {
         console.log("Restarting game");
+        Utils.playSound("click");
 
         // 切换到游戏页面
         var resultPage = document.getElementById("page-result");
@@ -978,7 +986,7 @@ var ConnectGame = (function () {
             console.error("Next page element not found:", nextPageId);
             return;
         }
-
+        Utils.playSound("click");
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage);
     }

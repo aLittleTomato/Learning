@@ -64,7 +64,7 @@ var MemoryGame = (function () {
     // 配置
     var config = {
         startLevel: 1, // 起始关卡（3位数）
-        maxLevel: 1, // 最高关卡（15位数）
+        maxLevel: 15, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 1, // 准备倒计时（秒）
@@ -87,7 +87,7 @@ var MemoryGame = (function () {
             console.error("Next page element not found:", nextPageId);
             return;
         }
-
+        Utils.playSound("click");
         // 页面切换动画
         Animation.pageTransition(currentPage, nextPage, function () {
             // 更新当前页面
@@ -173,6 +173,7 @@ var MemoryGame = (function () {
      */
     function startForwardPhase() {
         console.log("Starting forward phase");
+        Utils.playSound("click");
 
         // 重置状态
         state.phase = "forward";
@@ -280,6 +281,7 @@ var MemoryGame = (function () {
         numberDisplay.textContent = "准备";
 
         var countdown = config.readyCountdown;
+        Utils.playSound("countdown");
 
         var countdownInterval = setInterval(function () {
             countdown--;
@@ -311,6 +313,7 @@ var MemoryGame = (function () {
             }
 
             var number = state.currentNumbers[currentIndex];
+            Utils.playSound("number");
 
             // 显示数字
             numberDisplay.className = "number-display number-appear";
@@ -361,6 +364,7 @@ var MemoryGame = (function () {
      */
     function inputNumber(num) {
         var digitCount = state.level + 2;
+        Utils.playSound("click");
 
         // 限制输入长度
         if (state.userInput.length >= digitCount) {
@@ -396,6 +400,7 @@ var MemoryGame = (function () {
      */
     function submitAnswer() {
         var digitCount = state.level + 2;
+        Utils.playSound("click");
 
         // 检查输入长度
         if (state.userInput.length !== digitCount) {
@@ -537,6 +542,7 @@ var MemoryGame = (function () {
         state.level++;
         state.retryUsed = false; // 重置复活机会
         startLevel();
+        Utils.playSound("click");
 
         var currentPage = getCurrentPage();
 
@@ -609,6 +615,7 @@ var MemoryGame = (function () {
     function retryLevel() {
         // 标记已使用复活机会
         state.retryUsed = true;
+        Utils.playSound("click");
 
         // 关闭弹窗
         var popup = document.getElementById("popup-retry");
@@ -634,6 +641,8 @@ var MemoryGame = (function () {
      * 显示倒序规则页面
      */
     function showBackwardRules() {
+        Utils.playSound("click");
+
         // 切换页面
         var currentPage = getCurrentPage();
         var rulesPage = document.getElementById("page-backward-rule1");
@@ -688,6 +697,7 @@ var MemoryGame = (function () {
      */
     function startBackwardPhase() {
         console.log("Starting backward phase");
+        Utils.playSound("click");
 
         // 重置状态
         state.phase = "backward";
@@ -762,6 +772,7 @@ var MemoryGame = (function () {
         // 切换页面
         var currentPage = getCurrentPage();
         var resultPage = document.getElementById("page-result");
+        Utils.playSound("success");
 
         if (currentPage) {
             Animation.pageTransition(currentPage, resultPage, function () {
@@ -810,7 +821,7 @@ var MemoryGame = (function () {
      */
     function viewDetails() {
         console.log("Viewing details");
-
+        Utils.playSound("click");
         // 默认显示正序阶段
         state.currentDetailsTab = "forward";
 
@@ -903,6 +914,7 @@ var MemoryGame = (function () {
      * 返回结果页面
      */
     function backToResult() {
+        Utils.playSound("click");
         var detailsPage = document.getElementById("page-details");
         var resultPage = document.getElementById("page-result");
         detailsPage.classList.remove("active");
@@ -915,6 +927,7 @@ var MemoryGame = (function () {
      */
     function restart() {
         console.log("Restarting game");
+        Utils.playSound("click");
 
         // 重置状态
         state.phase = "forward";
@@ -953,6 +966,7 @@ var MemoryGame = (function () {
      */
     function switchTab(tab) {
         console.log("Switching tab to:", tab);
+        Utils.playSound("click");
 
         // 更新状态
         state.currentDetailsTab = tab;
