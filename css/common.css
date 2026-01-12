@@ -5,16 +5,16 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 @font-face {
     font-family: "MyFont";
-    src: url("../fonts/ChillRoundGothic_Bold.otf") format("opentype");
+    src: url("../fonts/ChillRoundGothic_Bold.woff2") format("woff2"),
+        url("../fonts/chillroundgothic-bold.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    font-family: "MyFont", sans-serif;
+    font-family: "MyFont", "MyFont1" sans-serif;
     user-select: none;
 }
 button {
