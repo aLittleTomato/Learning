@@ -24,8 +24,8 @@ var PictureMemoryGame = (function () {
     // 游戏配置
     var config = {
         warmup: {
-            totalPictures: 4,
-            totalRounds: 2,
+            totalPictures: 6,
+            totalRounds: 8,
             distribution: {
                 once: 1,
                 twice: 2,
@@ -34,7 +34,7 @@ var PictureMemoryGame = (function () {
         },
         test: {
             totalPictures: 25,
-            totalRounds: 5,
+            totalRounds: 50,
             distribution: {
                 once: 5,
                 twice: 15,
@@ -46,40 +46,15 @@ var PictureMemoryGame = (function () {
     };
 
     // 图片资源（使用占位图）
-    var picturePool = [
-        "../images/game-picture/cat.webp",
-        "../images/game-picture/rabbit.webp",
-        "https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=1",
-        "https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=2",
-        "https://via.placeholder.com/400x400/45B7D1/FFFFFF?text=3",
-        "https://via.placeholder.com/400x400/FFA07A/FFFFFF?text=4",
-        "https://via.placeholder.com/400x400/98D8C8/FFFFFF?text=5",
-        "https://via.placeholder.com/400x400/F7DC6F/FFFFFF?text=6",
-        "https://via.placeholder.com/400x400/BB8FCE/FFFFFF?text=7",
-        "https://via.placeholder.com/400x400/85C1E2/FFFFFF?text=8",
-        "https://via.placeholder.com/400x400/F8B88B/FFFFFF?text=9",
-        "https://via.placeholder.com/400x400/FAD7A0/FFFFFF?text=10",
-        "https://via.placeholder.com/400x400/D5DBDB/FFFFFF?text=11",
-        "https://via.placeholder.com/400x400/AED6F1/FFFFFF?text=12",
-        "https://via.placeholder.com/400x400/A9DFBF/FFFFFF?text=13",
-        "https://via.placeholder.com/400x400/F9E79F/FFFFFF?text=14",
-        "https://via.placeholder.com/400x400/FADBD8/FFFFFF?text=15",
-        "https://via.placeholder.com/400x400/E8DAEF/FFFFFF?text=16",
-        "https://via.placeholder.com/400x400/D6EAF8/FFFFFF?text=17",
-        "https://via.placeholder.com/400x400/D1F2EB/FFFFFF?text=18",
-        "https://via.placeholder.com/400x400/FCF3CF/FFFFFF?text=19",
-        "https://via.placeholder.com/400x400/EBDEF0/FFFFFF?text=20",
-        "https://via.placeholder.com/400x400/D4E6F1/FFFFFF?text=21",
-        "https://via.placeholder.com/400x400/A3E4D7/FFFFFF?text=22",
-        "https://via.placeholder.com/400x400/F8C471/FFFFFF?text=23",
-        "https://via.placeholder.com/400x400/EC7063/FFFFFF?text=24",
-        "https://via.placeholder.com/400x400/AF7AC5/FFFFFF?text=25",
-    ];
+    var picturePool = [];
 
     /**
      * 初始化游戏
      */
     function init() {
+        for (let i = 0; i < 30; i++) {
+            picturePool.push("../images/game5/pool/" + (i + 1) + ".png");
+        }
         console.log("图片记忆游戏初始化");
         state.phase = "welcome";
         showPage("page-welcome");
@@ -308,11 +283,11 @@ var PictureMemoryGame = (function () {
      */
     function updateProgress() {
         var progressText = state.currentRound + " / " + state.totalRounds;
-        var progressPercent = (state.currentRound / state.totalRounds) * 100;
+        var progressPercent = (state.currentRound / state.totalRounds) * 90;
 
         document.getElementById("test-progress").textContent = progressText;
         document.getElementById("test-progress-fill").style.width =
-            progressPercent + "%";
+            10 + progressPercent + "%";
     }
 
     /**
@@ -386,7 +361,7 @@ var PictureMemoryGame = (function () {
             stats.falseRate.toFixed(0) != 0
                 ? (stats.missRate / stats.falseRate).toFixed(0)
                 : 0;
-        document.getElementById("stat-green1").textContent = green1Text + "%";
+        document.getElementById("stat-green1").textContent = green1Text;
 
         // 根据正确率显示称号
         var title = "记忆新手";

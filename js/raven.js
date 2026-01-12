@@ -223,7 +223,7 @@ var RavenGame = (function () {
      * 下一题
      */
     function nextQuestion() {
-        if (state.currentQuestion < 3) {
+        if (state.currentQuestion < state.totalQuestion - 1) {
             state.currentQuestion++;
             renderQuestion();
         } else {
@@ -258,7 +258,7 @@ var RavenGame = (function () {
         btnNext.disabled = state.answers[state.currentQuestion] == null;
 
         // 最后一题显示"完成"
-        if (state.currentQuestion === 59) {
+        if (state.currentQuestion === state.totalQuestion - 1) {
             btnNext.textContent = "完成";
         } else {
             btnNext.textContent = "下一题";
@@ -443,7 +443,7 @@ var RavenGame = (function () {
         var btnNext = document.getElementById("btn-next-deteil");
 
         btnPrev.disabled = state.currentQuestion === 0;
-        btnNext.disabled = state.currentQuestion === 59;
+        btnNext.disabled = state.currentQuestion === state.totalQuestion - 1;
     }
 
     /**
@@ -460,7 +460,7 @@ var RavenGame = (function () {
      * 详情页下一题
      */
     function nextDetail() {
-        if (state.currentQuestion < 59) {
+        if (state.currentQuestion < state.totalQuestion - 1) {
             state.currentQuestion++;
             renderDetail();
         }

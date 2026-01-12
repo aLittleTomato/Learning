@@ -206,6 +206,7 @@
     border: 5px solid #b9f0ae;
     border-radius: 35px;
     top: 400px;
+    overflow: hidden;
 }
 
 .game-picture {
