@@ -399,7 +399,7 @@ var MemoryGame = (function () {
 
         // 检查输入长度
         if (state.userInput.length !== digitCount) {
-            alert("请输入 " + digitCount + " 位数字");
+            // alert("请输入 " + digitCount + " 位数字");
             return;
         }
 

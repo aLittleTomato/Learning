@@ -4,10 +4,10 @@
  */
 
 Utils.pageConfig = {
-    "page-welcome": { x: 50, colorTop: "#FD9156", colorBottom: "#a3d26e" },
-    "page-mindset": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
-    "page-rules-1": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
-    "page-rules-2": { x: -30, colorTop: "#FD9156", colorBottom: "#ffffff" },
+    "page-welcome": { x: 50, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-mindset": { x: -30, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-rules-1": { x: -30, colorTop: "#ffffff", colorBottom: "#ffffff" },
+    "page-rules-2": { x: -30, colorTop: "#ffffff", colorBottom: "#ffffff" },
     "page-tutorial": { x: -30, colorTop: "#ffffff", colorBottom: "#ffffff" },
     "page-task": { x: 0, colorTop: "#ffffff", colorBottom: "#FD9156" },
     "page-game": { x: 0, colorTop: "#ffffff", colorBottom: "#ffffff" },

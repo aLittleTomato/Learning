@@ -960,7 +960,7 @@ function submitTestData() {
         })
         .catch(function (error) {
             console.error("Failed to submit test data:", error);
-            Utils.showToast("数据上报失败，已保存到本地", "error");
+            // Utils.showToast("数据上报失败，已保存到本地", "error");
         });
 }
 

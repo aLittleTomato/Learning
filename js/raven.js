@@ -115,6 +115,8 @@ var RavenGame = (function () {
      * 开始游戏
      */
     function startGame() {
+        var currentPage = Utils.getCurrentPage();
+        if (currentPage) currentPage.classList.remove("active");
         state.startTime = Date.now();
         state.currentQuestion = 0;
         showPage("game");
