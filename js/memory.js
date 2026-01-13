@@ -215,7 +215,7 @@ var MemoryGame = (function () {
         var numberDisplay = document.getElementById("number-display");
         if (!numberDisplay) return;
 
-        numberDisplay.textContent = "准备";
+        numberDisplay.textContent = "开始";
 
         var nextPage = document.getElementById(nextPageId);
         if (!nextPage) {
@@ -300,7 +300,7 @@ var MemoryGame = (function () {
         if (!numberDisplay) return;
 
         numberDisplay.className = "number-display ready";
-        numberDisplay.textContent = "准备";
+        numberDisplay.textContent = "开始";
 
         var countdown = config.readyCountdown;
         Utils.playSound("countdown");
@@ -730,7 +730,7 @@ var MemoryGame = (function () {
         if (!numberDisplay) return;
 
         numberDisplay.className = "number-display ready";
-        numberDisplay.textContent = "准备";
+        numberDisplay.textContent = "开始";
 
         // 切换到游戏页面
         var rulesPage = getCurrentPage();
