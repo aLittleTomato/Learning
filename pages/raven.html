@@ -178,6 +178,27 @@
                     >
                         下一题
                     </button>
+
+                    <div id="submit-confirm-popup" class="popup">
+                        <div
+                            class="popup-overlay front"
+                            onclick="RavenGame.cancelSubmit()"
+                        ></div>
+                        <div class="popup-submit"></div>
+
+                        <button
+                            class="btn-nav cancel"
+                            onclick="RavenGame.cancelSubmit()"
+                        >
+                            取消
+                        </button>
+                        <button
+                            class="btn-nav confirm"
+                            onclick="RavenGame.confirmSubmit()"
+                        >
+                            确认
+                        </button>
+                    </div>
                 </div>
 
                 <!-- 结算页 -->

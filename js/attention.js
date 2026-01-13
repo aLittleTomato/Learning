@@ -13,7 +13,7 @@ Utils.pageConfig = {
     "page-details": { x: -30, colorTop: "#5ca1ff", colorBottom: "#ffffff" },
 };
 
-setAppBackgroundByPage("page-welcome");
+// setAppBackgroundByPage("page-welcome");
 
 var AttentionGame = (function () {
     "use strict";
@@ -493,10 +493,11 @@ var AttentionGame = (function () {
         startTutorial: startTutorial,
         generateCorrectQ: generateCorrectQ,
         generateIncorrectLetter: generateIncorrectLetter,
-        startMainGame: null, // 将在第2部分定义
-        nextGamePage: null, // 将在第2部分定义
-        viewDetails: null, // 将在第2部分定义
-        restart: null, // 将在第2部分定义
+        startMainGame: null,
+        nextGamePage: null,
+        viewDetails: null,
+        restart: null,
+        backToResult: null,
     };
 })();
 
@@ -1063,10 +1064,32 @@ function renderProgressBar(currentPage, totalPages, progressBarId) {
         if (i === currentPage) {
             dot.classList.add("active");
         }
+        // progressBar.appendChild(dot);
+
+        // 为详情页的进度点添加点击事件
+        if (progressBarId === "details-progress-bar") {
+            (function (pageIndex) {
+                dot.addEventListener("click", function () {
+                    AttentionGame.jumpToDetailPage(pageIndex);
+                });
+            })(i);
+            dot.style.cursor = "pointer";
+        }
+
         progressBar.appendChild(dot);
     }
 }
+/**
+ * 跳转到指定详情页
+ */
+AttentionGame.jumpToDetailPage = function (pageIndex) {
+    Utils.playSound("click");
 
+    if (pageIndex >= 0 && pageIndex < AttentionGame.state.gameData.totalPages) {
+        AttentionGame.state.detailsPage = pageIndex;
+        renderDetailsPage(pageIndex);
+    }
+};
 /**
  * 更新进度条状态
  */
@@ -1216,8 +1239,12 @@ AttentionGame.prevDetailPage = function () {
         AttentionGame.state.detailsPage--;
         renderDetailsPage(AttentionGame.state.detailsPage);
     } else {
-        showResult(false);
     }
+};
+
+AttentionGame.backToResult = function () {
+    Utils.playSound("click");
+    showResult(false);
 };
 
 /**

@@ -54,7 +54,7 @@ body {
     left: 50%;
     top: 50%;
     transform-origin: center;
-    overflow: hidden;
+    overflow: visible;
     /* transform-origin: top left; */
     /* position: relative; ⭐ 这里 */
 }

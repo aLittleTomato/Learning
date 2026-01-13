@@ -180,7 +180,7 @@ var PictureMemoryGame = (function () {
         }
 
         // 打乱序列
-        return shuffleArray(sequence);
+        return shuffleArrayWithNoConsecutiveDuplicates(sequence);
     }
 
     /**
@@ -194,6 +194,59 @@ var PictureMemoryGame = (function () {
             result[i] = result[j];
             result[j] = temp;
         }
+        return result;
+    }
+
+    /**
+     * 打乱数组，确保连续两个元素不相同
+     */
+    function shuffleArrayWithNoConsecutiveDuplicates(array) {
+        var maxAttempts = 1000; // 最大尝试次数
+        var attempts = 0;
+        var result;
+
+        while (attempts < maxAttempts) {
+            result = shuffleArray(array);
+
+            // 检查是否有连续相同的元素
+            var hasConsecutiveDuplicates = false;
+            for (var i = 0; i < result.length - 1; i++) {
+                if (result[i] === result[i + 1]) {
+                    hasConsecutiveDuplicates = true;
+                    break;
+                }
+            }
+
+            // 如果没有连续相同，返回结果
+            if (!hasConsecutiveDuplicates) {
+                return result;
+            }
+
+            attempts++;
+        }
+
+        // 如果随机打乱失败，使用确定性算法修复
+        result = shuffleArray(array);
+
+        // 修复连续相同的情况
+        for (var j = 0; j < result.length - 1; j++) {
+            if (result[j] === result[j + 1]) {
+                // 找到一个不同的元素交换
+                for (var k = j + 2; k < result.length; k++) {
+                    if (
+                        result[k] !== result[j] &&
+                        (k === result.length - 1 || result[k] !== result[k + 1])
+                    ) {
+                        // 交换
+                        var temp = result[j + 1];
+                        result[j + 1] = result[k];
+                        result[k] = temp;
+                        break;
+                    }
+                }
+            }
+        }
+
         return result;
     }
 
@@ -280,6 +333,9 @@ var PictureMemoryGame = (function () {
         // 启用按钮
         var btnEl = document.getElementById("test-btn");
         btnEl.disabled = false;
+
+        var btnError = document.getElementById("error-btn");
+        btnError.classList.add("hide");
 
         // 设置自动跳过计时器
         clearTimeout(state.pictureTimer);
@@ -507,23 +563,35 @@ var PictureMemoryGame = (function () {
         document.getElementById("details-progress").textContent =
             index + 1 + "/" + state.history.length;
 
+        var record = state.history[index];
+
         // 显示图片
         var pictureUrl = picturePool[record.pictureId];
         document.getElementById("details-picture").src = pictureUrl;
 
-        // 显示出现记录
-        var historyText = "";
-        var appearRounds = state.appearedPictures[record.pictureId];
         var item = document.getElementById("picture-history");
-        if (appearRounds.length === 1) {
-            historyText = "这张图片在之前没有重复出现";
-            item.classList.add("hide");
-        } else {
-            historyText =
-                "这张图片在第 " + appearRounds.join("、") + " 题出现过";
+        if (!record.correct) {
+            // 显示出现记录
+            var historyText = "";
+            var allAppearRounds = state.appearedPictures[record.pictureId];
+
+            var rounds = [];
+            for (let i = 0; i < allAppearRounds.length; i++) {
+                if (allAppearRounds[i] < index) {
+                    rounds.push(allAppearRounds[i]);
+                }
+            }
+            if (rounds.length === 0) {
+                historyText = "这张图片在之前没有重复出现";
+            } else {
+                historyText = "这张图片在第 " + rounds.join("、") + " 题出现过";
+            }
             item.classList.remove("hide");
+            document.getElementById("picture-history").textContent =
+                historyText;
+        } else {
+            item.classList.add("hide");
         }
-        document.getElementById("picture-history").textContent = historyText;
 
         // 更新导航按钮状态
         document.getElementById("btn-prev").disabled = index === 0;
@@ -640,10 +708,14 @@ var PictureMemoryGame = (function () {
         var errorText = document.getElementById("warmup-error-text");
         Utils.playSound("error");
 
+        var btnError = document.getElementById("error-btn");
+        btnError.classList.remove("hide");
         if (clicked && !shouldClick) {
             errorText.textContent = "这张图片没有重复出现哦";
+            btnError.textContent = "我知道了 🫡";
         } else if (!clicked && shouldClick) {
-            errorText.textContent = "这张图片出现过，需要点击哦";
+            errorText.textContent = "注意，这张图片出现过，需要点击😯";
+            btnError.textContent = "这张图片出现过 ✅";
         }
 
         errorEl.classList.add("show");
@@ -651,10 +723,7 @@ var PictureMemoryGame = (function () {
         // 1.5秒后隐藏并继续
         setTimeout(function () {
             errorEl.classList.remove("show");
-            setTimeout(function () {
-                showNextPicture();
-            }, 300);
-        }, 1500);
+        }, 2000);
     }
 
     function getNextPageId() {
@@ -722,6 +791,7 @@ var PictureMemoryGame = (function () {
         restart: restart,
         backToHome: backToHome,
         nextPage: nextPage,
+        showNextPicture: showNextPicture,
     };
 })();
 

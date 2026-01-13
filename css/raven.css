@@ -332,7 +332,9 @@
     background-position: center;
     background-color: rgba(0, 0, 0, 0);
 }
-
+.btn-nav:active {
+    transform: scale(0.95);
+}
 .btn-nav.right {
     left: auto;
     right: 0px;
@@ -909,4 +911,25 @@
 
 .popup-overlay.front {
     background: rgba(0, 0, 0, 0);
+}
+
+.popup-submit {
+    position: absolute;
+    background-image: url("../images/game4/submit.png");
+    background-size: cover;
+    width: 750px;
+    height: 953px;
+    left: 0px;
+    top: 250px;
+}
+
+.btn-nav.cancel {
+    left: 50px;
+    bottom: 350px;
+}
+
+.btn-nav.confirm {
+    left: auto;
+    right: 50px;
+    bottom: 350px;
 }

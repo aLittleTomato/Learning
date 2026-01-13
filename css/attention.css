@@ -1,5 +1,6 @@
 /* 注意力测试游戏样式 */
-.root {}
+.root {
+}
 
 #page-welcome {
     cursor: pointer;
@@ -112,8 +113,7 @@
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
     animation: right1Appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        right1Breath 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
 
@@ -131,7 +131,6 @@
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes right1Breath {
-
     0%,
     100% {
         transform: translateY(0) rotate(-20deg);
@@ -149,8 +148,7 @@
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
     animation: leftAppear 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        rightBreath 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ rightBreath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
 
@@ -168,7 +166,6 @@
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes leftBreath {
-
     0%,
     100% {
         transform: translateY(0) rotate(40deg);
@@ -187,8 +184,7 @@
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
     animation: leftAppear1 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        leftBreath1 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
 
@@ -206,7 +202,6 @@
 
 /* 2. 呼吸动画：上下浮动50px，每个方向2秒，总共4秒 */
 @keyframes leftBreath1 {
-
     0%,
     100% {
         transform: translateY(0) rotate(15deg);
@@ -227,8 +222,7 @@
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
     animation: right1Appear 1s ease-out forwards,
-        /* 出现动画，执行一次 */
-        right1Breath 4s ease-in-out 1s infinite;
+        /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
 
@@ -359,7 +353,7 @@
 
 .page-texts.out {
     animation: fadeOut 1s forwards;
-    animation-delay: 2s;
+    animation-delay: 4s;
     top: 1000px;
 }
 
@@ -368,7 +362,7 @@
     /* 初始显示 */
     animation: fadeIn 1s forwards;
     /* 动画持续3秒，结束保持最终状态 */
-    animation-delay: 2s;
+    animation-delay: 4s;
     /* 等待3秒后才开始动画 */
     top: 1072px;
 }
@@ -390,8 +384,6 @@
     line-height: 1.5;
     font-size: 50px;
 }
-
-
 
 /* 游戏页面 */
 .test-logo {
@@ -438,8 +430,6 @@
     background-color: rgba(0, 0, 0, 0);
     /* 保持透明 */
 }
-
-
 
 .btn-bottom {
     position: absolute;
@@ -706,7 +696,6 @@
 }
 
 @keyframes timer-pulse {
-
     0%,
     100% {
         transform: scale(1);
@@ -759,6 +748,14 @@
 .progress-dot.error {
     background-image: url("../images/game1/processer_error.png");
     background-size: 120px 83px;
+}
+
+.progress-dot.correct.active {
+    filter: brightness(0.83);
+}
+
+.progress-dot.error.active {
+    filter: brightness(0.83);
 }
 
 /* 游戏容器 */
@@ -878,7 +875,7 @@
 }
 
 /* 第一行元素不要被挤压 */
-.result-card> :nth-child(-n + 2) {
+.result-card > :nth-child(-n + 2) {
     margin-top: 0;
 }
 
@@ -1023,6 +1020,8 @@
 }
 
 .page-texts.detail {
+    left: auto;
+    right: 50px;
     font-size: 60px;
     top: 163px;
 }
@@ -1041,7 +1040,8 @@
         font-size: 16px;
     }
 
-    .game-container {}
+    .game-container {
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -1050,4 +1050,14 @@
         margin-left: auto;
         margin-right: auto;
     }
+}
+
+.btn-detail {
+    position: absolute;
+    width: 93px;
+    height: 93px;
+    left: 50px;
+    top: 165px;
+    background-image: url("../images/game1/btn_detail_back.png");
+    bottom: 190px;
 }

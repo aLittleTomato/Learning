@@ -233,6 +233,23 @@ var Utils = (function () {
         s.play();
     }
 
+    function restart() {
+        var currentPage = getCurrentPage();
+        var welcomePage = document.getElementById("page-welcome");
+
+        if (!currentPage) {
+            return;
+        }
+
+        if (!welcomePage) {
+            return;
+        }
+
+        Utils.playSound("click");
+        currentPage.classList.remove("active");
+        welcomePage.classList.add("active");
+    }
+
     // 导出公共方法
     return {
         getUrlParam: getUrlParam,
@@ -248,6 +265,7 @@ var Utils = (function () {
         pageConfig: pageConfig,
         getCurrentPage: getCurrentPage,
         playSound: playSound,
+        restart: restart,
     };
 })();
 
@@ -309,4 +327,4 @@ function observePageActive() {
 }
 
 // 4️⃣ 初始化监听
-observePageActive();
+// observePageActive();

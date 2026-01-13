@@ -183,7 +183,10 @@
             <div id="page-details" class="page">
 
                 <img class="page-detail-mask" src="../images/game1/page_detail_mask.png" />
-
+                <button
+                class="btn btn-detail"
+                onclick="AttentionGame.backToResult()"
+            ></button>
                 <div class="page-texts detail">
                     <p class="line2" id="detail-title">📄 第一关</p>
                 </div>
@@ -239,7 +242,7 @@
                     </div>
                     <button class="btn btn-bottom long detail" onclick="AttentionGame.viewDetails()">
                     </button>
-                    <button class="btn btn-bottom long again" onclick="AttentionGame.restart()">
+                    <button class="btn btn-bottom long again" onclick="Utils.restart()">
                     </button>
 
                 </div>

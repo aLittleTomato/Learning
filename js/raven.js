@@ -14,7 +14,7 @@ var RavenGame = (function () {
         startTime: null, // 开始时间
         endTime: null, // 结束时间
         questions: [], // 题目数组
-        totalQuestion: 60,
+        totalQuestion: 3,
     };
 
     const answer = [
@@ -268,7 +268,7 @@ var RavenGame = (function () {
             state.currentQuestion++;
             renderQuestion();
         } else {
-            finishGame();
+            showSubmitConfirm();
         }
     }
 
@@ -588,6 +588,43 @@ var RavenGame = (function () {
     }
 
     /**
+     * 显示提交确认弹窗
+     */
+    function showSubmitConfirm() {
+        var popup = document.getElementById("submit-confirm-popup");
+        if (popup) {
+            popup.classList.add("active");
+        }
+    }
+
+    /**
+     * 隐藏提交确认弹窗
+     */
+    function hideSubmitConfirm() {
+        var popup = document.getElementById("submit-confirm-popup");
+        if (popup) {
+            popup.classList.remove("active");
+        }
+    }
+
+    /**
+     * 取消提交
+     */
+    function cancelSubmit() {
+        Utils.playSound("click");
+        hideSubmitConfirm();
+    }
+
+    /**
+     * 确认提交
+     */
+    function confirmSubmit() {
+        Utils.playSound("click");
+        hideSubmitConfirm();
+        finishGame();
+    }
+
+    /**
      * 渲染题目列表
      */
     function renderQuestionList() {
@@ -768,6 +805,8 @@ var RavenGame = (function () {
         restart: restart,
         backToHome: backToHome,
         nextPage: nextPage,
+        cancelSubmit: cancelSubmit,
+        confirmSubmit: confirmSubmit,
     };
 })();
 

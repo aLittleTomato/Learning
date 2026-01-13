@@ -171,6 +171,14 @@
                             class="btn btn-bottom long answer"
                             onclick="PictureMemoryGame.clickAnswer()"
                         >
+                            这张图片出现过 ✅
+                        </button>
+
+                        <button
+                            id="error-btn"
+                            class="btn btn-bottom long hide"
+                            onclick="PictureMemoryGame.showNextPicture()"
+                        >
                             这张图片出现过
                         </button>
                         <div id="warmup-error" class="error-toast">
@@ -264,7 +272,7 @@
                         </button>
                         <button
                             class="btn btn-bottom long again"
-                            onclick="PictureMemoryGame.restart()"
+                            onclick="Utils.restart()"
                         >
                             再玩一次 ✨
                         </button>
