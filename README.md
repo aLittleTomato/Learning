@@ -14,26 +14,26 @@
 
 ```
 cognitive-test-webview/
-├── index.html              # 主入口页面
 ├── pages/                  # 游戏页面
 │   └── attention.html      # 注意力测试页面
+│   └── connect.html        # 连线测试页面
+│   └── connect2.html       # 连线2测试页面
+│   └── memory.html         # 数字记忆测试页面
+│   └── picture-memory.html # 图片记忆测试页面
+│   └── raven.html          # 瑞文推理测试页面
 ├── css/                    # 样式文件
 │   ├── common.css          # 通用样式
-│   ├── main.css            # 主页面样式
-│   └── attention.css       # 注意力测试样式
+│   └── preloader.css       # 加载界面样式
+│   └── preloader.css       # 加载界面样式
+│   └── xxx.css             # 各界面样式
 ├── js/                     # JavaScript 文件
 │   ├── utils.js            # 工具函数库
 │   ├── config.js           # 配置管理
 │   ├── api.js              # API 接口封装
 │   ├── animation.js        # 通用动画组件
-│   ├── main.js             # 主应用逻辑
-│   └── attention.js        # 注意力测试逻辑
+│   └── xxx.js              # 各界面逻辑
 ├── images/                 # 图片资源
-│   ├── base/               # 通用图片资源
-│   └── game/               # 游戏图片资源
-│       └── attention/      # 注意力测试图片
-├── data/                   # 数据文件
-├── server.js               # 本地测试服务器
+│   └── games/              # 各游戏图片资源
 └── README.md               # 项目说明文档
 ```
 
@@ -63,51 +63,26 @@ cognitive-test-webview/
 ### 3. 核心功能模块
 
 - **配置管理**：支持从 URL 参数解析 token，支持本地存储配置
-- **API 接口**：封装数据上报接口，支持失败时本地缓存
+- **API 接口**：封装数据上报接口
 - **工具函数**：URL 参数解析、Toast 提示、时间格式化、数组打乱等
 - **数据统计**：准确率、加工速度、集中程度等多维度数据分析
 
 ## 待实现功能
 
-- 数字广度测试 (DST)
-- 情景记忆测试
-- 连线测试 (TMT)
-- 瑞文推理（60道题目）
-- 答题详情页面
+- 配置对应的API地址，上传数据
+- 游戏配置
 
-## 本地开发
 
-### 1. 启动本地服务器
-
-```bash
-cd cognitive-test-webview
-node server.js
-```
-
-服务器将在 http://localhost:8080/ 启动
-
-### 2. 访问应用
+### 1. 访问应用
 
 - 主页面：http://localhost:8080/
 - 注意力测试：http://localhost:8080/pages/attention.html
 
-### 3. 带 Token 访问
+### 2. 带 Token 访问
 
 ```
 http://localhost:8080/?token=your_token_here
 http://localhost:8080/pages/attention.html?token=your_token_here
-```
-
-## 微信小程序集成
-
-### 1. 配置业务域名
-
-在微信小程序后台配置业务域名，将网页部署到服务器后，添加域名到白名单。
-
-### 2. 使用 web-view 组件
-
-```xml
-<web-view src="https://your-domain.com/?token={{token}}"></web-view>
 ```
 
 ### 3. 数据交互
@@ -123,28 +98,10 @@ http://localhost:8080/pages/attention.html?token=your_token_here
 ```javascript
 api: {
     baseUrl: 'https://api.example.com',  // 修改为实际的 API 地址
-    timeout: 30000
+    timeout: 3000
 }
 ```
 
-### 游戏配置
-
-可以在 `js/config.js` 中调整游戏参数：
-
-```javascript
-games: {
-    attention: {
-        name: '注意力测试',
-        enabled: true,
-        pages: 3,                    // 测试页数
-        itemsPerPage: 56,            // 每页选项数
-        correctItemsPerPage: 25,     // 每页正确答案数
-        timePerPage: 20,             // 每页时间（秒）
-        practiceItems: 6,            // 练习选项数
-        practiceCorrectItems: 2      // 练习正确答案数
-    }
-}
-```
 
 ## 数据格式
 
@@ -186,55 +143,9 @@ games: {
 - **HTML5**：语义化标签
 - **CSS3**：Flexbox、Grid、动画
 - **JavaScript (ES5)**：兼容性优先
-- **Node.js**：本地开发服务器
-
-## 浏览器兼容性
-
-- Chrome/Edge: ✓
-- Safari: ✓
-- Firefox: ✓
-- 微信浏览器: ✓
-- 微信小程序 webview: ✓
-
-## 注意事项
-
-1. **不使用 ES6 语法**：为了兼容性，整个项目使用 ES5 语法
-2. **图片资源**：需要自行准备图片资源，放在对应目录下
-3. **API 接口**：需要后端提供数据上报接口
-4. **Token 管理**：通过 URL 参数传递 token，应用会自动解析和使用
-
-## 开发建议
-
-1. 使用 VSCode 进行开发
-2. 安装 Live Server 插件进行实时预览
-3. 使用浏览器开发者工具调试
-4. 在微信开发者工具中测试 webview 兼容性
 
 ## 部署
 
 ### 静态服务器部署
 
 将整个项目文件夹上传到静态服务器即可，无需构建步骤。
-
-### Nginx 配置示例
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-    root /path/to/cognitive-test-webview;
-    index index.html;
-    
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-
-## 许可证
-
-MIT License
-
-## 联系方式
-
-如有问题，请联系开发团队。
