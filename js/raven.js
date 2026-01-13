@@ -14,7 +14,7 @@ var RavenGame = (function () {
         startTime: null, // 开始时间
         endTime: null, // 结束时间
         questions: [], // 题目数组
-        totalQuestion: 3,
+        totalQuestion: 60,
     };
 
     const answer = [
