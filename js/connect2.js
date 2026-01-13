@@ -40,13 +40,31 @@ var ConnectGame2 = (function () {
      * 初始化游戏
      */
     function init() {
-        console.log("ConnectGame2 initialized");
+        // 预加载所有图片资源
+        var imagesToPreload = [
+            "../images/game3/number_normal.png",
+            "../images/game3/number_error.png",
+        ];
 
-        // 检查是否有 token
-        // var token = Utils.getQueryParam('token');
-        // if (token) {
-        //     Config.set('user.token', token);
-        // }
+        getImgUrls(imagesToPreload);
+
+        Preloader.preload({
+            images: imagesToPreload,
+            container: document.body,
+            onComplete: function () {
+                console.log("所有资源加载完成");
+                initPage();
+            },
+        });
+    }
+
+    function getImgUrls(imagesToPreload) {}
+    function initPage() {
+        // 绑定欢迎页点击事件
+        var welcomePage = document.getElementById("page-welcome");
+        if (welcomePage) {
+            welcomePage.classList.add("active");
+        }
     }
 
     /**

@@ -61,29 +61,65 @@ var AttentionGame = (function () {
 
         // 初始化配置
         Config.init();
+        // 预加载所有图片资源
+        var imagesToPreload = [
+            "../images/game1/welcome_bg.png",
+            "../images/game1/welcom_mask.png",
+            "../images/game1/attention_logo.png",
+            "../images/game1/welcome_txt_bg.png",
+            "../images/game1/big_txt_bg.png",
+            "../images/game1/btn_detail.png",
+            "../images/game1/goto_tutorial.png",
+            "../images/game1/btn_next_step_long.png",
+            "../images/game1/btn_back.png",
+            "../images/game1/btn_again.png",
+            "../images/game1/test_next_game.png",
+            "../images/game1/btn_next_step.png",
+            "../images/game1/last_page.png",
+            "../images/game1/next_page.png",
+        ];
 
+        getImgUrls(imagesToPreload);
+
+        Preloader.preload({
+            images: imagesToPreload,
+            container: document.body,
+            onComplete: function () {
+                console.log("所有资源加载完成");
+                initGame();
+            },
+        });
+    }
+
+    function getImgUrls(imagesToPreload) {
+        var qFolder = ["q/highlight/", "q/result1/", "q/normal/", "q/result2/"];
+        var bFolder = ["b/highlight/", "b/result1/", "b/normal/"];
+        for (let i = 0; i < qFolder.length; i++) {
+            for (let j = 1; j <= 15; j++) {
+                imagesToPreload.push(
+                    "../images/game1/" + qFolder[i] + Utils.format2(j) + ".png"
+                );
+            }
+        }
+        for (let i = 0; i < bFolder.length; i++) {
+            for (let j = 1; j <= 15; j++) {
+                imagesToPreload.push(
+                    "../images/game1/" + bFolder[i] + Utils.format2(j) + ".png"
+                );
+            }
+        }
+    }
+    function initGame() {
         // 绑定欢迎页点击事件
         var welcomePage = document.getElementById("page-welcome");
         if (welcomePage) {
+            welcomePage.classList.add("active");
             welcomePage.addEventListener("click", function () {
                 nextPage();
             });
         }
 
-        // 启动吉祥物闲置动画
-        startMascotIdleAnimation();
-
         console.log("Attention Game initialized");
-    }
-
-    /**
-     * 启动吉祥物闲置动画
-     */
-    function startMascotIdleAnimation() {
-        var mascots = document.querySelectorAll(".mascot");
-        for (var i = 0; i < mascots.length; i++) {
-            timers.mascotIdle = Animation.startMascotIdle(mascots[i]);
-        }
     }
 
     /**

@@ -38,6 +38,41 @@ var RavenGame = (function () {
      * 初始化游戏
      */
     function init() {
+        // 预加载所有图片资源
+        var imagesToPreload = [];
+
+        getImgUrls(imagesToPreload);
+
+        Preloader.preload({
+            images: imagesToPreload,
+            container: document.body,
+            onComplete: function () {
+                console.log("所有资源加载完成");
+                initGame();
+            },
+        });
+    }
+
+    function getImgUrls(imagesToPreload) {
+        var factors = ["A", "B", "C", "D", "E"];
+
+        for (var i = 0; i < factors.length; i++) {
+            var factor = factors[i];
+
+            for (var j = 1; j <= 12; j++) {
+                var questionId = factor + j;
+                imagesToPreload.push(
+                    "../images/game4/question/" + questionId + ".png"
+                );
+            }
+        }
+    }
+    function initGame() {
+        // 绑定欢迎页点击事件
+        var welcomePage = document.getElementById("page-welcome");
+        if (welcomePage) {
+            welcomePage.classList.add("active");
+        }
         // 获取页面元素
         pages.welcome = document.getElementById("page-welcome");
         pages.rules = document.getElementById("page-rules");

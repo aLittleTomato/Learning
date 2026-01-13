@@ -40,7 +40,7 @@ Utils.pageConfig = {
     "page-input": { x: 0, colorTop: "#ffffff", colorBottom: "#ffffff" },
 };
 
-setAppBackgroundByPage("page-welcome");
+// setAppBackgroundByPage("page-welcome");
 
 var MemoryGame = (function () {
     "use strict";
@@ -152,6 +152,28 @@ var MemoryGame = (function () {
         var token = Utils.getUrlParam("token");
         if (token) {
             Config.set("user.token", token);
+        }
+        // 预加载所有图片资源
+        var imagesToPreload = [];
+
+        getImgUrls(imagesToPreload);
+
+        Preloader.preload({
+            images: imagesToPreload,
+            container: document.body,
+            onComplete: function () {
+                console.log("所有资源加载完成");
+                initGame();
+            },
+        });
+    }
+
+    function getImgUrls(imagesToPreload) {}
+    function initGame() {
+        // 绑定欢迎页点击事件
+        var welcomePage = document.getElementById("page-welcome");
+        if (welcomePage) {
+            welcomePage.classList.add("active");
         }
     }
 
@@ -540,7 +562,6 @@ var MemoryGame = (function () {
 
         // 进入下一关
         state.level++;
-        state.retryUsed = false; // 重置复活机会
         startLevel();
         Utils.playSound("click");
 

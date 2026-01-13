@@ -56,6 +56,28 @@ var PictureMemoryGame = (function () {
             picturePool.push("../images/game5/pool/" + (i + 1) + ".png");
         }
         console.log("图片记忆游戏初始化");
+        // 预加载所有图片资源
+
+        var imagesToPreload = [].concat(picturePool);
+        getImgUrls(imagesToPreload);
+
+        Preloader.preload({
+            images: imagesToPreload,
+            container: document.body,
+            onComplete: function () {
+                console.log("所有资源加载完成");
+                initGame();
+            },
+        });
+    }
+
+    function getImgUrls(imagesToPreload) {}
+    function initGame() {
+        // 绑定欢迎页点击事件
+        // var welcomePage = document.getElementById("page-welcome");
+        // if (welcomePage) {
+        //     welcomePage.classList.add("active");
+        // }
         state.phase = "welcome";
         showPage("page-welcome");
     }
