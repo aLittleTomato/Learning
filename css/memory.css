@@ -107,16 +107,6 @@
     }
 }
 
-.page-dialogBG {
-    position: absolute;
-    /* background-image: "../images/game1/welcome_txt_bg.png"; */
-    width: 750px;
-    height: 641px;
-    left: 0px;
-    bottom: 0px;
-    object-fit: fill;
-}
-
 /* 欢迎卡片 */
 .welcome-card {
     text-align: center;
@@ -144,7 +134,7 @@
 }
 
 .page-texts.welcome {
-    top: 960px;
+    top: 520px;
 }
 
 .page-texts.rule1 {
@@ -198,7 +188,7 @@
     background-image: url("../images/game2/btn_next_step.png");
     width: 361px;
     height: 231px;
-    left: 413px;
+    left: 0px;
     bottom: 20px;
 
     /* background-image: url("../images/game1/btn_next_page.png"); */
@@ -583,16 +573,24 @@
 }
 
 .number-display {
-    font-size: 210px;
+    font-size: 200px;
     font-weight: bold;
     color: #ff5c5f;
 }
 
 .number-display.ready {
     font-size: 200px;
-    animation: fadeOut 0.6s forwards;
-    animation-delay: 1s;
+    /* animation: numberAppear 0.6s forwards; */
+    transform: scale(1);
+    opacity: 1;
+    animation: numberDisappear 0.6s forwards;
+    animation-delay: 0.5s;
 }
+
+/* .number-display.ready.disappear {
+    font-size: 200px;
+    animation: numberDisappear 0.6s forwards;
+} */
 
 /* 输入容器 */
 .input-container {

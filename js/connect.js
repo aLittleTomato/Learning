@@ -845,7 +845,7 @@ var ConnectGame = (function () {
         tbody.innerHTML = "";
 
         // 渲染每条记录
-        for (var i = 0; i < state.history.length * 3; i++) {
+        for (var i = 0; i < state.history.length; i++) {
             var index = i % state.history.length;
             var record = state.history[index];
             var tr = document.createElement("tr");

@@ -27,10 +27,12 @@ var PictureMemoryGame = (function () {
             totalPictures: 6,
             totalRounds: 8,
             distribution: {
-                once: 1,
+                once: 4,
                 twice: 2,
-                thrice: 1,
+                thrice: 0,
             },
+            startIndex: 0,
+            endIndex: 7,
         },
         test: {
             totalPictures: 25,
@@ -40,6 +42,8 @@ var PictureMemoryGame = (function () {
                 twice: 15,
                 thrice: 5,
             },
+            startIndex: 7,
+            endIndex: 55,
         },
         pictureDisplayTime: 3000, // 每张图片显示3秒
         countdownTime: 3, // 准备倒计时3秒
@@ -52,7 +56,7 @@ var PictureMemoryGame = (function () {
      * 初始化游戏
      */
     function init() {
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 55; i++) {
             picturePool.push("../images/game5/pool/" + (i + 1) + ".png");
         }
         console.log("图片记忆游戏初始化");
@@ -141,110 +145,78 @@ var PictureMemoryGame = (function () {
         startCountdown();
     }
 
-    /**
-     * 生成图片序列
-     */
     function generatePictureSequence(gameConfig) {
-        var sequence = [];
-        var pictureIds = [];
-        var totalPictures = gameConfig.totalPictures;
+        var repeatPriorityRate = 0.3;
+        const { startIndex, endIndex, distribution } = gameConfig;
 
-        // 选择图片ID
-        for (var i = 0; i < totalPictures; i++) {
-            pictureIds.push(i);
+        // 1️⃣ 生成池子
+        const pool = [];
+        let idx =
+            startIndex + Math.floor(Math.random() * (endIndex - startIndex));
+
+        for (let i = 0; i < distribution.twice; i++) {
+            pool.push({ id: idx, type: "twice" });
+            pool.push({ id: idx, type: "twice" });
+            idx++;
+            if (idx >= endIndex) idx = startIndex;
         }
 
-        // 根据分布生成序列
-        var dist = gameConfig.distribution;
-        var index = 0;
-
-        // 出现1次的图片
-        for (var j = 0; j < dist.once; j++) {
-            sequence.push(pictureIds[index]);
-            index++;
+        for (let i = 0; i < distribution.once; i++) {
+            pool.push({ id: idx, type: "once" });
+            idx++;
+            if (idx >= endIndex) idx = startIndex;
         }
 
-        // 出现2次的图片
-        for (var k = 0; k < dist.twice; k++) {
-            sequence.push(pictureIds[index]);
-            sequence.push(pictureIds[index]);
-            index++;
+        for (let i = 0; i < distribution.thrice; i++) {
+            pool.push({ id: idx, type: "thrice" });
+            pool.push({ id: idx, type: "thrice" });
+            pool.push({ id: idx, type: "thrice" });
+            idx++;
+            if (idx >= endIndex) idx = startIndex;
         }
 
-        // 出现3次的图片
-        for (var m = 0; m < dist.thrice; m++) {
-            sequence.push(pictureIds[index]);
-            sequence.push(pictureIds[index]);
-            sequence.push(pictureIds[index]);
-            index++;
-        }
+        let sequencePool = pool.map((item) => item.id);
 
-        // 打乱序列
-        return shuffleArrayWithNoConsecutiveDuplicates(sequence);
-    }
+        const result = [];
+        const seen = new Set();
 
-    /**
-     * 打乱数组
-     */
-    function shuffleArray(array) {
-        var result = array.slice();
-        for (var i = result.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = result[i];
-            result[i] = result[j];
-            result[j] = temp;
-        }
-        return result;
-    }
+        while (sequencePool.length > 0) {
+            const last = result[result.length - 1];
+            const last2 = result.slice(-2);
 
-    /**
-     * 打乱数组，确保连续两个元素不相同
-     */
-    function shuffleArrayWithNoConsecutiveDuplicates(array) {
-        var maxAttempts = 1000; // 最大尝试次数
-        var attempts = 0;
-        var result;
+            // 1️⃣ 排除连续重复
+            let candidates = sequencePool.filter((v) => v !== last);
 
-        while (attempts < maxAttempts) {
-            result = shuffleArray(array);
-
-            // 检查是否有连续相同的元素
-            var hasConsecutiveDuplicates = false;
-            for (var i = 0; i < result.length - 1; i++) {
-                if (result[i] === result[i + 1]) {
-                    hasConsecutiveDuplicates = true;
-                    break;
+            // 2️⃣ 连续两张已出现 → 有概率优先消耗重复图片
+            const consecutiveOld =
+                last2.length === 2 && last2.every((v) => seen.has(v));
+            if (consecutiveOld && Math.random() < repeatPriorityRate) {
+                let repeatCandidates = candidates.filter((v) => seen.has(v));
+                if (repeatCandidates.length > 0) {
+                    candidates = repeatCandidates;
                 }
             }
 
-            // 如果没有连续相同，返回结果
-            if (!hasConsecutiveDuplicates) {
-                return result;
+            // 3️⃣ 兜底：如果 candidates 为空，只能选 sequencePool 中第一个非 last
+            if (candidates.length === 0) {
+                candidates = sequencePool.filter((v) => v !== last);
             }
 
-            attempts++;
-        }
-
-        // 如果随机打乱失败，使用确定性算法修复
-        result = shuffleArray(array);
-
-        // 修复连续相同的情况
-        for (var j = 0; j < result.length - 1; j++) {
-            if (result[j] === result[j + 1]) {
-                // 找到一个不同的元素交换
-                for (var k = j + 2; k < result.length; k++) {
-                    if (
-                        result[k] !== result[j] &&
-                        (k === result.length - 1 || result[k] !== result[k + 1])
-                    ) {
-                        // 交换
-                        var temp = result[j + 1];
-                        result[j + 1] = result[k];
-                        result[k] = temp;
-                        break;
-                    }
-                }
+            // 4️⃣ 最终兜底：如果还是空（sequencePool 只剩 last），直接选 last
+            if (candidates.length === 0) {
+                candidates = [sequencePool[0]];
             }
+
+            // 5️⃣ 随机 pick
+            const pick =
+                candidates[Math.floor(Math.random() * candidates.length)];
+
+            // 6️⃣ 删除 pick
+            const index = sequencePool.indexOf(pick);
+            if (index > -1) sequencePool.splice(index, 1);
+
+            result.push(pick);
+            seen.add(pick);
         }
 
         return result;

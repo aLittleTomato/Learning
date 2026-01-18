@@ -625,6 +625,21 @@ var RavenGame = (function () {
     }
 
     /**
+     * A：知觉辨别
+B：类同比较
+C：比较推理
+D：系列关系
+E：抽象推理
+     */
+    var factorName = [
+        "A：知觉辨别",
+        "B：类同比较",
+        "C：比较推理",
+        "D：系列关系",
+        "E：抽象推理",
+    ];
+
+    /**
      * 渲染题目列表
      */
     function renderQuestionList() {
@@ -656,8 +671,8 @@ var RavenGame = (function () {
                 '<span class="factor-title">' +
                 "第" +
                 numberToChinese(i + 1) +
-                "部分(因子" +
-                factor +
+                "部分(" +
+                factorName[i] +
                 ")" +
                 "</span>" +
                 '<span class="factor-acc">' +

@@ -30,7 +30,7 @@ var ConnectGame2 = (function () {
         gameNumbers: 13, // 游戏数字数量 (1-13)
         gameLetters: 12, // 游戏字母数量 (A-L)
         nodeSize: 114, // 数字节点大小
-        minSpacing: 16, // 最小间距（px）
+        minSpacing: 6, // 最小间距（px）
         lineColor: "#FFD4BD", // 连线颜色
         lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
@@ -322,7 +322,7 @@ var ConnectGame2 = (function () {
             var overlapping = state.numbers.some((node) => {
                 var dx = x - node.x;
                 var dy = y - node.y;
-                return Math.sqrt(dx * dx + dy * dy) < minDist;
+                return Math.sqrt(dx * dx + dy * dy) < config.nodeSize + 2;
             });
 
             if (!overlapping) return { x, y };

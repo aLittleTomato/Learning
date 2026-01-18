@@ -61,7 +61,7 @@
     background-image: url("../images/game3/btn_welcome.png");
     width: 361px;
     height: 231px;
-    left: 413px;
+    left: 0px;
     bottom: 20px;
 
     background-size: cover;
@@ -126,16 +126,6 @@
     object-fit: fill;
 }
 
-.page-dialogBG {
-    position: absolute;
-    /* background-image: "../images/game1/welcome_txt_bg.png"; */
-    width: 750px;
-    height: 641px;
-    left: 0px;
-    bottom: 0px;
-    object-fit: fill;
-}
-
 .full-bg.rule {
     height: 844px;
     position: absolute;
@@ -164,7 +154,7 @@
 }
 
 .page-texts.welcome {
-    top: 960px;
+    top: 520px;
 }
 
 .page-texts.rule1 {

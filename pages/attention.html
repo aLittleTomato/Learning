@@ -18,7 +18,7 @@
             <div id="page-welcome" class="page">
                 <img class="page-welcome-bg" src="../images/game1/welcome_bg.png" />
                 <img class="page-welcome-mask" src="../images/game1/welcom_mask.png" />
-                <img class="page-logo right" src="../images/game1/attention_logo.png" />
+                <img class="page-logo right welcome" src="../images/game1/attention_logo.png" />
                 <img class="page-dialogBG" src="../images/game1/welcome_txt_bg.png" />
                 <div class="page-content">
                     <!-- 新增两行文本 -->
@@ -44,9 +44,9 @@
                 <div class="page-content">
                     <div class="page-texts mindset">
                         <p class="line1">接下来你将看到一组图案，</p>
-                        <p class="line1">试着在最快时间内找出</p>
-                        <p class="line1">上下一共有两条竖线的</p>
-                        <p class="line1">字母“q”，</p>
+                        <p class="line1">试着在<span class="rule-text-blue">最快时间</span>内找出</p>
+                        <p class="line1"><span class="rule-text-blue">上下一共有两条竖线的</span></p>
+                        <p class="line1"><span class="rule-text-blue">字母“q”</span>，</p>
                         <p class="line2">并点击他们吧！</p>
                     </div>
                     <button class="btn btn-bottom long" onclick="AttentionGame.nextPage()"></button>
@@ -68,14 +68,15 @@
                             找到后请<span class="rule-text-green">快速点击</span>它们。
                         </p>
                     </div>
-                    <div class="rule-grid">
+                    <img class="page-rule-img" src="../images/game1/rule1.png" />
+                    <!-- <div class="rule-grid">
                         <div class="rule-item i1"></div>
                         <div class="rule-item i2"></div>
                         <div class="rule-item i3"></div>
                         <div class="rule-item i4"></div>
                         <div class="rule-item i5"></div>
                         <div class="rule-item i6"></div>
-                    </div>
+                    </div> -->
                     <button class="btn btn-bottom long" onclick="AttentionGame.nextPage()"></button>
                 </div>
             </div>
@@ -95,14 +96,16 @@
                             请<span class="rule-text-red">不要点击</span>它们哦。
                         </p>
                     </div>
-                    <div class="rule-grid">
+                    <img class="page-rule-img" src="../images/game1/rule2.png" />
+
+                    <!-- <div class="rule-grid">
                         <div class="rule-item e1"></div>
                         <div class="rule-item e2"></div>
                         <div class="rule-item e3"></div>
                         <div class="rule-item e4"></div>
                         <div class="rule-item e5"></div>
                         <div class="rule-item e6"></div>
-                    </div>
+                    </div> -->
                     <button class="btn btn-bottom long try" onclick="AttentionGame.startTutorial()"></button>
                 </div>
             </div>
@@ -138,7 +141,7 @@
                         <p class="line2">符合要求的字母了。</p>
                         <p class="line2" style="height: 0.7em; margin: 0"></p>
                         <p class="line2">接下来</p>
-                        <p class="line2">我们将进入7关正式挑战</p>
+                        <p class="line2">我们将进入<span class="rule-text-blue">7关</span>正式挑战</p>
                         <p class="line2">
                             每关<span class="rule-text-red">限时70秒</span>,
                         </p>

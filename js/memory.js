@@ -67,7 +67,7 @@ var MemoryGame = (function () {
         maxLevel: 15, // 最高关卡（15位数）
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
-        readyCountdown: 1, // 准备倒计时（秒）
+        readyCountdown: 3, // 准备倒计时（秒）
     };
 
     /**
@@ -215,7 +215,7 @@ var MemoryGame = (function () {
         var numberDisplay = document.getElementById("number-display");
         if (!numberDisplay) return;
 
-        numberDisplay.textContent = "开始";
+        numberDisplay.textContent = "3";
 
         var nextPage = document.getElementById(nextPageId);
         if (!nextPage) {
@@ -300,21 +300,30 @@ var MemoryGame = (function () {
         if (!numberDisplay) return;
 
         numberDisplay.className = "number-display ready";
-        numberDisplay.textContent = "开始";
+        numberDisplay.textContent = "3";
 
         var countdown = config.readyCountdown;
-        Utils.playSound("countdown");
 
         var countdownInterval = setInterval(function () {
             countdown--;
+            Utils.playSound("countdown");
+
+            numberDisplay.classList.remove("ready");
+            void numberDisplay.offsetWidth;
+            numberDisplay.classList.add("ready");
+
             if (countdown > 0) {
                 numberDisplay.textContent = countdown;
             } else {
                 clearInterval(countdownInterval);
+                numberDisplay.textContent = "开始";
 
-                displayNumbers();
+                var readyInterval = setInterval(function () {
+                    clearInterval(readyInterval);
+                    displayNumbers();
+                }, 1300);
             }
-        }, 1500);
+        }, 1000);
     }
 
     /**
@@ -609,17 +618,31 @@ var MemoryGame = (function () {
     function showRetryPopup() {
         // 更新弹窗内容
         var correctAnswer;
-        // if (state.phase === "forward") {
         correctAnswer = state.currentNumbers.join("");
         // } else {
         //     correctAnswer = state.currentNumbers.slice().reverse().join("");
         // }
+        var input = state.userInput;
+        if (state.phase != "forward") {
+            input = input.split("").reverse().join("");
+        }
 
         var retryCorrectAnswer = document.getElementById(
             "retry-correct-answer"
         );
+        let resultHTML = "";
+        for (let i = 0; i < correctAnswer.length; i++) {
+            var char = input[i];
+
+            if (char === correctAnswer[i]) {
+                resultHTML += `<span class="rule-text-green">${correctAnswer[i]}</span>`;
+            } else {
+                resultHTML += `<span class="rule-text-red">${correctAnswer[i]}</span>`;
+            }
+        }
+
         if (retryCorrectAnswer) {
-            retryCorrectAnswer.textContent = correctAnswer;
+            retryCorrectAnswer.innerHTML = resultHTML;
         }
 
         // 显示弹窗
@@ -686,19 +709,38 @@ var MemoryGame = (function () {
             forwardScore.textContent = digitCount;
         }
 
+        // 更新弹窗内容
         var correctAnswer;
-        // if (state.phase === "forward") {
         correctAnswer = state.currentNumbers.join("");
         // } else {
         //     correctAnswer = state.currentNumbers.slice().reverse().join("");
         // }
+        var input = state.userInput;
+        if (state.phase != "forward") {
+            input = input.split("").reverse().join("");
+        }
 
         var retryCorrectAnswer = document.getElementById(
             "retry-correct-answer-goto-back"
         );
-        if (retryCorrectAnswer) {
-            retryCorrectAnswer.textContent = correctAnswer;
+        let resultHTML = "";
+        for (let i = 0; i < correctAnswer.length; i++) {
+            var char = input[i];
+
+            if (char === correctAnswer[i]) {
+                resultHTML += `<span class="rule-text-green">${correctAnswer[i]}</span>`;
+            } else {
+                resultHTML += `<span class="rule-text-red">${correctAnswer[i]}</span>`;
+            }
         }
+
+        if (retryCorrectAnswer) {
+            retryCorrectAnswer.innerHTML = resultHTML;
+        }
+
+        // if (retryCorrectAnswer) {
+        //     retryCorrectAnswer.textContent = correctAnswer;
+        // }
 
         // 切换页面
         var currentPage = getCurrentPage();
@@ -730,7 +772,7 @@ var MemoryGame = (function () {
         if (!numberDisplay) return;
 
         numberDisplay.className = "number-display ready";
-        numberDisplay.textContent = "开始";
+        numberDisplay.textContent = "3";
 
         // 切换到游戏页面
         var rulesPage = getCurrentPage();

@@ -16,7 +16,7 @@
     background: linear-gradient(to bottom, #37c85b 0% 50%, #fff 50% 100%);
 }
 .page-texts.welcome {
-    top: 960px;
+    top: 430px;
 }
 .page-texts.rule1 {
     font-size: 60px;
@@ -30,22 +30,12 @@
     object-fit: fill;
 }
 
-.page-dialogBG {
-    position: absolute;
-    /* background-image: "../images/game1/welcome_txt_bg.png"; */
-    width: 750px;
-    height: 641px;
-    left: 0px;
-    bottom: 0px;
-    object-fit: fill;
-}
-
 .btn-welcome {
     position: absolute;
     background-image: url("../images/game5/btn_welcome.png");
     width: 361px;
     height: 231px;
-    left: 413px;
+    left: 0px;
     bottom: 20px;
 
     background-size: cover;
@@ -114,6 +104,11 @@
     top: 280px;
 }
 
+.page-logo.right.welcome {
+    top: 680px;
+    right: -330px;
+}
+
 .page-logo.left.rule {
     top: -200px;
     left: -350px;
@@ -170,6 +165,9 @@
     height: 100%;
     background-color: #baf0af;
     border-radius: 35px;
+}
+.page-dialogBG {
+    top: 280px;
 }
 
 /* 内层填充（比外层小） */

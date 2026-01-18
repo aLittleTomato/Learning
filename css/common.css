@@ -413,6 +413,21 @@ body {
     /* background-image: "../images/game1/attention_logo.png"; */
 }
 
+.page-logo.right.welcome {
+    top: 780px;
+    right: -300px;
+}
+
+.page-dialogBG {
+    position: absolute;
+    /* background-image: "../images/game1/welcome_txt_bg.png"; */
+    width: 750px;
+    height: 641px;
+    left: 0px;
+    bottom: 450px;
+    object-fit: fill;
+}
+
 /* 1. 出现动画：透明度0→1，旋转30°→45°，1秒 */
 @keyframes appear {
     from {
