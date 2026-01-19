@@ -446,6 +446,25 @@
     gap: 31px;
 }
 
+.question-grid-train {
+    position: absolute;
+    left: 96px;
+    top: 216px;
+
+    width: 474px;
+    height: 975px;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.question-grid-train-inner {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 474px;
+    gap: 30px;
+    transition: transform 0.1s ease-out;
+}
+
 .question-item {
     width: 70px;
     height: 70px;
