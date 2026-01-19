@@ -1239,6 +1239,7 @@ AttentionGame.prevDetailPage = function () {
         AttentionGame.state.detailsPage--;
         renderDetailsPage(AttentionGame.state.detailsPage);
     } else {
+        showResult(false);
     }
 };
 

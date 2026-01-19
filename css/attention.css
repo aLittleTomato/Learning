@@ -589,6 +589,10 @@
     z-index: 1;
 }
 
+.game-grid.detail.hide {
+    --slide-x: 0;
+}
+
 .game-grid.next {
     --slide-x: 100vw;
 }
@@ -748,6 +752,41 @@
     filter: brightness(0.83);
 }
 
+.progress-dot-train {
+    width: 237px;
+    height: 75px;
+    background: url("../images/game1/processer_normal_long.png");
+    background-position: center;
+    background-size: cover;
+    transition: all 0.3s ease;
+    overflow: visible;
+    margin-left: 0px;
+}
+
+.progress-dot-train:first-child {
+    margin-left: 0;
+}
+
+.progress-dot-train.active {
+    background-image: url("../images/game1/processer_current_long.png");
+}
+
+.progress-dot-train.correct {
+    background-image: url("../images/game1/processer_correct_long.png");
+}
+
+.progress-dot-train.error {
+    background-image: url("../images/game1/processer_error_long.png");
+}
+
+.progress-dot-train.correct.active {
+    filter: brightness(0.83);
+}
+
+.progress-dot-train.error.active {
+    filter: brightness(0.83);
+}
+
 /* 游戏容器 */
 .game-container {
     position: absolute;
@@ -802,6 +841,23 @@
 
 .btn-bottom.btn-next-game.last {
     background-image: url("../images/game1/next_page.png");
+}
+
+.btn-bottom.train.btn-next-game {
+    background-image: url("../images/game1/btn_test_right.png");
+    background-size: 100% 100%;
+    /* 拉伸填满容器，横竖都拉伸 */
+    width: 438px;
+    height: 231px;
+    right: -10px;
+    bottom: 10px;
+    padding-left: 25px;
+
+    font-size: 40px;
+    color: #fff;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
 }
 
 /* 游戏底部 */

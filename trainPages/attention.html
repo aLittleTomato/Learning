@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>注意力测试</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/preloader.css" />
+    <link rel="stylesheet" href="../css/attention.css" />
+</head>
+
+<body>
+    <div id="app">
+        <div id="stage" class="stage">
+            <!-- P1: 欢迎页 -->
+            <div id="page-welcome" class="page">
+                <img class="page-welcome-bg" src="../images/game1/welcome_bg.png" />
+                <img class="page-welcome-mask" src="../images/game1/welcom_mask.png" />
+                <img class="page-logo right welcome" src="../images/game1/attention_logo.png" />
+                <img class="page-dialogBG" src="../images/game1/welcome_txt_bg.png" />
+                <div class="page-content">
+                    <!-- 新增两行文本 -->
+                    <div class="page-texts-title">
+                        <p class="line2">欢迎来到<br />注意力小练习👋</p>
+                    </div>
+
+                    <div class="page-texts out">
+                        <p class="line1">你好呀</p>
+                        <p class="line2">准备好接受<br />我的挑战了吗</p>
+                    </div>
+                    <div class="page-texts in">
+                        <p class="line2">请跟随我<br />查看挑战规则</p>
+                    </div>
+                    <button class="btn btn-welcome" onclick="AttentionGame.nextPage()"></button>
+                </div>
+            </div>
+
+            <!-- P2: 心理建设 -->
+            <div id="page-mindset" class="page">
+                <img class="page-logo left" src="../images/game1/attention_logo.png" />
+                <img class="page-mindset-mask" src="../images/game1/big_txt_bg.png" />
+                <div class="page-content">
+                    <div class="page-texts mindset">
+                        <p class="line1">接下来你将看到一组图案，</p>
+                        <p class="line1">试着在<span class="rule-text-blue">最快时间</span>内找出</p>
+                        <p class="line1"><span class="rule-text-blue">上下一共有两条竖线的</span></p>
+                        <p class="line1"><span class="rule-text-blue">字母“q”</span>，</p>
+                        <p class="line2">并点击他们吧！</p>
+                    </div>
+                    <button class="btn btn-bottom long" onclick="AttentionGame.nextPage()"></button>
+                </div>
+            </div>
+
+            <!-- P4: 规则详解 1 -->
+            <div id="page-rules-1" class="page">
+                <img class="page-logo right1" src="../images/game1/attention_logo.png" />
+                <img class="page-rule-mask" src="../images/game1/normal_bg.png" />
+                <div class="page-content">
+                    <div class="page-texts rules">
+                        <p class="line2">
+                            例如以下图案<span class="rule-text-green">是</span>
+                        </p>
+                        <p class="line2">上下一共有两条竖线的</p>
+                        <p class="line2">字母“q”，</p>
+                        <p class="line2">
+                            找到后请<span class="rule-text-green">快速点击</span>它们。
+                        </p>
+                    </div>
+                    <img class="page-rule-img" src="../images/game1/rule1.png" />
+                    <!-- <div class="rule-grid">
+                        <div class="rule-item i1"></div>
+                        <div class="rule-item i2"></div>
+                        <div class="rule-item i3"></div>
+                        <div class="rule-item i4"></div>
+                        <div class="rule-item i5"></div>
+                        <div class="rule-item i6"></div>
+                    </div> -->
+                    <button class="btn btn-bottom long" onclick="AttentionGame.nextPage()"></button>
+                </div>
+            </div>
+
+            <!-- P5: 规则详解 2 -->
+            <div id="page-rules-2" class="page">
+                <img class="page-logo right1" src="../images/game1/attention_logo.png" />
+                <img class="page-rule-mask" src="../images/game1/normal_bg.png" />
+                <div class="page-content">
+                    <div class="page-texts rules">
+                        <p class="line2">请注意</p>
+                        <p class="line2">
+                            例如以下图案<span class="rule-text-red">不是</span>上下共有
+                        </p>
+                        <p class="line2">两条竖线的字母“q”，</p>
+                        <p class="line2">
+                            请<span class="rule-text-red">不要点击</span>它们哦。
+                        </p>
+                    </div>
+                    <img class="page-rule-img" src="../images/game1/rule2.png" />
+
+                    <!-- <div class="rule-grid">
+                        <div class="rule-item e1"></div>
+                        <div class="rule-item e2"></div>
+                        <div class="rule-item e3"></div>
+                        <div class="rule-item e4"></div>
+                        <div class="rule-item e5"></div>
+                        <div class="rule-item e6"></div>
+                    </div> -->
+                    <button class="btn btn-bottom long try" onclick="AttentionGame.startTutorial()"></button>
+                </div>
+            </div>
+
+            <!-- P6: 练习模式 -->
+            <div id="page-tutorial" class="page">
+                <img class="page-logo left1" src="../images/game1/attention_logo.png" />
+                <img class="page-tutorial-mask" src="../images/game1/normal_bg.png" />
+                <div class="page-content">
+                    <div class="page-texts rules">
+                        <p class="line2">找一找，点一点，</p>
+                        <p class="line2">哪些是上下有两条竖线的</p>
+                        <p class="line2">字母“q”呢？</p>
+                    </div>
+                    <div id="tutorial-grid" class="tutorial-grid"></div>
+                    <img id="toast-corrent" class="page-tutorial-toast corrent"
+                        src="../images/game1/toast_correct.png" />
+                    <img id="toast-error" class="page-tutorial-toast error" src="../images/game1/toast_error.png" />
+                </div>
+            </div>
+
+            <!-- P3: 核心任务发布 -->
+            <div id="page-task" class="page">
+                <img class="page-task-mask" src="../images/game1/normal_bg.png" />
+                <div class="logo-flip">
+                    <img class="page-logo bottom" src="../images/game1/attention_logo.png" />
+                </div>
+
+                <div class="page-content">
+                    <div class="page-texts task">
+                        <p class="line2">太棒了 🎉</p>
+                        <p class="line2">你已经能准确找到所有</p>
+                        <p class="line2">符合要求的字母了。</p>
+                        <p class="line2" style="height: 0.7em; margin: 0"></p>
+                        <p class="line2">接下来</p>
+                        <p class="line2">我们将进入<span class="rule-text-blue">3关</span>正式挑战</p>
+                        <p class="line2">
+                            每关<span class="rule-text-red">限时70秒</span>,
+                        </p>
+                        <p class="line2">倒计时结束将自动进入下一关</p>
+                        <p class="line2" style="height: 0.7em; margin: 0"></p>
+
+                        <p class="line2">提前完成可手动进入下一关</p>
+                    </div>
+                    <button class="btn btn-bottom long task" onclick="AttentionGame.startMainGame()"></button>
+                </div>
+            </div>
+
+            <!-- P7: 正式测试 -->
+            <div id="page-game" class="page">
+                <div class="page-content">
+                    <img class="test-logo" src="../images/game1/test_logo.png" />
+                    <img class="test-tip-bg" src="../images/game1/test_text_bg.png" />
+
+                    <div class="page-texts test-tip">
+                        <p class="line2">找一找，点一点，</p>
+                        <p class="line2">哪些是上下有两条竖线的“q”呢?</p>
+                    </div>
+
+                    <div class="progress-bar" id="progress-bar"></div>
+
+                    <div class="game-container">
+                        <!-- <div class="game-grid main-grid" id="main-grid"></div> -->
+                        <div class="game-grid main-grid active" id="main-grid"></div>
+                        <div class="game-grid main-grid next" id="next-grid"></div>
+                        <div class="game-grid main-grid detail" id="detail-test-grid"></div>
+                    </div>
+
+                    <div class="game-timer" id="game-timer">
+                        时间：00:20
+                    </div>
+
+                    <button id="test-next-btn" class="btn btn-bottom train btn-next-game"
+                        onclick="AttentionGame.completePage()"></button>
+                </div>
+            </div>
+
+            <!-- P8: 答题详情 -->
+            <div id="page-details" class="page">
+
+                <img class="page-detail-mask" src="../images/game1/page_detail_mask.png" />
+                <button
+                class="btn btn-detail"
+                onclick="AttentionGame.backToResult()"
+            ></button>
+                <div class="page-texts detail">
+                    <p class="line2" id="detail-title">📄 第一关</p>
+                </div>
+
+                <div class="progress-bar detail" id="details-progress-bar"></div>
+
+                <div class="details-container">
+                    <div class="game-grid main-grid" id="details-grid"></div>
+                </div>
+
+                <button class="btn btn-bottom btn-prev" id="btn-prev-detail" onclick="AttentionGame.prevDetailPage()">
+                </button>
+                <button class="btn btn-bottom btn-next" id="btn-next-detail" onclick="AttentionGame.nextDetailPage()">
+                </button>
+            </div>
+
+            <!-- P9: 结果结算 -->
+            <div id="page-result" class="page">
+                <img class="page-logo left1 result" src="../images/game1/attention_logo.png" />
+                <img class="page-rule-mask result" src="../images/game1/normal_bg.png" />
+                <div class="page-content">
+                    <div class="page-texts result">
+                        <p class="line2">恭喜你！ 🎉</p>
+                        <p class="line2">完成了全部挑战。</p>
+                        <p class="line2">你真是眼疾手快！👏</p>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="stat-item time">
+                            <div class="stat-value" id="stat-time">
+                                00:00
+                            </div>
+                            <div class="stat-label">作答时间</div>
+                        </div>
+                        <div class="stat-item accuracy">
+                            <div class="stat-value" id="stat-accuracy">
+                                0%
+                            </div>
+                            <div class="stat-label">正确率</div>
+                        </div>
+                        <div class="stat-item speed">
+                            <div class="stat-value" id="stat-speed">
+                                0
+                            </div>
+                            <div class="stat-label">加工速度</div>
+                        </div>
+                        <div class="stat-item focus">
+                            <div class="stat-value" id="stat-focus">
+                                0
+                            </div>
+                            <div class="stat-label">集中程度</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-bottom long detail" onclick="AttentionGame.viewDetails()">
+                    </button>
+                    <button class="btn btn-bottom long again" onclick="Utils.restart()">
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="../js/scale.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/animation.js"></script>
+    <script src="../js/preloader.js"></script>
+    <script src="../trainJs/attention.js"></script>
+</body>
+
+</html>
