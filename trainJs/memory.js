@@ -59,6 +59,13 @@ var MemoryGame = (function () {
         bestBackwardLevel: 0, // 历史最佳倒序关卡
         currentDetailsTab: "forward", // 当前详情页签
         timeCost: 0,
+
+        remainingTime: 300, // 剩余时间（秒）
+        timerInterval: null, // 计时器
+
+        showNextTimer: null, // 计时器
+        showReadyTimer: null, // 计时器
+        countdownInterval: null,
     };
 
     // 配置
@@ -68,6 +75,7 @@ var MemoryGame = (function () {
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 3, // 准备倒计时（秒）
+        trainingDuration: 120, // 训练时长（秒）5分钟
     };
 
     /**
@@ -223,6 +231,12 @@ var MemoryGame = (function () {
             return;
         }
 
+        state.remainingTime = 12;
+        // 开始计时器
+        if (!state.timerInterval) {
+            startTimer();
+        }
+
         Animation.pageTransition(currentPage, nextPage, function () {
             // if (currentPage) {
             //     currentPage.classList.remove("active");
@@ -231,6 +245,53 @@ var MemoryGame = (function () {
             // 开始第一关
             startLevel();
         });
+    }
+
+    /**
+     * 开始计时器
+     */
+    function startTimer() {
+        state.timerInterval = setInterval(function () {
+            state.remainingTime--;
+            console.log("计时器：" + state.remainingTime);
+            if (state.remainingTime <= 0) {
+                endTraining();
+            }
+        }, 1000);
+    }
+
+    /**
+     * 停止计时器
+     */
+    function stopTimer() {
+        if (state.timerInterval) {
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+        }
+        if (state.countdownInterval) {
+            clearInterval(state.countdownInterval);
+            state.countdownInterval = null;
+        }
+        if (state.showReadyTimer) {
+            clearInterval(state.showReadyTimer);
+            state.showReadyTimer = null;
+        }
+        if (state.showNextTimer) {
+            clearTimeout(state.showNextTimer);
+            state.showNextTimer = null;
+        }
+    }
+
+    function endTraining() {
+        stopTimer();
+
+        if (state.phase === "forward") {
+            // 进入倒序阶段
+            showBackwardRules();
+        } else {
+            // 游戏结束
+            showResult();
+        }
     }
 
     /**
@@ -304,7 +365,7 @@ var MemoryGame = (function () {
 
         var countdown = config.readyCountdown;
 
-        var countdownInterval = setInterval(function () {
+        state.countdownInterval = setInterval(function () {
             countdown--;
             Utils.playSound("countdown");
 
@@ -315,11 +376,13 @@ var MemoryGame = (function () {
             if (countdown > 0) {
                 numberDisplay.textContent = countdown;
             } else {
-                clearInterval(countdownInterval);
+                if (state.countdownInterval)
+                    clearInterval(state.countdownInterval);
                 numberDisplay.textContent = "开始";
 
-                var readyInterval = setInterval(function () {
-                    clearInterval(readyInterval);
+                state.showReadyTimer = setInterval(function () {
+                    if (state.showReadyTimer)
+                        clearInterval(state.showReadyTimer);
                     displayNumbers();
                 }, 1300);
             }
@@ -351,11 +414,20 @@ var MemoryGame = (function () {
             numberDisplay.textContent = number;
 
             // 数字显示时长后消失
-            setTimeout(function () {
+            state.showNextTimer = setTimeout(function () {
                 numberDisplay.className = "number-display number-disappear";
 
+                if (state.showNextTimer) {
+                    clearTimeout(state.showNextTimer);
+                    state.showNextTimer = null;
+                }
+
                 // 间隔后显示下一个数字
-                setTimeout(function () {
+                state.showNextTimer = setTimeout(function () {
+                    if (state.showNextTimer) {
+                        clearTimeout(state.showNextTimer);
+                        state.showNextTimer = null;
+                    }
                     currentIndex++;
                     showNextNumber();
                 }, config.displayInterval);
@@ -383,11 +455,11 @@ var MemoryGame = (function () {
         state.inputStartTime = Date.now();
 
         // 页面切换
+        displayPage.classList.remove("active");
+        inputPage.classList.add("active");
+        // Animation.gameToResultTransition(displayPage, inputPage, function () {
 
-        Animation.gameToResultTransition(displayPage, inputPage, function () {
-            displayPage.classList.remove("active");
-            inputPage.classList.add("active");
-        });
+        // });
     }
 
     /**
@@ -517,30 +589,33 @@ var MemoryGame = (function () {
         }
 
         var exLastPart = document.getElementById("ex-Last-Text");
-        var lastPart = document.getElementById("Last-Text");
+        // var lastPart = document.getElementById("Last-Text");
 
         exLastPart.style.display = "none";
-        lastPart.style.display = "none";
-        // 已经是最后一关
-        if (state.level >= config.maxLevel) {
-            var nextLevel = state.level + 1;
-            var nextDigitCount = nextLevel + 2;
-            var correctDesc = document.getElementById("max-num");
-            if (correctDesc) {
-                correctDesc.textContent = config.maxLevel + 2 + "个";
-            }
-            lastPart.style.display = "block";
-        } else {
-            var nextLevel = state.level + 1;
-            var nextDigitCount = nextLevel + 2;
-            var correctDesc = document.getElementById("correct-desc");
-            if (correctDesc) {
-                correctDesc.textContent = nextDigitCount + "个";
-            }
-            exLastPart.style.display = "block";
-        }
+        // lastPart.style.display = "none";
 
-        // 显示弹窗
+        // 已经是最后一关
+        // if (state.level >= config.maxLevel) {
+        //     var nextLevel = state.level + 1;
+        //     var nextDigitCount = nextLevel + 2;
+        //     var correctDesc = document.getElementById("max-num");
+        //     if (correctDesc) {
+        //         correctDesc.textContent = config.maxLevel + 2 + "个";
+        //     }
+        //     lastPart.style.display = "block";
+        // } else {
+        var nextLevel = state.level + 1;
+        var nextDigitCount = nextLevel + 2;
+
+        state.level = Math.min(state.level + 1, config.maxLevel);
+
+        var correctDesc = document.getElementById("correct-desc");
+        if (correctDesc) {
+            correctDesc.textContent = nextDigitCount + "个";
+        }
+        exLastPart.style.display = "block";
+        // }
+
         var inputPage = document.getElementById("page-input");
         var popup = document.getElementById("popup-correct");
 
@@ -552,25 +627,6 @@ var MemoryGame = (function () {
      * 下一关
      */
     function nextLevel() {
-        // 关闭弹窗
-        // var popup = document.getElementById("popup-correct");
-        // popup.classList.remove("active");
-
-        // 检查是否达到最高关卡
-        if (state.level >= config.maxLevel) {
-            // 完成当前阶段
-            if (state.phase === "forward") {
-                // 进入倒序阶段
-                showBackwardRules();
-            } else {
-                // 游戏结束
-                showResult();
-            }
-            return;
-        }
-
-        // 进入下一关
-        state.level++;
         startLevel();
         Utils.playSound("click");
 
@@ -602,20 +658,16 @@ var MemoryGame = (function () {
             showRetryPopup();
         } else {
             // 无复活机会，结束当前阶段
-            if (state.phase === "forward") {
-                // 进入倒序阶段
-                showFailed();
-            } else {
-                // 游戏结束
-                showResult();
-            }
+            showFailed();
         }
     }
 
     /**
-     * 显示复活弹窗
+     * 失误一次
      */
     function showRetryPopup() {
+        // 标记已使用复活机会
+        state.retryUsed = true;
         // 更新弹窗内容
         var correctAnswer;
         correctAnswer = state.currentNumbers.join("");
@@ -657,12 +709,10 @@ var MemoryGame = (function () {
      * 重试当前关卡
      */
     function retryLevel() {
-        // 标记已使用复活机会
-        state.retryUsed = true;
         Utils.playSound("click");
 
         // 关闭弹窗
-        var popup = document.getElementById("popup-retry");
+        var popup = Utils.getCurrentPage();
         popup.classList.remove("active");
 
         // 切换到展示页面
@@ -738,10 +788,17 @@ var MemoryGame = (function () {
             retryCorrectAnswer.innerHTML = resultHTML;
         }
 
+        state.retryUsed = false;
+        state.level = Math.max(state.level - 1, 1);
+
+        var nextDigitCount = state.level + 2;
+        var correctDesc = document.getElementById("failed-desc");
+        if (correctDesc) {
+            correctDesc.textContent = nextDigitCount + "个";
+        }
         // if (retryCorrectAnswer) {
         //     retryCorrectAnswer.textContent = correctAnswer;
         // }
-
         // 切换页面
         var currentPage = getCurrentPage();
         var rulesPage = document.getElementById("popup-goto-backward");
@@ -774,6 +831,12 @@ var MemoryGame = (function () {
         numberDisplay.className = "number-display ready";
         numberDisplay.textContent = "3";
 
+        state.remainingTime = config.trainingDuration;
+        // 开始计时器
+        if (!state.timerInterval) {
+            startTimer();
+        }
+
         // 切换到游戏页面
         var rulesPage = getCurrentPage();
         var displayPage = document.getElementById("page-display");
@@ -794,8 +857,10 @@ var MemoryGame = (function () {
         console.log("Showing result");
 
         // 计算成绩
-        var forwardDigits = state.forwardMaxLevel + 2;
-        var backwardDigits = state.backwardMaxLevel + 2;
+        var forwardDigits =
+            state.forwardMaxLevel > 0 ? state.forwardMaxLevel + 2 : 0;
+        var backwardDigits =
+            state.backwardMaxLevel > 0 ? state.backwardMaxLevel + 2 : 0;
         var totalScore = forwardDigits + backwardDigits;
 
         // 更新显示
@@ -898,6 +963,86 @@ var MemoryGame = (function () {
         Animation.pageTransition(resultPage, detailsPage, function () {
             // resultPage.classList.remove("active");
             // detailsPage.classList.add("active");
+            // 确保触摸滑动功能已初始化
+            initTouchScroll();
+        });
+    }
+
+    /**
+     * 初始化触摸拖动滑动功能
+     */
+    function initTouchScroll() {
+        // 优先使用训练版本的容器
+        var container =
+            document.querySelector(".details-container-train") ||
+            document.querySelector(".details-container");
+        if (!container) return;
+
+        // 避免重复初始化
+        if (container.hasAttribute("data-touch-scroll-init")) {
+            return;
+        }
+        container.setAttribute("data-touch-scroll-init", "true");
+
+        var isScrolling = false;
+        var startY = 0;
+        var scrollTop = 0;
+
+        // 触摸开始处理函数
+        var touchStartHandler = function (e) {
+            if (e.touches.length === 1) {
+                isScrolling = true;
+                startY = e.touches[0].pageY;
+                scrollTop = container.scrollTop;
+                container.style.transition = "none";
+            }
+        };
+
+        // 触摸移动处理函数
+        var touchMoveHandler = function (e) {
+            if (!isScrolling) return;
+            if (e.touches.length !== 1) return;
+
+            var currentY = e.touches[0].pageY;
+            var deltaY = startY - currentY;
+            var newScrollTop = scrollTop + deltaY;
+
+            // 限制滚动范围
+            var maxScroll = container.scrollHeight - container.clientHeight;
+            if (newScrollTop < 0) {
+                newScrollTop = 0;
+            } else if (newScrollTop > maxScroll) {
+                newScrollTop = maxScroll;
+            }
+
+            container.scrollTop = newScrollTop;
+            e.preventDefault();
+        };
+
+        // 触摸结束处理函数
+        var touchEndHandler = function (e) {
+            isScrolling = false;
+            container.style.transition = "";
+        };
+
+        // 触摸取消处理函数
+        var touchCancelHandler = function (e) {
+            isScrolling = false;
+            container.style.transition = "";
+        };
+
+        // 绑定事件监听器
+        container.addEventListener("touchstart", touchStartHandler, {
+            passive: false,
+        });
+        container.addEventListener("touchmove", touchMoveHandler, {
+            passive: false,
+        });
+        container.addEventListener("touchend", touchEndHandler, {
+            passive: true,
+        });
+        container.addEventListener("touchcancel", touchCancelHandler, {
+            passive: true,
         });
     }
 
@@ -920,7 +1065,7 @@ var MemoryGame = (function () {
         }
 
         // 渲染表格
-        for (var j = 0; j < filteredHistory.length * 10; j++) {
+        for (var j = 0; j < filteredHistory.length; j++) {
             var record = filteredHistory[j % filteredHistory.length];
             var tr = document.createElement("tr");
 
@@ -971,6 +1116,18 @@ var MemoryGame = (function () {
                 j * 50
             );
         }
+
+        // 渲染表格后初始化触摸滑动并滚动到顶部
+        setTimeout(function () {
+            initTouchScroll();
+            // 滚动到顶部
+            var container =
+                document.querySelector(".details-container-train") ||
+                document.querySelector(".details-container");
+            if (container) {
+                container.scrollTop = 0;
+            }
+        }, 100);
     }
 
     /**

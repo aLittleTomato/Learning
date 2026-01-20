@@ -96,24 +96,25 @@
                     />
                     <div class="page-content">
                         <div class="page-texts rule2">
-                            <p class="line1">请注意，</p>
+                            <p class="line2">请注意，</p>
                             <p class="line1">
                                 每一关的数字只<span class="rule-text-red"
                                     >展示一次</span
                                 >。
                             </p>
-                            <p class="line3">
-                                如果挑战失败,<br />你将有<span
+                            <p class="line1">
+                                如果挑战<span class="rule-text-red">成功</span
+                                >,<br />展示数字的位数将<span
                                     class="rule-text-red"
-                                    >一次</span
-                                >复活机会来完成当前关卡。
+                                    >加一</span
+                                >。
                             </p>
-                            <p class="line3">
-                                如果复活机会用完还<span class="rule-text-red"
-                                    >未通过</span
-                                >当前关卡，<br />你将<span class="rule-text-red"
-                                    >直接进入</span
-                                >下一轮挑战。
+                            <p class="line2">
+                                如果挑战<span class="rule-text-red">失败</span
+                                >,<br />展示数字的位数将<span
+                                    class="rule-text-red"
+                                    >减一</span
+                                >。
                             </p>
                         </div>
                         <button
@@ -287,25 +288,14 @@
                         <div class="page-texts retry" id="ex-Last-Text">
                             <p class="line2">太棒了 🎉</p>
                             <p class="line2">恭喜你通过本关！</p>
-                            <p class="line2">
+                            <p class="line1">
                                 接下来的展示总共<span
                                     class="rule-text-red"
                                     id="correct-desc"
                                     >4个</span
                                 >数字，
                             </p>
-                            <p class="line2">准备好升级挑战了吗？</p>
-                        </div>
-
-                        <div class="page-texts retry1" id="Last-Text">
-                            <p class="line2">我的天呐 🎉</p>
-                            <p class="line2">你居然一次记住了</p>
-                            <p class="line2">
-                                <span class="rule-text-red" id="max-num"
-                                    >4个</span
-                                >数字，
-                            </p>
-                            <p class="line2">你真是个小天才！</p>
+                            <p class="line2">准备继续挑战了吗？</p>
                         </div>
 
                         <button
@@ -332,7 +322,7 @@
                             <p class="line2" id="retry-correct-answer"></p>
                             <p class="line2">让我们再试一次</p>
                             <p class="line2">注意这次的数字和刚才的</p>
-                            <p class="line2">不一样哦</p>
+                            <p class="line2">不一样哦。</p>
                         </div>
 
                         <button
@@ -361,14 +351,17 @@
                                     id="retry-correct-answer-goto-back"
                                 ></span>
                             </p>
-                            <p class="line2">别灰心，让我们来试试</p>
-                            <p class="line1">另一轮挑战，</p>
-                            <p class="line2">一起先来看看规则吧</p>
+                            <p class="line2">别灰心，接下来的展示</p>
+                            <p class="line2">
+                                总共<span class="rule-text-red" id="failed-desc"
+                                    >4个</span
+                                >数字，
+                            </p>
                         </div>
 
                         <button
                             class="btn btn-bottom long gotoBackard"
-                            onclick="MemoryGame.showBackwardRules()"
+                            onclick="MemoryGame.retryLevel()"
                         ></button>
                     </div>
                 </div>
@@ -452,24 +445,25 @@
                     />
                     <div class="page-content">
                         <div class="page-texts rule1">
-                            <p class="line1">请注意</p>
+                            <p class="line2">请注意，</p>
                             <p class="line1">
                                 每一关的数字只<span class="rule-text-red"
                                     >展示一次</span
-                                >
+                                >。
                             </p>
-                            <p class="line3">
-                                如果挑战失败<br />你将有<span
+                            <p class="line1">
+                                如果挑战<span class="rule-text-red">成功</span
+                                >,<br />展示数字的位数将<span
                                     class="rule-text-red"
-                                    >一次</span
-                                >复活机会来完成当前关卡。
+                                    >加一</span
+                                >。
                             </p>
-                            <p class="line3">
-                                如果复活机会用完还<span class="rule-text-red"
-                                    >未通过</span
-                                >当前关卡，<br />你将<span class="rule-text-red"
-                                    >直接结束</span
-                                >本次练习。
+                            <p class="line2">
+                                如果挑战<span class="rule-text-red">失败</span
+                                >,<br />展示数字的位数将<span
+                                    class="rule-text-red"
+                                    >减一</span
+                                >。
                             </p>
                         </div>
                         <button
@@ -616,8 +610,8 @@
                         ></button>
                     </div>
 
-                    <div class="details-container">
-                        <table class="details-table" id="details-table">
+                    <div class="details-container-train">
+                        <table class="details-table-train" id="details-table">
                             <colgroup>
                                 <col />
                                 <col class="col-sep" />

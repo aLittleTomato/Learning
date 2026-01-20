@@ -275,7 +275,7 @@
 }
 
 .btn-bottom.long.gotoBackard {
-    background-image: url("../images/game2/goto_backward.png");
+    background-image: url("../images/game2/retry.png");
     bottom: 40px;
 }
 
@@ -819,6 +819,34 @@
     overflow: hidden; /* ⭐ 关键：裁剪 table */
 }
 
+.details-container-train {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    position: absolute;
+    width: 666px;
+    left: 42px;
+    top: 500px;
+    height: 700px;
+    /* border: 10px solid #ffc4c6;
+    border-radius: 80px; */
+    border: 10px solid #ffc4c6;
+    border-radius: 80px;
+
+    -webkit-overflow-scrolling: touch; /* iOS 平滑滚动 */
+    overflow-y: auto; /* 允许垂直滚动 */
+    overflow-x: hidden; /* 隐藏水平滚动 */
+
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 和 Edge */
+}
+
+/* 隐藏 Webkit 浏览器的滚动条 */
+.details-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 .details-table {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.95);
@@ -876,6 +904,62 @@
 }
 
 .details-table .col-sep {
+    border-left: 4px solid #ffc4c6;
+}
+
+.details-table-train {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+
+    overflow: hidden;
+
+    padding-bottom: 20px;
+}
+
+.details-table-train th {
+    padding: 12px 8px;
+    font-size: 35px;
+    font-weight: 600;
+    color: #cc2224;
+    text-align: center;
+}
+
+.details-table-train thead th {
+    background-color: rgba(255, 255, 255, 0.95); /* 和容器一致 */
+    position: relative;
+    z-index: 2; /* ⭐ 盖住竖线 */
+}
+
+.details-table-train td {
+    padding: 12px 8px;
+    font-size: 35px;
+    color: #ff5c5f;
+    text-align: center;
+}
+
+.details-table-train td {
+    border-right: 4px solid #ffc4c6;
+}
+
+.details-table-train td:last-child {
+    border-right: none;
+}
+
+.details-table-train tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.details-table-train tbody tr:nth-child(even) {
+    background-color: rgba(255, 107, 107, 0.02);
+}
+
+.details-table-train {
+    border-collapse: collapse; /* ⭐ 必须 */
+    border-collapse: separate;
+    border-spacing: 0; /* 去掉单元格间距 */
+}
+
+.details-table-train .col-sep {
     border-left: 4px solid #ffc4c6;
 }
 
