@@ -38,12 +38,12 @@ var PictureMemoryGame = (function () {
             totalPictures: 25,
             totalRounds: 100,
             distribution: {
-                once: 4,
-                twice: 36,
-                thrice: 8,
+                once: 15,
+                twice: 35,
+                thrice: 5,
             },
             startIndex: 7,
-            endIndex: 55,
+            endIndex: 65,
         },
         pictureDisplayTime: 3000, // 每张图片显示3秒
         countdownTime: 3, // 准备倒计时3秒
@@ -56,7 +56,7 @@ var PictureMemoryGame = (function () {
      * 初始化游戏
      */
     function init() {
-        for (let i = 0; i < 55; i++) {
+        for (let i = 0; i < 65; i++) {
             picturePool.push("../images/game5/pool/" + (i + 1) + ".png");
         }
         console.log("图片记忆游戏初始化");
