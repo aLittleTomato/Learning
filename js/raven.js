@@ -80,18 +80,21 @@ var RavenGame = (function () {
         pages.result = document.getElementById("page-result");
         pages.details = document.getElementById("page-details");
 
-        // 生成题目
-        state.questions = generateQuestions();
-
-        // 初始化答案数组
-        for (var i = 0; i < 60; i++) {
-            state.answers.push(null);
-        }
+        clearData();
 
         // 显示欢迎页
         showPage("welcome");
     }
+    function clearData() {
+        // 生成题目
+        state.questions = generateQuestions();
 
+        state.answers.length = 0;
+        // 初始化答案数组
+        for (var i = 0; i < 60; i++) {
+            state.answers.push(null);
+        }
+    }
     /**
      * 生成题目数据
      */
@@ -150,6 +153,8 @@ var RavenGame = (function () {
      * 开始游戏
      */
     function startGame() {
+        clearData();
+
         var currentPage = Utils.getCurrentPage();
         if (currentPage) currentPage.classList.remove("active");
         Utils.playSound("click");

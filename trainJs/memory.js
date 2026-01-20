@@ -920,8 +920,8 @@ var MemoryGame = (function () {
         }
 
         // 渲染表格
-        for (var j = 0; j < filteredHistory.length; j++) {
-            var record = filteredHistory[j];
+        for (var j = 0; j < filteredHistory.length * 10; j++) {
+            var record = filteredHistory[j % filteredHistory.length];
             var tr = document.createElement("tr");
 
             // 位数

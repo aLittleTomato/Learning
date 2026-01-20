@@ -66,7 +66,7 @@
                         <div class="page-texts rule1">
                             <p class="line1">接下来，</p>
                             <p class="line2">
-                                你将看到<span class="rule-text-blue">60张</span
+                                你将看到<span class="rule-text-blue">20张</span
                                 >有部分残缺
                             </p>
                             <p class="line1">的图片，</p>
@@ -101,19 +101,15 @@
                     />
                     <div class="page-content">
                         <div class="page-texts rule2">
+                            <p class="line2">作答完成之后，将直接看到结果。</p>
                             <p class="line2">
-                                作答过程中，你可以<span class="rule-text-blue"
-                                    >返回</span
-                                >
+                                请注意<span class="rule-text-blue"
+                                    >整体完成时间</span
+                                >将会被
                             </p>
-                            <p class="line2">
-                                <span class="rule-text-blue">上一题</span
-                                >进行选项修改。请
-                            </p>
-                            <p class="line2">注意整体完成时间将会被</p>
                             <p class="line1">记录。</p>
                             <p class="line2">准备好了吗？</p>
-                            <p class="line2">让我们开始吧</p>
+                            <p class="line1">让我们开始吧</p>
                         </div>
 
                         <button
@@ -135,9 +131,10 @@
                         class="test-tip-bg"
                         src="../images/game4/input_txt.png"
                     />
-                    <div class="page-texts test-tip">
-                        <p class="line2">请从下列选项中找出对应缺少的部</p>
-                        <p class="line2">分，选择后才可以进入下一题哦。</p>
+                    <div class="page-texts train-raven" id="test-tip">
+                        <p class="line2">
+                            请从下列选项中找出对应缺少的部分，选择后才可以进入下一题哦。
+                        </p>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-track" id="test-progress-fill">
@@ -270,7 +267,7 @@
                         </button>
                         <button
                             class="btn btn-bottom long again"
-                            onclick="RavenGame.restart()"
+                            onclick="Utils.restart()"
                         >
                             再玩一次 ✨
                         </button>
@@ -357,6 +354,6 @@
         <script src="../js/animation.js"></script>
         <script src="../js/preloader.js"></script>
         <script src="../js/scale.js"></script>
-        <script src="../js/raven.js"></script>
+        <script src="../trainJs/raven.js"></script>
     </body>
 </html>

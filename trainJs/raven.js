@@ -14,7 +14,7 @@ var RavenGame = (function () {
         startTime: null, // 开始时间
         endTime: null, // 结束时间
         questions: [], // 题目数组
-        totalQuestion: 60,
+        totalQuestion: 20,
     };
 
     const answer = [
@@ -80,16 +80,19 @@ var RavenGame = (function () {
         pages.result = document.getElementById("page-result");
         pages.details = document.getElementById("page-details");
 
-        // 生成题目
-        state.questions = generateQuestions();
-
-        // 初始化答案数组
-        for (var i = 0; i < 60; i++) {
-            state.answers.push(null);
-        }
-
         // 显示欢迎页
         showPage("welcome");
+    }
+
+    function clearData() {
+        // 生成题目
+        state.questions = generateQuestions();
+        state.answers.length = 0;
+
+        // 初始化答案数组
+        for (var i = 0; i < state.totalQuestion; i++) {
+            state.answers.push(null);
+        }
     }
 
     /**
@@ -103,18 +106,22 @@ var RavenGame = (function () {
             var factor = factors[i];
             var optionCount = factor === "A" || factor === "B" ? 6 : 8;
 
-            for (var j = 1; j <= 12; j++) {
+            var index = Math.floor(Math.random() * 4) + 1;
+
+            for (var j = 1; j <= 4; j++) {
                 var questionId = factor + j;
-                var correctAnswer = answer[i][j - 1];
+                var correctAnswer = answer[i][index - 1];
 
                 questions.push({
                     id: questionId,
                     factor: factor,
                     questionImage:
-                        "../images/game4/question/" + questionId + ".png",
+                        "../images/game4/question/" + factor + index + ".png",
                     options: optionCount,
                     correctAnswer: correctAnswer,
                 });
+                index++;
+                if (index > 12) index = (index % 12) + 1;
             }
         }
 
@@ -150,6 +157,8 @@ var RavenGame = (function () {
      * 开始游戏
      */
     function startGame() {
+        clearData();
+
         var currentPage = Utils.getCurrentPage();
         if (currentPage) currentPage.classList.remove("active");
         Utils.playSound("click");
@@ -205,9 +214,16 @@ var RavenGame = (function () {
             option.textContent = i;
             option.setAttribute("data-value", i);
 
-            // 如果已经选择过，标记为选中
-            if (state.answers[state.currentQuestion] === i) {
-                option.classList.add("selected");
+            if (state.answers[state.currentQuestion] != null) {
+                option.classList.remove("selected");
+                if (state.answers[state.currentQuestion] === i) {
+                    option.classList.add("error");
+                }
+
+                if (question.correctAnswer === i) {
+                    option.classList.remove("error");
+                    option.classList.add("correct");
+                }
             }
 
             // 绑定点击事件
@@ -237,15 +253,24 @@ var RavenGame = (function () {
      * 选择答案
      */
     function selectAnswer(value) {
+        if (state.answers[state.currentQuestion] != null) return;
         // 记录答案
         state.answers[state.currentQuestion] = value;
+        var question = state.questions[state.currentQuestion];
 
         // 更新选项样式
         var options = document.querySelectorAll(".option-item");
         for (var i = 0; i < options.length; i++) {
+            let option = options[i];
             options[i].classList.remove("selected");
             if (parseInt(options[i].getAttribute("data-value")) === value) {
-                options[i].classList.add("selected");
+                option.classList.add("error");
+            }
+
+            // 如果已经选择过，标记为选中
+            if (question.correctAnswer === i + 1) {
+                option.classList.remove("error");
+                option.classList.add("correct");
             }
         }
         updateNavButtons();
@@ -268,7 +293,7 @@ var RavenGame = (function () {
             state.currentQuestion++;
             renderQuestion();
         } else {
-            showSubmitConfirm();
+            confirmSubmit();
         }
     }
 
@@ -297,6 +322,20 @@ var RavenGame = (function () {
             btnPrev.disabled = false;
         }
 
+        var tip = document.getElementById("test-tip");
+        var question = state.questions[state.currentQuestion];
+        var str = "";
+        if (state.answers[state.currentQuestion] == null) {
+            str = "请从下列选项中找出对应缺少的部分。";
+        } else if (
+            question.correctAnswer == state.answers[state.currentQuestion]
+        ) {
+            str = "恭喜你，回答正确！";
+        } else {
+            str = "很抱歉，回答错误。";
+        }
+        tip.textContent = str;
+
         btnNext.disabled = state.answers[state.currentQuestion] == null;
 
         // 最后一题显示"完成"
@@ -322,7 +361,7 @@ var RavenGame = (function () {
      * 计算统计数据
      */
     function calculateStats() {
-        var total = 60;
+        var total = state.totalQuestion;
         var correct = 0;
         var factorStats = {};
 
@@ -433,7 +472,7 @@ var RavenGame = (function () {
 
         // 更新进度
         document.getElementById("details-progress").textContent =
-            state.currentQuestion + 1 + "/60";
+            state.currentQuestion + 1 + "/" + state.totalQuestion;
 
         // 更新题目
         document.getElementById("details-label").textContent = question.id;
@@ -661,7 +700,7 @@ E：抽象推理
 
             // 创建因子组
             var group = document.createElement("div");
-            group.className = "factor-group";
+            group.className = "factor-group train";
             group.style.animationDelay = i * 50 + "ms";
 
             // 因子头部
@@ -682,7 +721,7 @@ E：抽象推理
 
             // 题目网格
             var grid = document.createElement("div");
-            grid.className = "question-grid";
+            grid.className = "question-grid-train";
 
             // 找出该因子的所有题目
             for (var j = 0; j < state.questions.length; j++) {
@@ -738,7 +777,7 @@ E：抽象推理
     function restart() {
         Utils.playSound("click");
         // 重置答案
-        for (var i = 0; i < 60; i++) {
+        for (var i = 0; i < state.totalQuestion; i++) {
             state.answers[i] = null;
         }
 
