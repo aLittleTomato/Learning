@@ -23,19 +23,26 @@ var ConnectGame = (function () {
     // 游戏状态
     var state = {
         mode: "tutorial", // 'tutorial' 或 'game'
-        currentNumber: 1, // 当前应该点击的数字
+        // 教程：仍按 1..N
+        currentNumber: 1, // 当前应该点击的数字（tutorial 用）
         maxNumber: 4, // 最大数字（教程4，游戏25）
         numbers: [], // 数字节点数据
         connectedNumbers: [], // 已连接的数字
-        startTime: 0, // 游戏开始时间
-        lastClickTime: 0, // 上一次点击时间
-        history: [], // 作答历史
-        totalAttempts: 0, // 总尝试次数
-        correctAttempts: 0, // 正确尝试次数
+        startTime: 0, // 组开始时间（game 用）
+        lastClickTime: 0, // 上一次点击时间（game 用）
+        history: [], // 当前组作答历史（game 用）
+        totalAttempts: 0, // 当前组总尝试次数（game 用）
+        correctAttempts: 0, // 当前组正确尝试次数（game 用）
         timerInterval: null, // 计时器
         canvas: null, // Canvas 元素
         ctx: null, // Canvas 上下文
         container: null, // 数字容器
+
+        // ===== 训练版：三组模块（仅 game 模式使用）=====
+        groupIndex: 0, // 0/1/2
+        groupSequence: null, // 当前组需要点击的序列（长度 25）
+        groupCursor: 0, // 当前需要点击序列的下标
+        groupResults: [], // 三组结果数组
     };
 
     // 配置
@@ -43,11 +50,46 @@ var ConnectGame = (function () {
         tutorialNumbers: 4, // 教程数字数量
         gameNumbers: 25, // 游戏数字数量
         nodeSize: 114, // 数字节点大小
-        minSpacing: 16, // 最小间距（px）
+        minSpacing: 6, // 最小间距（px）
         lineColor: "#FFD4BD", // 连线颜色
         lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
     };
+
+    // 三组训练定义：原始序列 → 奇数 → 偶数
+    var TRAIN_GROUPS = [
+        { key: "seq", title: "第一组", type: "seq" },
+        { key: "odd", title: "第二组", type: "odd" },
+        { key: "even", title: "第三组", type: "even" },
+    ];
+
+    function buildSequence(type, count) {
+        var seq = [];
+        var i;
+        if (type === "seq") {
+            for (i = 1; i <= count; i++) {
+                seq.push(i);
+            }
+            return seq;
+        }
+        if (type === "odd") {
+            for (i = 0; i < count; i++) {
+                seq.push(1 + i * 2);
+            }
+            return seq;
+        }
+        if (type === "even") {
+            for (i = 0; i < count; i++) {
+                seq.push(2 + i * 2);
+            }
+            return seq;
+        }
+        // fallback
+        for (i = 1; i <= count; i++) {
+            seq.push(i);
+        }
+        return seq;
+    }
 
     /**
      * 初始化游戏
@@ -152,14 +194,13 @@ var ConnectGame = (function () {
      */
     function initGame() {
         state.mode = "game";
-        state.currentNumber = 1;
         state.maxNumber = config.gameNumbers;
         state.connectedNumbers = [];
-        state.history = [];
-        state.totalAttempts = 0;
-        state.correctAttempts = 0;
-        state.startTime = Date.now();
-        state.lastClickTime = Date.now();
+        state.groupIndex = 0;
+        state.groupResults = [];
+
+        // 初始化第一组
+        startGroup(state.groupIndex);
 
         // 获取 Canvas 和容器
         state.canvas = document.getElementById("game-canvas");
@@ -170,17 +211,32 @@ var ConnectGame = (function () {
         // 初始化 Canvas
         initCanvas();
 
-        // 生成数字节点
+        // 生成数字节点（按当前组序列）
         generateNumbers();
 
         // 渲染数字节点
         renderNumbers();
 
-        // 更新目标提示
+        // 更新目标提示（如果页面没有该元素也不会报错）
         updateTargetHint();
 
         // 开始计时
         startTimer();
+    }
+
+    function startGroup(groupIndex) {
+        var group = TRAIN_GROUPS[groupIndex];
+        state.groupIndex = groupIndex;
+        state.groupSequence = buildSequence(group.type, config.gameNumbers);
+        state.groupCursor = 0;
+
+        // 重置当前组数据
+        state.connectedNumbers = [];
+        state.history = [];
+        state.totalAttempts = 0;
+        state.correctAttempts = 0;
+        state.startTime = Date.now();
+        state.lastClickTime = Date.now();
     }
 
     /**
@@ -223,6 +279,13 @@ var ConnectGame = (function () {
         var effectiveWidth = containerWidth - radius * 2;
         var effectiveHeight = containerHeight - radius * 2;
 
+        // tutorial：1..maxNumber
+        // game：使用当前组序列中的“显示数字”
+        var displayList = null;
+        if (state.mode === "game" && state.groupSequence) {
+            displayList = state.groupSequence;
+        }
+
         for (var i = 1; i <= state.maxNumber; i++) {
             var position = generateRandomPosition(
                 effectiveWidth,
@@ -232,7 +295,7 @@ var ConnectGame = (function () {
             );
 
             state.numbers.push({
-                number: i,
+                number: displayList ? displayList[i - 1] : i,
                 x: position.x + radius,
                 y: position.y + radius,
                 connected: false,
@@ -268,7 +331,7 @@ var ConnectGame = (function () {
             }
 
             if (!overlapping) {
-                return { x, y };
+                return { x: x, y: y };
             }
 
             attempts++;
@@ -304,7 +367,7 @@ var ConnectGame = (function () {
             }
 
             if (!overlapping) {
-                return { x, y };
+                return { x: x, y: y };
             }
         }
 
@@ -317,7 +380,10 @@ var ConnectGame = (function () {
     function shuffle(arr) {
         for (var i = arr.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
+            // ES5 交换写法
+            var tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
         }
     }
 
@@ -367,14 +433,29 @@ var ConnectGame = (function () {
         // 增加总尝试次数
         state.totalAttempts++;
 
-        // 检查是否是正确的数字
-        if (number === state.currentNumber) {
-            // 正确
+        // tutorial：按 currentNumber 判定
+        if (state.mode === "tutorial") {
+            if (number === state.currentNumber) {
+                handleCorrectClick(number);
+            } else {
+                handleWrongClick(number);
+            }
+            return;
+        }
+
+        // game：按组序列判定
+        var expected = getExpectedNumber();
+        if (number === expected) {
             handleCorrectClick(number);
         } else {
-            // 错误
             handleWrongClick(number);
         }
+    }
+
+    function getExpectedNumber() {
+        if (state.mode !== "game") return state.currentNumber;
+        if (!state.groupSequence) return 1;
+        return state.groupSequence[state.groupCursor];
     }
 
     /**
@@ -390,9 +471,9 @@ var ConnectGame = (function () {
         var currentTime = Date.now();
         var timeCost = ((currentTime - state.lastClickTime) / 1000).toFixed(1);
 
-        // 记录历史（游戏模式）
+        // 记录历史（game 模式）
         if (state.mode === "game") {
-            // 查找该数字的历史记录
+            // 当前点击的“目标数字”就是 number（序列里对应项）
             var record = null;
             for (var i = 0; i < state.history.length; i++) {
                 if (state.history[i].number === number) {
@@ -400,14 +481,8 @@ var ConnectGame = (function () {
                     break;
                 }
             }
-
-            // 如果没有记录，创建新记录
             if (!record) {
-                record = {
-                    number: number,
-                    timeCost: timeCost,
-                    errorCount: 0,
-                };
+                record = { number: number, timeCost: timeCost, errorCount: 0 };
                 state.history.push(record);
             }
             record.timeCost = timeCost;
@@ -435,8 +510,12 @@ var ConnectGame = (function () {
         // 重新渲染数字节点
         renderNumbers();
 
-        // 更新当前数字
-        state.currentNumber++;
+        // 更新当前数字 / 组游标
+        if (state.mode === "tutorial") {
+            state.currentNumber++;
+        } else {
+            state.groupCursor++;
+        }
         state.lastClickTime = currentTime;
 
         // 更新目标提示
@@ -445,8 +524,14 @@ var ConnectGame = (function () {
         }
 
         // 检查是否完成
-        if (state.currentNumber > state.maxNumber) {
-            handleComplete();
+        if (state.mode === "tutorial") {
+            if (state.currentNumber > state.maxNumber) {
+                handleComplete();
+            }
+        } else {
+            if (state.groupCursor >= state.maxNumber) {
+                handleComplete();
+            }
         }
     }
 
@@ -456,28 +541,20 @@ var ConnectGame = (function () {
     function handleWrongClick(number) {
         console.log("Wrong click:", number);
 
-        // 记录错误次数（游戏模式）
+        // 记录错误次数（game 模式）
         if (state.mode === "game") {
-            // 查找该数字的历史记录
+            var expected = getExpectedNumber();
             var record = null;
             for (var i = 0; i < state.history.length; i++) {
-                if (state.history[i].number === state.currentNumber) {
+                if (state.history[i].number === expected) {
                     record = state.history[i];
                     break;
                 }
             }
-
-            // 如果没有记录，创建新记录
             if (!record) {
-                record = {
-                    number: state.currentNumber,
-                    timeCost: 0,
-                    errorCount: 0,
-                };
+                record = { number: expected, timeCost: 0, errorCount: 0 };
                 state.history.push(record);
             }
-
-            // 增加错误次数
             record.errorCount++;
         }
 
@@ -485,7 +562,11 @@ var ConnectGame = (function () {
         showErrorAnimation(number);
 
         // 显示错误提示
-        showErrorToast("请按顺序点击 " + state.currentNumber + " 😉");
+        if (state.mode === "tutorial") {
+            showErrorToast("请按顺序点击 " + state.currentNumber + " 😉");
+        } else {
+            showErrorToast("请按顺序点击 " + getExpectedNumber() + " 😉");
+        }
     }
 
     /**
@@ -572,7 +653,11 @@ var ConnectGame = (function () {
     function updateTargetHint() {
         var targetElement = document.getElementById("target-number");
         if (targetElement) {
-            targetElement.textContent = state.currentNumber;
+            if (state.mode === "game") {
+                targetElement.textContent = getExpectedNumber();
+            } else {
+                targetElement.textContent = state.currentNumber;
+            }
         }
     }
 
@@ -640,11 +725,73 @@ var ConnectGame = (function () {
                 showReady();
             }, 500);
         } else {
-            // 游戏完成，显示结算页面
-            setTimeout(function () {
-                showResult();
-            }, 500);
+            // 保存当前组结果
+            saveCurrentGroupResult();
+
+            // 还有下一组：直接进入下一组（仍在 page-game）
+            if (state.groupIndex < TRAIN_GROUPS.length - 1) {
+                setTimeout(function () {
+                    startNextGroup();
+                }, 500);
+            } else {
+                // 第三组结束：显示结算页面
+                setTimeout(function () {
+                    showResult();
+                }, 500);
+            }
         }
+    }
+
+    function saveCurrentGroupResult() {
+        var totalTime = ((Date.now() - state.startTime) / 1000).toFixed(1);
+        var accuracy = "0";
+        if (state.totalAttempts > 0) {
+            accuracy = (
+                (state.correctAttempts / state.totalAttempts) *
+                100
+            ).toFixed(0);
+        }
+        var maxPause = calculateMaxPause(state.history);
+        var minPause = calculateMinPause(state.history);
+
+        state.groupResults[state.groupIndex] = {
+            groupIndex: state.groupIndex,
+            groupKey: TRAIN_GROUPS[state.groupIndex].key,
+            groupTitle: TRAIN_GROUPS[state.groupIndex].title,
+            totalTime: totalTime,
+            accuracy: accuracy,
+            maxPause: maxPause,
+            minPause: minPause,
+            totalAttempts: state.totalAttempts,
+            correctAttempts: state.correctAttempts,
+            history: cloneHistory(state.history),
+        };
+    }
+
+    function cloneHistory(history) {
+        var out = [];
+        var i;
+        for (i = 0; i < history.length; i++) {
+            out.push({
+                number: history[i].number,
+                timeCost: history[i].timeCost,
+                errorCount: history[i].errorCount,
+            });
+        }
+        return out;
+    }
+
+    function startNextGroup() {
+        // 清空画布
+        if (state.ctx && state.canvas) {
+            state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+        }
+
+        startGroup(state.groupIndex + 1);
+        generateNumbers();
+        renderNumbers();
+        updateTargetHint();
+        startTimer();
     }
 
     /**
@@ -663,14 +810,12 @@ var ConnectGame = (function () {
         gamePage.classList.remove("active");
         resultPage.classList.add("active");
 
-        // 计算统计数据
-        var totalTime = ((Date.now() - state.startTime) / 1000).toFixed(1);
-        var accuracy = (
-            (state.correctAttempts / state.totalAttempts) *
-            100
-        ).toFixed(0);
-        var maxPause = calculateMaxPause();
-        var minPause = calculateMinPause();
+        // 计算统计数据：三组汇总
+        var summary = calculateSummaryFromGroups();
+        var totalTime = summary.totalTime;
+        var accuracy = summary.accuracy;
+        var maxPause = summary.maxPause;
+        var minPause = summary.minPause;
         // 显示统计数据
         var timeElement = document.getElementById("stat-blue");
         var accuracyElement = document.getElementById("stat-green");
@@ -690,23 +835,25 @@ var ConnectGame = (function () {
             minPauseElement.textContent = minPause + "秒";
         }
 
-        // 上报数据
+        // 上报数据（包含三组）
         submitGameData({
             totalTime: totalTime,
             accuracy: accuracy,
             maxPause: maxPause,
-            history: state.history,
+            minPause: minPause,
+            groups: state.groupResults,
         });
     }
 
     /**
      * 计算最大停顿时间
      */
-    function calculateMaxPause() {
+    function calculateMaxPause(history) {
         var maxPause = 0;
 
-        for (var i = 0; i < state.history.length; i++) {
-            var record = state.history[i];
+        history = history || [];
+        for (var i = 0; i < history.length; i++) {
+            var record = history[i];
             var timeCost = parseFloat(record.timeCost);
             if (timeCost > maxPause) {
                 maxPause = timeCost;
@@ -716,18 +863,59 @@ var ConnectGame = (function () {
         return maxPause.toFixed(1);
     }
 
-    function calculateMinPause() {
+    function calculateMinPause(history) {
         var minPause = 999999;
 
-        for (var i = 0; i < state.history.length; i++) {
-            var record = state.history[i];
+        history = history || [];
+        for (var i = 0; i < history.length; i++) {
+            var record = history[i];
             var timeCost = parseFloat(record.timeCost);
             if (timeCost < minPause) {
                 minPause = timeCost;
             }
         }
 
+        if (minPause === 999999) {
+            minPause = 0;
+        }
         return minPause.toFixed(1);
+    }
+
+    function calculateSummaryFromGroups() {
+        var i;
+        var totalTimeSum = 0;
+        var totalAttemptsSum = 0;
+        var correctAttemptsSum = 0;
+        var maxPause = 0;
+        var minPause = 999999;
+
+        for (i = 0; i < state.groupResults.length; i++) {
+            var g = state.groupResults[i];
+            if (!g) continue;
+            totalTimeSum += parseFloat(g.totalTime) || 0;
+            totalAttemptsSum += g.totalAttempts || 0;
+            correctAttemptsSum += g.correctAttempts || 0;
+            var gMax = parseFloat(g.maxPause) || 0;
+            var gMin = parseFloat(g.minPause) || 0;
+            if (gMax > maxPause) maxPause = gMax;
+            if (gMin < minPause) minPause = gMin;
+        }
+
+        if (minPause === 999999) minPause = 0;
+
+        var accuracy = "0";
+        if (totalAttemptsSum > 0) {
+            accuracy = ((correctAttemptsSum / totalAttemptsSum) * 100).toFixed(
+                0
+            );
+        }
+
+        return {
+            totalTime: totalTimeSum.toFixed(1),
+            accuracy: accuracy,
+            maxPause: maxPause.toFixed(1),
+            minPause: minPause.toFixed(1),
+        };
     }
 
     /**
@@ -744,10 +932,11 @@ var ConnectGame = (function () {
                 totalTime: data.totalTime,
                 accuracy: data.accuracy,
                 maxPause: data.maxPause,
-                totalAttempts: state.totalAttempts,
-                correctAttempts: state.correctAttempts,
+                minPause: data.minPause,
+                // 三组汇总：从 groups 里算
+                groupsCount: data.groups ? data.groups.length : 0,
             },
-            history: data.history,
+            groups: data.groups || [],
         };
 
         // 调用 API 上报
@@ -780,10 +969,63 @@ var ConnectGame = (function () {
         detailsPage.classList.add("active");
 
         // 渲染详情表格
-        renderDetailsTable();
+        initDetailsTabsOnce();
+        setActiveDetailsGroup(0);
 
         // 添加鼠标拖动滑动功能
         initDragScroll();
+    }
+
+    var detailsTabsInited = false;
+    function initDetailsTabsOnce() {
+        if (detailsTabsInited) return;
+        detailsTabsInited = true;
+
+        var tabs = document.getElementById("details-tabs-train");
+        if (!tabs) return;
+
+        tabs.addEventListener("click", function (e) {
+            var target = e.target;
+            if (!target) return;
+            if (
+                target.className &&
+                target.className.indexOf("details-tab-train") !== -1
+            ) {
+                var groupStr = target.getAttribute("data-group");
+                var groupIndex = parseInt(groupStr, 10);
+                if (isNaN(groupIndex)) groupIndex = 0;
+                setActiveDetailsGroup(groupIndex);
+            }
+        });
+    }
+
+    function setActiveDetailsGroup(groupIndex) {
+        // 切换 active 样式
+        var tabs = document.getElementById("details-tabs-train");
+        if (tabs) {
+            var buttons = tabs.getElementsByTagName("button");
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = buttons[i];
+                var gi = parseInt(btn.getAttribute("data-group"), 10);
+                if (gi === groupIndex) {
+                    if (btn.className.indexOf("active") === -1) {
+                        btn.className += " active";
+                    }
+                } else {
+                    btn.className = btn.className.replace(" active", "");
+                }
+            }
+        }
+
+        renderDetailsTable(groupIndex);
+
+        // 切换页签后：滚动回到列表顶部
+        var container = document.querySelector(
+            "#page-details .details-container"
+        );
+        if (container) {
+            container.scrollTop = 0;
+        }
     }
 
     /**
@@ -838,16 +1080,25 @@ var ConnectGame = (function () {
     /**
      * 渲染详情表格
      */
-    function renderDetailsTable() {
+    function renderDetailsTable(groupIndex) {
         var tbody = document.getElementById("details-tbody");
         if (!tbody) return;
 
         tbody.innerHTML = "";
 
+        var history = state.history;
+        if (state.groupResults && state.groupResults[groupIndex]) {
+            history = state.groupResults[groupIndex].history || [];
+        } else if (state.groupResults && state.groupResults.length) {
+            // 如果没有该组结果，尽量兜底用第一组
+            history =
+                (state.groupResults[0] && state.groupResults[0].history) || [];
+        }
+
         // 渲染每条记录
-        for (var i = 0; i < state.history.length; i++) {
-            var index = i % state.history.length;
-            var record = state.history[index];
+        for (var i = 0; i < history.length; i++) {
+            var index = i % history.length;
+            var record = history[index];
             var tr = document.createElement("tr");
 
             // 数字
@@ -951,7 +1202,8 @@ var ConnectGame = (function () {
             "page-welcome",
             "page-rule-1",
             "page-rule-2",
-            "page-tutorial",
+            "page-rule-3",
+            "page-rule-4",
             "page-task",
             "page-game",
             "page-result",

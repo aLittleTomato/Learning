@@ -63,10 +63,11 @@
                     <div class="page-content">
                         <div class="page-texts rule1">
                             <p class="line2"></p>
-                            <p class="line2">接下来,</p>
+                            <p class="line2">挑战一共有三轮，</p>
                             <p class="line1">你将看到一些数字和字母，</p>
                             <p class="line2">
-                                请从“1”开始<span class="rule-text-yellow"
+                                请从<span class="rule-text-yellow">数字</span
+                                >开始<span class="rule-text-yellow"
                                     >按照从小</span
                                 >
                             </p>
@@ -77,7 +78,7 @@
                                 >来<span class="rule-text-yellow">交替</span>
                             </p>
                             <p class="line2">
-                                点击数字和字母，又快又准的将它们连起来
+                                点击数字和字母，又快又准的将它们连起来。
                             </p>
                         </div>
 
@@ -105,29 +106,112 @@
                     />
                     <div class="page-content">
                         <div class="page-texts rule2 c2">
-                            <p class="line2">比如，下面出现了</p>
+                            <p class="line2">在第一轮中，</p>
                             <p class="line1">
-                                <span class="rule-text-yellow">3个数字</span
-                                >和<span class="rule-text-yellow">3个字母</span
-                                >，
+                                你将看到一些<span class="rule-text-yellow"
+                                    >数字</span
+                                >和<span class="rule-text-yellow">字母</span>，
                             </p>
                             <p class="line2">
                                 我们需要快速的按照<span class="rule-text-yellow"
-                                    >“1、A、</span
+                                    >1、A、</span
                                 >
                             </p>
                             <p class="line1">
-                                <span class="rule-text-yellow"
-                                    >2、B、3、C、”</span
+                                <span class="rule-text-yellow">2、B、3、C</span
                                 >的顺序点击，
                             </p>
-                            <p class="line2">将它们连起来就算挑战成功</p>
+                            <p class="line2">将它们连起来就算挑战成功。</p>
                         </div>
                         <button
                             class="btn btn-bottom long rule1"
-                            onclick="ConnectGame2.showTutorial()"
+                            onclick="ConnectGame2.nextPage()"
                         >
-                            先来试一试 👉
+                            下一步 👉
+                        </button>
+                    </div>
+                </div>
+
+                <div id="page-rule-3" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo right1"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img class="full-bg" src="../images/game3/burble_4.png" />
+                    <img
+                        class="page-rule-tutorial c2 moveRight"
+                        src="../images/game3/tutorial5.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule2 c2">
+                            <p class="line2">在第二轮中，</p>
+                            <p class="line1">
+                                你将看到一些<span class="rule-text-yellow"
+                                    >奇数</span
+                                >和<span class="rule-text-yellow">字母</span>，
+                            </p>
+                            <p class="line2">
+                                我们需要快速的按照<span class="rule-text-yellow"
+                                    >1、A、</span
+                                >
+                            </p>
+                            <p class="line1">
+                                <span class="rule-text-yellow">3、B、5、C</span
+                                >的顺序点击，
+                            </p>
+                            <p class="line2">将它们连起来就算挑战成功。</p>
+                        </div>
+                        <button
+                            class="btn btn-bottom long rule1"
+                            onclick="ConnectGame2.nextPage()"
+                        >
+                            下一步 👉
+                        </button>
+                    </div>
+                </div>
+
+                <div id="page-rule-4" class="page">
+                    <img
+                        class="full-bg rule"
+                        src="../images/game3/rule_bg.png"
+                    />
+                    <img
+                        class="page-logo right1"
+                        src="../images/game3/big_logo.png"
+                    />
+                    <img class="full-bg" src="../images/game3/burble_4.png" />
+                    <img
+                        class="page-rule-tutorial c2 moveRight"
+                        src="../images/game3/tutorial6.png"
+                    />
+                    <div class="page-content">
+                        <div class="page-texts rule2 c2">
+                            <p class="line2">在第三轮中，</p>
+                            <p class="line1">
+                                你将看到一些<span class="rule-text-yellow"
+                                    >偶数</span
+                                >和<span class="rule-text-yellow">字母</span>，
+                            </p>
+                            <p class="line2">
+                                我们需要快速的按照<span class="rule-text-yellow"
+                                    >2、A、</span
+                                >
+                            </p>
+                            <p class="line1">
+                                <span class="rule-text-yellow">4、B、6、C</span
+                                >的顺序点击，
+                            </p>
+                            <p class="line2">将它们连起来就算挑战成功。</p>
+                        </div>
+                        <button
+                            class="btn btn-bottom long rule1"
+                            onclick="ConnectGame2.nextPage()"
+                        >
+                            下一步 👉
                         </button>
                     </div>
                 </div>
@@ -266,11 +350,36 @@
                 <div id="page-details" class="page">
                     <img class="full-bg" src="../images/game3/burble_5.png" />
 
-                    <div class="details-container">
+                    <!-- 训练版：三组详情页签（class 带 -train，避免影响普通版） -->
+                    <div class="details-tabs-train" id="details-tabs-train">
+                        <button
+                            class="details-tab-train active"
+                            data-group="0"
+                            type="button"
+                        >
+                            第一组
+                        </button>
+                        <button
+                            class="details-tab-train"
+                            data-group="1"
+                            type="button"
+                        >
+                            第二组
+                        </button>
+                        <button
+                            class="details-tab-train"
+                            data-group="2"
+                            type="button"
+                        >
+                            第三组
+                        </button>
+                    </div>
+
+                    <div class="details-container train">
                         <table class="details-table" id="details-table">
                             <thead>
                                 <tr>
-                                    <th>数字</th>
+                                    <th>字符</th>
                                     <th>错误次数</th>
                                     <th>耗时/秒</th>
                                 </tr>
@@ -300,6 +409,6 @@
         <script src="../js/animation.js"></script>
         <script src="../js/preloader.js"></script>
         <script src="../js/scale.js"></script>
-        <script src="../js/connect2.js"></script>
+        <script src="../trainJs/connect2.js"></script>
     </body>
 </html>

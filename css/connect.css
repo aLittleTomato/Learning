@@ -56,6 +56,46 @@
     background-repeat: no-repeat;
 }
 
+/* =========================
+   训练版（-train）：详情页三组页签
+   仅训练页使用该 class，避免影响普通版
+   ========================= */
+.details-tabs-train {
+    position: absolute;
+    left: 75px;
+    top: 200px;
+    width: 600px;
+    height: 70px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+}
+
+.details-tab-train {
+    flex: 1;
+    height: 70px;
+    border: 6px solid #ffd4bd;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #cc6622;
+    font-size: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.details-tab-train:active {
+    transform: scale(0.98);
+}
+
+.details-tab-train.active {
+    background: #ffd4bd;
+    color: #a64f16;
+}
+
 .btn-welcome {
     position: absolute;
     background-image: url("../images/game3/btn_welcome.png");
@@ -223,6 +263,10 @@
 
 .page-rule-tutorial.c2 {
     top: 840px;
+}
+.page-rule-tutorial.moveRight {
+    top: 840px;
+    left: 130px;
 }
 
 .page-logo.right1 {
@@ -622,6 +666,12 @@
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
 }
+
+.details-container.train {
+    height: 930px;
+    top: 300px;
+}
+
 .details-container::-webkit-scrollbar {
     display: none;
 }

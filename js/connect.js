@@ -43,7 +43,7 @@ var ConnectGame = (function () {
         tutorialNumbers: 4, // 教程数字数量
         gameNumbers: 25, // 游戏数字数量
         nodeSize: 114, // 数字节点大小
-        minSpacing: 16, // 最小间距（px）
+        minSpacing: 6, // 最小间距（px）
         lineColor: "#FFD4BD", // 连线颜色
         lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）

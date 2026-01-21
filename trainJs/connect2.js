@@ -22,6 +22,10 @@ var ConnectGame2 = (function () {
         canvas: null, // Canvas 元素
         ctx: null, // Canvas 上下文
         container: null, // 数字容器
+
+        // ===== 训练版：三组模块（仅 game 模式使用）=====
+        groupIndex: 0, // 0/1/2
+        groupResults: [], // 三组结果数组
     };
 
     // 配置
@@ -35,6 +39,32 @@ var ConnectGame2 = (function () {
         lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
     };
+
+    // 三组训练定义：数字原始序列 → 奇数 → 偶数（字母不跳序）
+    var TRAIN_GROUPS = [
+        { key: "seq", title: "第一组", type: "seq" },
+        { key: "odd", title: "第二组", type: "odd" },
+        { key: "even", title: "第三组", type: "even" },
+    ];
+
+    function buildNumberList(type, count) {
+        var out = [];
+        var i;
+        if (type === "seq") {
+            for (i = 1; i <= count; i++) out.push(String(i));
+            return out;
+        }
+        if (type === "odd") {
+            for (i = 0; i < count; i++) out.push(String(1 + i * 2));
+            return out;
+        }
+        if (type === "even") {
+            for (i = 0; i < count; i++) out.push(String(2 + i * 2));
+            return out;
+        }
+        for (i = 1; i <= count; i++) out.push(String(i));
+        return out;
+    }
 
     /**
      * 初始化游戏
@@ -70,12 +100,14 @@ var ConnectGame2 = (function () {
     /**
      * 生成游戏序列
      */
-    function generateGameSequence() {
+    function generateGameSequence(groupIndex) {
+        var group = TRAIN_GROUPS[groupIndex] || TRAIN_GROUPS[0];
+        var numbers = buildNumberList(group.type, config.gameNumbers);
         var sequence = [];
         for (var i = 1; i <= config.gameNumbers; i++) {
-            sequence.push(String(i));
+            sequence.push(numbers[i - 1]);
             if (i <= config.gameLetters) {
-                // A=65, B=66, ... L=76
+                // A=65, B=66, ... L=76（字母不跳序）
                 sequence.push(String.fromCharCode(64 + i));
             }
         }
@@ -187,14 +219,9 @@ var ConnectGame2 = (function () {
      */
     function initGame() {
         state.mode = "game";
-        state.sequence = generateGameSequence();
-        state.currentTarget = state.sequence[0];
-        state.connectedTargets = [];
-        state.history = [];
-        state.totalAttempts = 0;
-        state.correctAttempts = 0;
-        state.startTime = Date.now();
-        state.lastClickTime = Date.now();
+        state.groupIndex = 0;
+        state.groupResults = [];
+        startGroup(state.groupIndex);
 
         // 获取 Canvas 和容器
         state.canvas = document.getElementById("game-canvas");
@@ -216,6 +243,18 @@ var ConnectGame2 = (function () {
 
         // 开始计时
         startTimer();
+    }
+
+    function startGroup(groupIndex) {
+        state.groupIndex = groupIndex;
+        state.sequence = generateGameSequence(groupIndex);
+        state.currentTarget = state.sequence[0];
+        state.connectedTargets = [];
+        state.history = [];
+        state.totalAttempts = 0;
+        state.correctAttempts = 0;
+        state.startTime = Date.now();
+        state.lastClickTime = Date.now();
     }
 
     /**
@@ -293,13 +332,18 @@ var ConnectGame2 = (function () {
             var x = Math.random() * width;
             var y = Math.random() * height;
 
-            var overlapping = state.numbers.some((node) => {
+            var overlapping = false;
+            for (var n = 0; n < state.numbers.length; n++) {
+                var node = state.numbers[n];
                 var dx = x - node.x;
                 var dy = y - node.y;
-                return Math.sqrt(dx * dx + dy * dy) < minDist;
-            });
+                if (Math.sqrt(dx * dx + dy * dy) < minDist) {
+                    overlapping = true;
+                    break;
+                }
+            }
 
-            if (!overlapping) return { x, y };
+            if (!overlapping) return { x: x, y: y };
             attempts++;
         }
 
@@ -308,7 +352,7 @@ var ConnectGame2 = (function () {
         var candidates = [];
         for (var y = radius; y <= height - radius; y += step) {
             for (var x = radius; x <= width - radius; x += step) {
-                candidates.push({ x, y });
+                candidates.push({ x: x, y: y });
             }
         }
 
@@ -319,13 +363,18 @@ var ConnectGame2 = (function () {
             var x = candidates[i].x;
             var y = candidates[i].y;
 
-            var overlapping = state.numbers.some((node) => {
+            var overlapping = false;
+            for (var k = 0; k < state.numbers.length; k++) {
+                var node = state.numbers[k];
                 var dx = x - node.x;
                 var dy = y - node.y;
-                return Math.sqrt(dx * dx + dy * dy) < config.nodeSize + 2;
-            });
+                if (Math.sqrt(dx * dx + dy * dy) < config.nodeSize + 2) {
+                    overlapping = true;
+                    break;
+                }
+            }
 
-            if (!overlapping) return { x, y };
+            if (!overlapping) return { x: x, y: y };
         }
 
         // 3️⃣ 如果真的没有空位
@@ -337,7 +386,9 @@ var ConnectGame2 = (function () {
     function shuffle(arr) {
         for (var i = arr.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
+            var tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
         }
     }
     /**
@@ -659,11 +710,129 @@ var ConnectGame2 = (function () {
                 showReady();
             }, 500);
         } else {
-            // 游戏完成，显示结算页面
-            setTimeout(function () {
-                showResult();
-            }, 500);
+            // 保存当前组结果
+            saveCurrentGroupResult();
+
+            // 还有下一组：直接进入下一组
+            if (state.groupIndex < TRAIN_GROUPS.length - 1) {
+                setTimeout(function () {
+                    startNextGroup();
+                }, 500);
+            } else {
+                // 第三组结束：显示结算页面
+                setTimeout(function () {
+                    showResult();
+                }, 500);
+            }
         }
+    }
+
+    function cloneHistory(history) {
+        var out = [];
+        for (var i = 0; i < history.length; i++) {
+            out.push({
+                target: history[i].target,
+                timeCost: history[i].timeCost,
+                errorCount: history[i].errorCount,
+            });
+        }
+        return out;
+    }
+
+    function calculateMaxPauseByHistory(history) {
+        var maxPause = 0;
+        history = history || [];
+        for (var i = 0; i < history.length; i++) {
+            var record = history[i];
+            var timeCost = parseFloat(record.timeCost);
+            if (timeCost > maxPause) maxPause = timeCost;
+        }
+        return maxPause.toFixed(1);
+    }
+
+    function calculateMinPauseByHistory(history) {
+        var minPause = 999999;
+        history = history || [];
+        for (var i = 0; i < history.length; i++) {
+            var record = history[i];
+            var timeCost = parseFloat(record.timeCost);
+            if (timeCost < minPause) minPause = timeCost;
+        }
+        if (minPause === 999999) minPause = 0;
+        return minPause.toFixed(1);
+    }
+
+    function saveCurrentGroupResult() {
+        var totalTime = ((Date.now() - state.startTime) / 1000).toFixed(1);
+        var accuracy = "0";
+        if (state.totalAttempts > 0) {
+            accuracy = (
+                (state.correctAttempts / state.totalAttempts) *
+                100
+            ).toFixed(0);
+        }
+        var maxPause = calculateMaxPauseByHistory(state.history);
+        var minPause = calculateMinPauseByHistory(state.history);
+
+        state.groupResults[state.groupIndex] = {
+            groupIndex: state.groupIndex,
+            groupKey: TRAIN_GROUPS[state.groupIndex].key,
+            groupTitle: TRAIN_GROUPS[state.groupIndex].title,
+            totalTime: totalTime,
+            accuracy: accuracy,
+            maxPause: maxPause,
+            minPause: minPause,
+            totalAttempts: state.totalAttempts,
+            correctAttempts: state.correctAttempts,
+            history: cloneHistory(state.history),
+        };
+    }
+
+    function startNextGroup() {
+        if (state.ctx && state.canvas) {
+            state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+        }
+        startGroup(state.groupIndex + 1);
+        generateNodes();
+        renderNodes();
+        updateTargetHint();
+        startTimer();
+    }
+
+    function calculateSummaryFromGroups() {
+        var totalTimeSum = 0;
+        var totalAttemptsSum = 0;
+        var correctAttemptsSum = 0;
+        var maxPause = 0;
+        var minPause = 999999;
+
+        for (var i = 0; i < state.groupResults.length; i++) {
+            var g = state.groupResults[i];
+            if (!g) continue;
+            totalTimeSum += parseFloat(g.totalTime) || 0;
+            totalAttemptsSum += g.totalAttempts || 0;
+            correctAttemptsSum += g.correctAttempts || 0;
+            var gMax = parseFloat(g.maxPause) || 0;
+            var gMin = parseFloat(g.minPause) || 0;
+            if (gMax > maxPause) maxPause = gMax;
+            if (gMin < minPause) minPause = gMin;
+        }
+
+        if (minPause === 999999) minPause = 0;
+
+        var accuracy = "0";
+        if (totalAttemptsSum > 0) {
+            accuracy = ((correctAttemptsSum / totalAttemptsSum) * 100).toFixed(
+                0
+            );
+        }
+
+        return {
+            totalTime: totalTimeSum.toFixed(1),
+            accuracy: accuracy,
+            maxPause: maxPause.toFixed(1),
+            minPause: minPause.toFixed(1),
+        };
     }
 
     /**
@@ -712,14 +881,12 @@ var ConnectGame2 = (function () {
         gamePage.classList.remove("active");
         resultPage.classList.add("active");
 
-        // 计算统计数据
-        var totalTime = ((Date.now() - state.startTime) / 1000).toFixed(1);
-        var accuracy = (
-            (state.correctAttempts / state.totalAttempts) *
-            100
-        ).toFixed(0);
-        var maxPause = calculateMaxPause();
-        var minPause = calculateMinPause();
+        // 计算统计数据（三组汇总）
+        var summary = calculateSummaryFromGroups();
+        var totalTime = summary.totalTime;
+        var accuracy = summary.accuracy;
+        var maxPause = summary.maxPause;
+        var minPause = summary.minPause;
         // 显示统计数据
         var timeElement = document.getElementById("stat-blue");
         var accuracyElement = document.getElementById("stat-green");
@@ -744,25 +911,9 @@ var ConnectGame2 = (function () {
             totalTime: totalTime,
             accuracy: accuracy,
             maxPause: maxPause,
-            history: state.history,
+            minPause: minPause,
+            groups: state.groupResults,
         });
-    }
-
-    /**
-     * 计算最大停顿时间
-     */
-    function calculateMaxPause() {
-        var maxPause = 0;
-
-        for (var i = 0; i < state.history.length; i++) {
-            var record = state.history[i];
-            var timeCost = parseFloat(record.timeCost);
-            if (timeCost > maxPause) {
-                maxPause = timeCost;
-            }
-        }
-
-        return maxPause.toFixed(1);
     }
 
     /**
@@ -779,10 +930,10 @@ var ConnectGame2 = (function () {
                 totalTime: data.totalTime,
                 accuracy: data.accuracy,
                 maxPause: data.maxPause,
-                totalAttempts: state.totalAttempts,
-                correctAttempts: state.correctAttempts,
+                minPause: data.minPause,
+                groupsCount: data.groups ? data.groups.length : 0,
             },
-            history: data.history,
+            groups: data.groups || [],
         };
 
         // 调用 API 上报
@@ -815,10 +966,60 @@ var ConnectGame2 = (function () {
         detailsPage.classList.add("active");
 
         // 渲染详情表格
-        renderDetailsTable();
+        initDetailsTabsOnce();
+        setActiveDetailsGroup(0);
 
         // 添加鼠标拖动滑动功能
         initDragScroll();
+    }
+
+    var detailsTabsInited = false;
+    function initDetailsTabsOnce() {
+        if (detailsTabsInited) return;
+        detailsTabsInited = true;
+
+        var tabs = document.getElementById("details-tabs-train");
+        if (!tabs) return;
+
+        tabs.addEventListener("click", function (e) {
+            var target = e.target;
+            if (!target) return;
+            if (
+                target.className &&
+                target.className.indexOf("details-tab-train") !== -1
+            ) {
+                var groupStr = target.getAttribute("data-group");
+                var groupIndex = parseInt(groupStr, 10);
+                if (isNaN(groupIndex)) groupIndex = 0;
+                setActiveDetailsGroup(groupIndex);
+            }
+        });
+    }
+
+    function setActiveDetailsGroup(groupIndex) {
+        var tabs = document.getElementById("details-tabs-train");
+        if (tabs) {
+            var buttons = tabs.getElementsByTagName("button");
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = buttons[i];
+                var gi = parseInt(btn.getAttribute("data-group"), 10);
+                if (gi === groupIndex) {
+                    if (btn.className.indexOf("active") === -1) {
+                        btn.className += " active";
+                    }
+                } else {
+                    btn.className = btn.className.replace(" active", "");
+                }
+            }
+        }
+
+        renderDetailsTable(groupIndex);
+
+        // 切换页签后：滚动回到顶部
+        var container = document.querySelector(
+            "#page-details .details-container"
+        );
+        if (container) container.scrollTop = 0;
     }
 
     /**
@@ -873,15 +1074,23 @@ var ConnectGame2 = (function () {
     /**
      * 渲染详情表格
      */
-    function renderDetailsTable() {
+    function renderDetailsTable(groupIndex) {
         var tbody = document.getElementById("details-tbody");
         if (!tbody) return;
 
         tbody.innerHTML = "";
 
+        var history = state.history;
+        if (state.groupResults && state.groupResults[groupIndex]) {
+            history = state.groupResults[groupIndex].history || [];
+        } else if (state.groupResults && state.groupResults.length) {
+            history =
+                (state.groupResults[0] && state.groupResults[0].history) || [];
+        }
+
         // 渲染每条记录
-        for (var i = 0; i < state.history.length; i++) {
-            var record = state.history[i];
+        for (var i = 0; i < history.length; i++) {
+            var record = history[i];
             var tr = document.createElement("tr");
 
             // 节点
@@ -986,7 +1195,8 @@ var ConnectGame2 = (function () {
             "page-welcome",
             "page-rule-1",
             "page-rule-2",
-            "page-tutorial",
+            "page-rule-3",
+            "page-rule-4",
             "page-task",
             "page-game",
             "page-result",
