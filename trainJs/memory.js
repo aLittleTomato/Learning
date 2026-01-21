@@ -75,7 +75,7 @@ var MemoryGame = (function () {
         displayDuration: 1000, // 数字显示时长（毫秒）
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 3, // 准备倒计时（秒）
-        trainingDuration: 120, // 训练时长（秒）5分钟
+        trainingDuration: 300, // 训练时长（秒）5分钟
     };
 
     /**
@@ -231,7 +231,6 @@ var MemoryGame = (function () {
             return;
         }
 
-        state.remainingTime = 12;
         // 开始计时器
         if (!state.timerInterval) {
             startTimer();
