@@ -974,6 +974,22 @@ var AttentionGame = (function () {
     function renderResult() {
         var results = state.results;
 
+        // 根据集中程度动态调整结果页文案
+        var line1 = document.getElementById("result-line-1");
+        var line2 = document.getElementById("result-line-2");
+        var line3 = document.getElementById("result-line-3");
+        if (line1 && line2 && line3) {
+            if (results.focus < 28.89) {
+                line1.textContent = "辛苦啦！";
+                line2.textContent = "这次完成了全部挑战。";
+                line3.textContent = "继续练习会更稳更准！";
+            } else {
+                line1.textContent = "恭喜你！ 🎉";
+                line2.textContent = "完成了全部挑战。";
+                line3.textContent = "你真是眼疾手快！👏";
+            }
+        }
+
         // 更新标题
         var title = document.getElementById("result-title");
         if (title) {
