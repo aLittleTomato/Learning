@@ -9,6 +9,9 @@
     background: linear-gradient(to bottom, #fff 0% 50%, #37c85b 50% 100%);
     background-repeat: no-repeat;
 }
+#page-test {
+    background: linear-gradient(to bottom, #fff 0% 100%);
+}
 #page-result {
     background: linear-gradient(to bottom, #37c85b 0% 50%, #fff 50% 100%);
 }

@@ -269,7 +269,7 @@ var RavenGame = (function () {
      */
     function nextQuestion() {
         Utils.playSound("click");
-        if (state.currentQuestion < state.totalQuestion - 1) {
+        if (state.currentQuestion < 3) {
             state.currentQuestion++;
             renderQuestion();
         } else {

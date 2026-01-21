@@ -417,8 +417,8 @@ var PictureMemoryGame = (function () {
             stats.falseRate.toFixed(0) + "%";
 
         let green1Text =
-            stats.falseRate.toFixed(0) != 0
-                ? (stats.missRate / stats.falseRate).toFixed(0)
+            stats.accuracy.toFixed(0) != 0
+                ? (stats.missRate / stats.accuracy).toFixed(0)
                 : 0;
         document.getElementById("stat-green1").textContent = green1Text;
 
@@ -683,14 +683,35 @@ var PictureMemoryGame = (function () {
             innerContainer.style.transform = "translateY(" + translateY + "px)";
         }
 
-        // 触摸开始
-        function handleTouchStart(e) {
-            if (e.touches.length !== 1) return;
+        // 开始拖动（通用函数）
+        function startDrag(clientY) {
             isDragging = true;
-            startY = e.touches[0].clientY;
+            startY = clientY;
             startTranslateY = translateY;
             calculateBounds();
             innerContainer.style.transition = "none";
+        }
+
+        // 拖动中（通用函数）
+        function moveDrag(clientY) {
+            if (!isDragging) return;
+            currentY = clientY;
+            var deltaY = currentY - startY;
+            setTransform(startTranslateY + deltaY);
+        }
+
+        // 结束拖动（通用函数）
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            innerContainer.style.transition = "transform 0.1s ease-out";
+            setTransform(translateY);
+        }
+
+        // 触摸开始
+        function handleTouchStart(e) {
+            if (e.touches.length !== 1) return;
+            startDrag(e.touches[0].clientY);
         }
 
         // 触摸移动
@@ -700,23 +721,45 @@ var PictureMemoryGame = (function () {
             if (e.preventDefault) {
                 e.preventDefault();
             }
-            currentY = e.touches[0].clientY;
-            var deltaY = currentY - startY;
-            setTransform(startTranslateY + deltaY);
+            moveDrag(e.touches[0].clientY);
         }
 
         // 触摸结束
         function handleTouchEnd(e) {
+            endDrag();
+        }
+
+        // 鼠标按下
+        function handleMouseDown(e) {
+            e.preventDefault();
+            startDrag(e.clientY);
+        }
+
+        // 鼠标移动
+        function handleMouseMove(e) {
             if (!isDragging) return;
-            isDragging = false;
-            innerContainer.style.transition = "transform 0.1s ease-out";
-            setTransform(translateY);
+            e.preventDefault();
+            moveDrag(e.clientY);
+        }
+
+        // 鼠标抬起
+        function handleMouseUp(e) {
+            endDrag();
+        }
+
+        // 鼠标离开（防止鼠标移出元素后无法抬起）
+        function handleMouseLeave(e) {
+            endDrag();
         }
 
         // 移除旧的事件监听器（如果存在）
         var oldTouchStart = container._touchStartHandler;
         var oldTouchMove = container._touchMoveHandler;
         var oldTouchEnd = container._touchEndHandler;
+        var oldMouseDown = container._mouseDownHandler;
+        var oldMouseMove = container._mouseMoveHandler;
+        var oldMouseUp = container._mouseUpHandler;
+        var oldMouseLeave = container._mouseLeaveHandler;
 
         if (oldTouchStart) {
             container.removeEventListener("touchstart", oldTouchStart);
@@ -727,16 +770,36 @@ var PictureMemoryGame = (function () {
         if (oldTouchEnd) {
             container.removeEventListener("touchend", oldTouchEnd);
         }
+        if (oldMouseDown) {
+            container.removeEventListener("mousedown", oldMouseDown);
+        }
+        if (oldMouseMove) {
+            document.removeEventListener("mousemove", oldMouseMove);
+        }
+        if (oldMouseUp) {
+            document.removeEventListener("mouseup", oldMouseUp);
+        }
+        if (oldMouseLeave) {
+            container.removeEventListener("mouseleave", oldMouseLeave);
+        }
 
         // 保存事件处理器的引用
         container._touchStartHandler = handleTouchStart;
         container._touchMoveHandler = handleTouchMove;
         container._touchEndHandler = handleTouchEnd;
+        container._mouseDownHandler = handleMouseDown;
+        container._mouseMoveHandler = handleMouseMove;
+        container._mouseUpHandler = handleMouseUp;
+        container._mouseLeaveHandler = handleMouseLeave;
 
         // 添加新的事件监听器（使用 ES5 兼容方式）
         container.addEventListener("touchstart", handleTouchStart, false);
         container.addEventListener("touchmove", handleTouchMove, false);
         container.addEventListener("touchend", handleTouchEnd, false);
+        container.addEventListener("mousedown", handleMouseDown, false);
+        document.addEventListener("mousemove", handleMouseMove, false);
+        document.addEventListener("mouseup", handleMouseUp, false);
+        container.addEventListener("mouseleave", handleMouseLeave, false);
 
         // 初始化边界和位置
         setTimeout(function () {

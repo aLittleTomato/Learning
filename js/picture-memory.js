@@ -417,8 +417,8 @@ var PictureMemoryGame = (function () {
             stats.falseRate.toFixed(0) + "%";
 
         let green1Text =
-            stats.falseRate.toFixed(0) != 0
-                ? (stats.missRate / stats.falseRate).toFixed(0)
+            stats.accuracy.toFixed(0) != 0
+                ? (stats.missRate / stats.accuracy).toFixed(0)
                 : 0;
         document.getElementById("stat-green1").textContent = green1Text;
 

@@ -230,6 +230,7 @@ var MemoryGame = (function () {
             console.error("Next page element not found:", nextPageId);
             return;
         }
+        state.remainingTime = config.trainingDuration;
 
         // 开始计时器
         if (!state.timerInterval) {
@@ -987,22 +988,19 @@ var MemoryGame = (function () {
         var startY = 0;
         var scrollTop = 0;
 
-        // 触摸开始处理函数
-        var touchStartHandler = function (e) {
-            if (e.touches.length === 1) {
-                isScrolling = true;
-                startY = e.touches[0].pageY;
-                scrollTop = container.scrollTop;
-                container.style.transition = "none";
-            }
+        // 开始滚动（通用函数）
+        var startScroll = function (pageY) {
+            isScrolling = true;
+            startY = pageY;
+            scrollTop = container.scrollTop;
+            container.style.transition = "none";
         };
 
-        // 触摸移动处理函数
-        var touchMoveHandler = function (e) {
+        // 滚动中（通用函数）
+        var moveScroll = function (pageY) {
             if (!isScrolling) return;
-            if (e.touches.length !== 1) return;
 
-            var currentY = e.touches[0].pageY;
+            var currentY = pageY;
             var deltaY = startY - currentY;
             var newScrollTop = scrollTop + deltaY;
 
@@ -1015,20 +1013,107 @@ var MemoryGame = (function () {
             }
 
             container.scrollTop = newScrollTop;
+        };
+
+        // 结束滚动（通用函数）
+        var endScroll = function () {
+            isScrolling = false;
+            container.style.transition = "";
+        };
+
+        // 触摸开始处理函数
+        var touchStartHandler = function (e) {
+            if (e.touches.length === 1) {
+                startScroll(e.touches[0].pageY);
+            }
+        };
+
+        // 触摸移动处理函数
+        var touchMoveHandler = function (e) {
+            if (!isScrolling) return;
+            if (e.touches.length !== 1) return;
+
+            moveScroll(e.touches[0].pageY);
             e.preventDefault();
         };
 
         // 触摸结束处理函数
         var touchEndHandler = function (e) {
-            isScrolling = false;
-            container.style.transition = "";
+            endScroll();
         };
 
         // 触摸取消处理函数
         var touchCancelHandler = function (e) {
-            isScrolling = false;
-            container.style.transition = "";
+            endScroll();
         };
+
+        // 鼠标按下处理函数
+        var mouseDownHandler = function (e) {
+            e.preventDefault();
+            startScroll(e.pageY);
+        };
+
+        // 鼠标移动处理函数
+        var mouseMoveHandler = function (e) {
+            if (!isScrolling) return;
+            e.preventDefault();
+            moveScroll(e.pageY);
+        };
+
+        // 鼠标抬起处理函数
+        var mouseUpHandler = function (e) {
+            endScroll();
+        };
+
+        // 鼠标离开处理函数
+        var mouseLeaveHandler = function (e) {
+            endScroll();
+        };
+
+        // 移除旧的事件监听器（如果存在）
+        var oldTouchStart = container._touchStartHandler;
+        var oldTouchMove = container._touchMoveHandler;
+        var oldTouchEnd = container._touchEndHandler;
+        var oldTouchCancel = container._touchCancelHandler;
+        var oldMouseDown = container._mouseDownHandler;
+        var oldMouseMove = container._mouseMoveHandler;
+        var oldMouseUp = container._mouseUpHandler;
+        var oldMouseLeave = container._mouseLeaveHandler;
+
+        if (oldTouchStart) {
+            container.removeEventListener("touchstart", oldTouchStart);
+        }
+        if (oldTouchMove) {
+            container.removeEventListener("touchmove", oldTouchMove);
+        }
+        if (oldTouchEnd) {
+            container.removeEventListener("touchend", oldTouchEnd);
+        }
+        if (oldTouchCancel) {
+            container.removeEventListener("touchcancel", oldTouchCancel);
+        }
+        if (oldMouseDown) {
+            container.removeEventListener("mousedown", oldMouseDown);
+        }
+        if (oldMouseMove) {
+            document.removeEventListener("mousemove", oldMouseMove);
+        }
+        if (oldMouseUp) {
+            document.removeEventListener("mouseup", oldMouseUp);
+        }
+        if (oldMouseLeave) {
+            container.removeEventListener("mouseleave", oldMouseLeave);
+        }
+
+        // 保存事件处理器的引用
+        container._touchStartHandler = touchStartHandler;
+        container._touchMoveHandler = touchMoveHandler;
+        container._touchEndHandler = touchEndHandler;
+        container._touchCancelHandler = touchCancelHandler;
+        container._mouseDownHandler = mouseDownHandler;
+        container._mouseMoveHandler = mouseMoveHandler;
+        container._mouseUpHandler = mouseUpHandler;
+        container._mouseLeaveHandler = mouseLeaveHandler;
 
         // 绑定事件监听器
         container.addEventListener("touchstart", touchStartHandler, {
@@ -1041,6 +1126,18 @@ var MemoryGame = (function () {
             passive: true,
         });
         container.addEventListener("touchcancel", touchCancelHandler, {
+            passive: true,
+        });
+        container.addEventListener("mousedown", mouseDownHandler, {
+            passive: false,
+        });
+        document.addEventListener("mousemove", mouseMoveHandler, {
+            passive: false,
+        });
+        document.addEventListener("mouseup", mouseUpHandler, {
+            passive: true,
+        });
+        container.addEventListener("mouseleave", mouseLeaveHandler, {
             passive: true,
         });
     }
