@@ -195,19 +195,36 @@ var ConnectGame2 = (function () {
     }
 
     /**
-     * 开始游戏
+     * 开始游戏（显示第一组规则页）
      */
     function startGame() {
         console.log("Starting game");
         Utils.playSound("click");
 
-        // 切换页面
-        var tutorialPage = Utils.getCurrentPage();
+        // 切换页面到第一组规则页
+        var currentPage = Utils.getCurrentPage();
+        var rulePage = document.getElementById("page-rule-2");
+
+        if (!currentPage || !rulePage) return;
+
+        currentPage.classList.remove("active");
+        rulePage.classList.add("active");
+    }
+
+    /**
+     * 开始实际游戏（不显示规则页）
+     */
+    function startGroupGame() {
+        console.log("Starting group game");
+        Utils.playSound("click");
+
+        // 切换页面到游戏页
+        var currentPage = Utils.getCurrentPage();
         var gamePage = document.getElementById("page-game");
 
-        if (!tutorialPage || !gamePage) return;
+        if (!currentPage || !gamePage) return;
 
-        tutorialPage.classList.remove("active");
+        currentPage.classList.remove("active");
         gamePage.classList.add("active");
 
         // 初始化游戏
@@ -713,10 +730,10 @@ var ConnectGame2 = (function () {
             // 保存当前组结果
             saveCurrentGroupResult();
 
-            // 还有下一组：直接进入下一组
+            // 还有下一组：先显示下一组的规则页
             if (state.groupIndex < TRAIN_GROUPS.length - 1) {
                 setTimeout(function () {
-                    startNextGroup();
+                    showNextGroupRule();
                 }, 500);
             } else {
                 // 第三组结束：显示结算页面
@@ -788,7 +805,47 @@ var ConnectGame2 = (function () {
         };
     }
 
+    /**
+     * 显示下一组的规则页
+     */
+    function showNextGroupRule() {
+        var nextGroupIndex = state.groupIndex + 1;
+        var rulePageId = null;
+
+        // 根据下一组索引确定规则页
+        if (nextGroupIndex === 1) {
+            rulePageId = "page-rule-3"; // 第二组规则
+        } else if (nextGroupIndex === 2) {
+            rulePageId = "page-rule-4"; // 第三组规则
+        }
+
+        if (!rulePageId) return;
+
+        var currentPage = Utils.getCurrentPage();
+        var rulePage = document.getElementById(rulePageId);
+
+        if (!currentPage || !rulePage) return;
+
+        currentPage.classList.remove("active");
+        rulePage.classList.add("active");
+    }
+
+    /**
+     * 开始下一组游戏（不显示规则页）
+     */
     function startNextGroup() {
+        console.log("Starting next group");
+        Utils.playSound("click");
+
+        // 切换到游戏页面
+        var currentPage = Utils.getCurrentPage();
+        var gamePage = document.getElementById("page-game");
+
+        if (!currentPage || !gamePage) return;
+
+        currentPage.classList.remove("active");
+        gamePage.classList.add("active");
+
         if (state.ctx && state.canvas) {
             state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
         }
@@ -1239,6 +1296,8 @@ var ConnectGame2 = (function () {
         init: init,
         showTutorial: showTutorial,
         startGame: startGame,
+        startGroupGame: startGroupGame,
+        startNextGroup: startNextGroup,
         viewDetails: viewDetails,
         backToResult: backToResult,
         restart: restart,

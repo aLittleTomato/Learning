@@ -883,12 +883,11 @@ function showResult(needSound = true) {
     var resultPage = document.getElementById("page-result");
 
     currentPage.classList.remove("active");
+    // 渲染结果
+    renderResult();
 
     Animation.gameToResultTransition(currentPage, resultPage, function () {
         resultPage.classList.add("active");
-
-        // 渲染结果
-        renderResult();
 
         // 徽章动画
         var badge = resultPage.querySelector(".result-badge");
