@@ -283,6 +283,20 @@
     background-image: url("../images/game2/next_step.png");
     bottom: 40px;
 }
+.btn-bottom.long.retry1 {
+    background-image: url("../images/game2/retry.png");
+    bottom: 100px;
+}
+
+.btn-bottom.long.correct1 {
+    background-image: url("../images/game2/next_step.png");
+    bottom: 100px;
+}
+
+.btn-bottom.long.gotoBackard1 {
+    background-image: url("../images/game2/retry.png");
+    bottom: 100px;
+}
 
 .page-logo.right {
     right: -300px;
@@ -1153,6 +1167,32 @@
 
 .number-disappear {
     animation: numberDisappear 0.6s ease-out;
+}
+
+/* 倒计时显示 */
+.timer-display {
+    position: absolute;
+    bottom: 20px;
+    left: 255px;
+    z-index: 9999;
+    color: #FF5C5F;
+    font-size: 38px;
+    font-weight: bold;
+    width: 241px;
+    height: 80px;
+    border: 5px solid #FF5C5F;
+    border-radius: 40px;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    line-height: 1;
+
+}
+
+.timer-display #timer-text {
+    /* display: block; */
+    /* line-height: 1; */
+    text-align: center;
 }
 
 /* 响应式调整 */

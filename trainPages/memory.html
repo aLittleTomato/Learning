@@ -15,6 +15,10 @@
     <body>
         <div id="app">
             <div id="stage" class="stage">
+            <!-- 倒计时显示 -->
+                <div id="timer-display" class="timer-display" style="display: none">
+                    <span id="timer-text">00:00</span>
+                </div>
                 <!-- P1: 欢迎页 -->
                 <div id="page-welcome" class="page">
                     <img class="full-bg" src="../images/game2/welcome_bg.png" />
@@ -299,7 +303,7 @@
                         </div>
 
                         <button
-                            class="btn btn-bottom long correct"
+                            class="btn btn-bottom long correct1"
                             onclick="MemoryGame.nextLevel()"
                         ></button>
                     </div>
@@ -321,12 +325,11 @@
                             <p class="line2">我刚才展示的数字是：</p>
                             <p class="line2" id="retry-correct-answer"></p>
                             <p class="line2">让我们再试一次</p>
-                            <p class="line2">注意这次的数字和刚才的</p>
-                            <p class="line2">不一样哦。</p>
+                            <p class="line2">注意这次的数字不一样哦。</p>
                         </div>
 
                         <button
-                            class="btn btn-bottom long retry"
+                            class="btn btn-bottom long retry1"
                             onclick="MemoryGame.retryLevel()"
                         ></button>
                     </div>
@@ -355,12 +358,12 @@
                             <p class="line2">
                                 总共<span class="rule-text-red" id="failed-desc"
                                     >4个</span
-                                >数字，
+                                >数字。
                             </p>
                         </div>
 
                         <button
-                            class="btn btn-bottom long gotoBackard"
+                            class="btn btn-bottom long gotoBackard1"
                             onclick="MemoryGame.retryLevel()"
                         ></button>
                     </div>

@@ -248,12 +248,36 @@ var MemoryGame = (function () {
     }
 
     /**
+     * 更新倒计时显示
+     */
+    function updateTimerDisplay() {
+        var timerDisplay = document.getElementById("timer-display");
+        var timerText = document.getElementById("timer-text");
+
+        if (!timerDisplay || !timerText) return;
+
+        if (state.remainingTime > 0) {
+            timerText.textContent = Utils.formatTime(state.remainingTime);
+            timerDisplay.style.display = "flex";
+        } else {
+            timerDisplay.style.display = "none";
+        }
+    }
+
+    /**
      * 开始计时器
      */
     function startTimer() {
+        // 初始化显示
+        updateTimerDisplay();
+
         state.timerInterval = setInterval(function () {
             state.remainingTime--;
             console.log("计时器：" + state.remainingTime);
+
+            // 更新倒计时显示
+            updateTimerDisplay();
+
             if (state.remainingTime <= 0) {
                 endTraining();
             }
@@ -279,6 +303,12 @@ var MemoryGame = (function () {
         if (state.showNextTimer) {
             clearTimeout(state.showNextTimer);
             state.showNextTimer = null;
+        }
+
+        // 隐藏倒计时显示
+        var timerDisplay = document.getElementById("timer-display");
+        if (timerDisplay) {
+            timerDisplay.style.display = "none";
         }
     }
 
