@@ -1173,12 +1173,12 @@
 .timer-display {
     position: absolute;
     bottom: 20px;
-    left: 255px;
+    left: 235px;
     z-index: 9999;
     color: #FF5C5F;
     font-size: 38px;
     font-weight: bold;
-    width: 241px;
+    width: 281px;
     height: 80px;
     border: 5px solid #FF5C5F;
     border-radius: 40px;

@@ -257,7 +257,7 @@ var MemoryGame = (function () {
         if (!timerDisplay || !timerText) return;
 
         if (state.remainingTime > 0) {
-            timerText.textContent = Utils.formatTime(state.remainingTime);
+            timerText.textContent = "时间：" + Utils.formatTime(state.remainingTime);
             timerDisplay.style.display = "flex";
         } else {
             timerDisplay.style.display = "none";
