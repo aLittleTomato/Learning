@@ -75,7 +75,7 @@ var PictureMemoryGame = (function () {
         });
     }
 
-    function getImgUrls(imagesToPreload) {}
+    function getImgUrls(imagesToPreload) { }
     function initGame() {
         // 绑定欢迎页点击事件
         // var welcomePage = document.getElementById("page-welcome");
@@ -146,81 +146,247 @@ var PictureMemoryGame = (function () {
     }
 
     function generatePictureSequence(gameConfig) {
-        var repeatPriorityRate = 0.3;
         const { startIndex, endIndex, distribution } = gameConfig;
 
-        // 1️⃣ 生成池子
-        const pool = [];
+        // 1️⃣ 构建剩余次数表
+        const remainMap = new Map();
         let idx =
             startIndex + Math.floor(Math.random() * (endIndex - startIndex));
 
+        function add(id, count) {
+            remainMap.set(id, (remainMap.get(id) || 0) + count);
+        }
+
         for (let i = 0; i < distribution.twice; i++) {
-            pool.push({ id: idx, type: "twice" });
-            pool.push({ id: idx, type: "twice" });
-            idx++;
-            if (idx >= endIndex) idx = startIndex;
+            add(idx, 2);
+            idx = idx + 1 >= endIndex ? startIndex : idx + 1;
         }
 
         for (let i = 0; i < distribution.once; i++) {
-            pool.push({ id: idx, type: "once" });
-            idx++;
-            if (idx >= endIndex) idx = startIndex;
+            add(idx, 1);
+            idx = idx + 1 >= endIndex ? startIndex : idx + 1;
         }
 
         for (let i = 0; i < distribution.thrice; i++) {
-            pool.push({ id: idx, type: "thrice" });
-            pool.push({ id: idx, type: "thrice" });
-            pool.push({ id: idx, type: "thrice" });
-            idx++;
-            if (idx >= endIndex) idx = startIndex;
+            add(idx, 3);
+            idx = idx + 1 >= endIndex ? startIndex : idx + 1;
         }
 
-        let sequencePool = pool.map((item) => item.id);
-
         const result = [];
-        const seen = new Set();
+        const appearCount = new Map();
 
-        while (sequencePool.length > 0) {
+        function getAvailableIds() {
+            return [...remainMap.entries()]
+                .filter(([, count]) => count > 0)
+                .map(([id]) => id);
+        }
+
+        function isNew(id) {
+            return (appearCount.get(id) || 0) < 2;
+        }
+
+        function isOld(id) {
+            return (appearCount.get(id) || 0) >= 2;
+        }
+        function hasSeen(id) {
+            return (appearCount.get(id) || 0) >= 1;
+        }
+
+        let consecutiveNewCount = 0;
+        const newToOldBiasRate = 0.45; // 推荐 0.3 ~ 0.5
+        while (true) {
+            const available = getAvailableIds();
+            if (available.length === 0) break;
             const last = result[result.length - 1];
-            const last2 = result.slice(-2);
+            const last3 = result.slice(-3);
 
-            // 1️⃣ 排除连续重复
-            let candidates = sequencePool.filter((v) => v !== last);
+            // 1️⃣ 所有可用
+            let candidates = available.slice();
 
-            // 2️⃣ 连续两张已出现 → 有概率优先消耗重复图片
-            const consecutiveOld =
-                last2.length === 2 && last2.every((v) => seen.has(v));
-            if (consecutiveOld && Math.random() < repeatPriorityRate) {
-                let repeatCandidates = candidates.filter((v) => seen.has(v));
-                if (repeatCandidates.length > 0) {
-                    candidates = repeatCandidates;
+            // 2️⃣ 禁止连续相同
+            if (last !== undefined) {
+                candidates = candidates.filter(id => id !== last);
+            }
+
+            // 3️⃣ 硬规则：不允许连续 4 个旧图
+            const isThreeOld =
+                last3.length === 3 &&
+                last3.every(id => isOld(id));
+
+            if (isThreeOld) {
+                const notOld = candidates.filter(id => !isOld(id));
+                if (notOld.length > 0) {
+                    candidates = notOld;
                 }
             }
 
-            // 3️⃣ 兜底：如果 candidates 为空，只能选 sequencePool 中第一个非 last
-            if (candidates.length === 0) {
-                candidates = sequencePool.filter((v) => v !== last);
+            // 4️⃣ 🎯 软规则：连续 2 个新图 → 概率偏向旧图
+            else if (
+                consecutiveNewCount >= 1 &&
+                Math.random() < newToOldBiasRate
+            ) {
+                const oldOnes = candidates.filter(id => hasSeen(id));
+                if (oldOnes.length > 0) {
+                    candidates = oldOnes;
+                }
             }
 
-            // 4️⃣ 最终兜底：如果还是空（sequencePool 只剩 last），直接选 last
+            // 5️⃣ 合法兜底
             if (candidates.length === 0) {
-                candidates = [sequencePool[0]];
+                candidates = available.slice();
             }
 
-            // 5️⃣ 随机 pick
+            // 6️⃣ 完全随机 pick
             const pick =
                 candidates[Math.floor(Math.random() * candidates.length)];
 
-            // 6️⃣ 删除 pick
-            const index = sequencePool.indexOf(pick);
-            if (index > -1) sequencePool.splice(index, 1);
+            // 6️⃣ 消耗次数
+            remainMap.set(pick, remainMap.get(pick) - 1);
 
             result.push(pick);
-            seen.add(pick);
+            appearCount.set(pick, (appearCount.get(pick) || 0) + 1);
+
+            if (isNew(pick)) {
+                consecutiveNewCount++;
+            } else {
+                consecutiveNewCount = 0;
+            }
         }
 
+
+
+
+        // ===== 统计分析 =====
+        // const stats = {
+        //     total: result.length,
+
+        //     appearCount: {},      // 每个 id 实际出现次数
+        //     once: 0,
+        //     twice: 0,
+        //     thrice: 0,
+
+        //     repeatImmediate: [],  // 连续重复位置
+        //     tripleOld: [],        // 连续3个"已出现"
+        //     quadrupleOld: []      // 连续4个"已出现"         // 连续3个“已出现”
+        // };
+
+        // // 统计每个图片出现次数
+        // result.forEach((id, i) => {
+        //     stats.appearCount[id] = (stats.appearCount[id] || 0) + 1;
+
+        //     // 连续重复 A A
+        //     if (i > 0 && result[i] === result[i - 1]) {
+        //         stats.repeatImmediate.push({
+        //             index: i,
+        //             value: id
+        //         });
+        //     }
+
+        //     // 连续3个已出现图片
+        //     if (i >= 2) {
+        //         const a = result[i - 2];
+        //         const b = result[i - 1];
+        //         const c = result[i];
+
+        //         const seenBefore =
+        //             new Set(result.slice(0, i - 2));
+
+        //         if (
+        //             seenBefore.has(a) &&
+        //             seenBefore.has(b) &&
+        //             seenBefore.has(c)
+        //         ) {
+        //             stats.tripleOld.push({
+        //                 index: i,
+        //                 values: [a, b, c]
+        //             });
+        //         }
+        //     }
+
+        //     // 连续4个已出现图片
+        //     if (i >= 3) {
+        //         const a = result[i - 3];
+        //         const b = result[i - 2];
+        //         const c = result[i - 1];
+        //         const d = result[i];
+
+        //         const seenBefore =
+        //             new Set(result.slice(0, i - 3));
+
+        //         if (
+        //             seenBefore.has(a) &&
+        //             seenBefore.has(b) &&
+        //             seenBefore.has(c) &&
+        //             seenBefore.has(d)
+        //         ) {
+        //             stats.quadrupleOld.push({
+        //                 index: i,
+        //                 values: [a, b, c, d]
+        //             });
+        //         }
+        //     }
+        // });
+
+        // // 根据实际出现次数统计 once / twice / thrice
+        // Object.values(stats.appearCount).forEach((count) => {
+        //     if (count === 1) stats.once++;
+        //     else if (count === 2) stats.twice++;
+        //     else if (count === 3) stats.thrice++;
+        // });
+
+        // console.group("🧠 Picture Sequence Stats");
+
+        // console.log("总长度:", stats.total);
+        // console.log("once / twice / thrice:", {
+        //     once: stats.once,
+        //     twice: stats.twice,
+        //     thrice: stats.thrice
+        // });
+
+        // // 打印 ID 列表，首次出现的标绿
+        // console.log("%cID 列表（绿色=首次出现）:", "font-weight: bold; font-size: 14px;");
+        // const firstAppear = new Set();
+        // result.forEach((id, i) => {
+        //     const isFirstAppear = !firstAppear.has(id);
+        //     if (isFirstAppear) {
+        //         firstAppear.add(id);
+        //         console.log(`%c[${i}] ${id}`, "color: green; font-weight: bold;");
+        //     } else {
+        //         console.log(`[${i}] ${id}`);
+        //     }
+        // });
+
+        // console.log("连续重复次数:", stats.repeatImmediate.length);
+        // if (stats.repeatImmediate.length > 0) {
+        //     console.table(stats.repeatImmediate);
+        // }
+
+        // console.log("连续3个已出现图片次数:", stats.tripleOld.length);
+        // if (stats.tripleOld.length > 0) {
+        //     console.table(stats.tripleOld);
+        // }
+
+        // console.log("连续4个已出现图片次数:", stats.quadrupleOld.length);
+        // if (stats.quadrupleOld.length > 0) {
+        //     console.table(stats.quadrupleOld);
+        // }
+
+        // console.groupEnd();
+
+        // if (stats.repeatImmediate.length > 0) {
+        //     console.warn("⚠️ 出现连续重复图片");
+        // }
+
+        // if (stats.tripleOld.length > 0) {
+        //     console.warn("⚠️ 出现连续3次已出现图片");
+        // }
+
+        // if (stats.quadrupleOld.length > 0) {
+        //     console.warn("⚠️ 出现连续4次已出现图片");
+        // }
         return result;
     }
+
 
     /**
      * 开始倒计时
@@ -469,13 +635,13 @@ var PictureMemoryGame = (function () {
         var missRate =
             shouldClickTotal > 0
                 ? ((shouldClickTotal - shouldClickCorrect) / shouldClickTotal) *
-                  100
+                100
                 : 0;
         var falseRate =
             shouldNotClickTotal > 0
                 ? ((shouldNotClickTotal - shouldNotClickCorrect) /
-                      shouldNotClickTotal) *
-                  100
+                    shouldNotClickTotal) *
+                100
                 : 0;
 
         return {

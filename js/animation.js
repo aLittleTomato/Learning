@@ -6,6 +6,48 @@
 var Animation = (function () {
     "use strict";
 
+    // 遮罩元素（单例）
+    var overlay = null;
+
+    /**
+     * 创建或获取遮罩元素
+     * @returns {HTMLElement} 遮罩元素
+     */
+    function getOverlay() {
+        if (!overlay) {
+            overlay = document.createElement("div");
+            overlay.id = "animation-overlay";
+            overlay.style.cssText =
+                "position: fixed;" +
+                "top: 0;" +
+                "left: 0;" +
+                "width: 100%;" +
+                "height: 100%;" +
+                "z-index: 9999;" +
+                "background: transparent;" +
+                "pointer-events: all;" +
+                "display: none;";
+            document.body.appendChild(overlay);
+        }
+        return overlay;
+    }
+
+    /**
+     * 显示遮罩
+     */
+    function showOverlay() {
+        var mask = getOverlay();
+        mask.style.display = "block";
+    }
+
+    /**
+     * 隐藏遮罩
+     */
+    function hideOverlay() {
+        var mask = getOverlay();
+        mask.style.display = "none";
+    }
+
     /**
      * 页面切换动画 - 引导流程切换 (P1 → P2 → P3 → P4 → P5)
      * @param {HTMLElement} oldPage - 旧页面元素
@@ -13,6 +55,9 @@ var Animation = (function () {
      * @param {Function} callback - 动画完成回调
      */
     function pageTransition(oldPage, newPage, callback) {
+        // 显示遮罩，屏蔽点击事件
+        showOverlay();
+
         // 旧页面退出动画
         if (oldPage) {
             oldPage.classList.add("page-transition-exit");
@@ -32,6 +77,9 @@ var Animation = (function () {
             }
             newPage.classList.remove("page-transition-enter");
 
+            // 隐藏遮罩，恢复点击事件
+            hideOverlay();
+
             if (callback) {
                 callback();
             }
@@ -45,6 +93,9 @@ var Animation = (function () {
      * @param {Function} callback - 动画完成回调
      */
     function tutorialToGameTransition(oldPage, newPage, callback) {
+        // 显示遮罩，屏蔽点击事件
+        showOverlay();
+
         // 旧页面向下沉降
         oldPage.style.transition = "all 0.4s ease-out";
         oldPage.style.transform = "translateY(30%)";
@@ -71,6 +122,9 @@ var Animation = (function () {
             newPage.style.transform = "";
             newPage.style.opacity = "";
             newPage.style.transition = "";
+
+            // 隐藏遮罩，恢复点击事件
+            hideOverlay();
 
             if (callback) {
                 callback();
@@ -124,6 +178,9 @@ var Animation = (function () {
      * @param {Function} callback - 动画完成回调
      */
     function gameToResultTransition(oldPage, newPage, callback) {
+        // 显示遮罩，屏蔽点击事件
+        showOverlay();
+
         // 背景渐变
         oldPage.classList.remove("active");
         newPage.classList.add("active");
@@ -148,6 +205,9 @@ var Animation = (function () {
             if (resultCard) {
                 resultCard.classList.remove("popup-enter");
             }
+
+            // 隐藏遮罩，恢复点击事件
+            hideOverlay();
 
             if (callback) {
                 callback();
