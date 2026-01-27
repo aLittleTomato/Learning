@@ -24,7 +24,7 @@ var Config = (function () {
                 // 每个页面正确的个数
                 correctItemsPerPage: 25,
                 // 每个页面的答题时间
-                timePerPage: 70,
+                timePerPage: 20,
                 // 模拟测试的选项个数
                 practiceItems: 6,
                 // 模拟测试的正确选项个数

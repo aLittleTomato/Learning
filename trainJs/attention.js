@@ -30,7 +30,7 @@ var AttentionGame = (function () {
             pages: [],
             currentPage: 0,
             totalPages: 3,
-            timePerPage: 70,
+            timePerPage: 20,
             startTime: null,
             pageTimes: [],
             pageResults: [],
