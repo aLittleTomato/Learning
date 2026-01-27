@@ -567,11 +567,11 @@ var AttentionGame = (function () {
 
         var btnNext = document.getElementById("test-next-btn");
         if (btnNext) {
-            // if (pageIndex === state.gameData.totalPages - 1) {
-            //     btnNext.textContent = "测试";
-            // } else {
-            btnNext.textContent = "下一关 👉";
-            // }
+            if (pageIndex === state.gameData.totalPages - 1) {
+                btnNext.textContent = "完成挑战";
+            } else {
+                btnNext.textContent = "下一关 👉";
+            }
         }
     }
 
@@ -765,7 +765,12 @@ var AttentionGame = (function () {
             if (timeLeft <= 0) {
                 clearInterval(timers.gameTimer);
                 // 时间到，自动进入下一页
-                nextGamePage();
+                completePage();
+                var timerElement = document.getElementById("game-timer");
+                if (!timerElement) return;
+
+                // 根据剩余时间改变样式
+                timerElement.classList.remove("warning", "danger");
             }
         }, 1000);
     }
