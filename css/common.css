@@ -139,6 +139,9 @@ body {
 .page-content {
     z-index: 3;
 }
+.page-content.pop {
+    pointer-events: none;
+}
 
 /* 加载动画 */
 .loading-screen {

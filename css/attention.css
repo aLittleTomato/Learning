@@ -2,47 +2,47 @@
 .root {
 }
 
-#page-welcome-bg {
+#page-welcome-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 30%, #a3d26e 30% 100%);
 }
 
-#page-mindset-bg {
+#page-mindset-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-rules-1-bg {
+#page-rules-1-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-rules-2-bg {
+#page-rules-2-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-tutorial-bg {
+#page-tutorial-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-task-bg {
+#page-task-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ffffff 0% 60%, #5ca1ff 60% 100%);
 }
 
-#page-game-bg {
+#page-game-cBG {
     cursor: pointer;
     background: #fefefe;
 }
 
-#page-result-bg {
+#page-result-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-details-bg {
+#page-details-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 20%, #ffffff 20% 100%);
 }
@@ -984,7 +984,7 @@
     width: 440px;
     height: 481px;
     left: 300px;
-    top: 0px;
+    top: -30px;
 }
 
 .page-rule-mask.result {

@@ -45,10 +45,10 @@ function resizeStage() {
         // 高度贴合，计算宽度留空比例
         ratio = windowWidth / (designWidth * contentScale);
     }
-    if (ratio < 1.13) {
+    if (ratio < 1.18) {
         // 留空比例小于 1.1，拉伸填满设备
-            const scaleX = windowWidth / designWidth;
-            const scaleY = windowHeight / designHeight;
+        const scaleX = windowWidth / designWidth;
+        const scaleY = windowHeight / designHeight;
         pageBackgrounds.forEach(bg => {
             bg.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${scaleY})`;
         });
