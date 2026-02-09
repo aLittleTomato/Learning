@@ -2,47 +2,47 @@
 .root {
 }
 
-#page-welcome {
+#page-welcome-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 30%, #a3d26e 30% 100%);
 }
 
-#page-mindset {
+#page-mindset-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-rules-1 {
+#page-rules-1-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-rules-2 {
+#page-rules-2-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-tutorial {
+#page-tutorial-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-task {
+#page-task-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #ffffff 0% 60%, #5ca1ff 60% 100%);
 }
 
-#page-game {
+#page-game-bg {
     cursor: pointer;
     background: #fefefe;
 }
 
-#page-result {
+#page-result-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 60%, #ffffff 60% 100%);
 }
 
-#page-details {
+#page-details-bg {
     cursor: pointer;
     background: linear-gradient(to bottom, #5ca1ff 0% 20%, #ffffff 20% 100%);
 }
@@ -112,7 +112,8 @@
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: right1Appear 1s ease-out forwards,
+    animation:
+        right1Appear 1s ease-out forwards,
         /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
@@ -147,7 +148,8 @@
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: leftAppear 1s ease-out forwards,
+    animation:
+        leftAppear 1s ease-out forwards,
         /* 出现动画，执行一次 */ rightBreath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
@@ -183,7 +185,8 @@
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: leftAppear1 1s ease-out forwards,
+    animation:
+        leftAppear1 1s ease-out forwards,
         /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }
@@ -221,7 +224,8 @@
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: right1Appear 1s ease-out forwards,
+    animation:
+        right1Appear 1s ease-out forwards,
         /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }

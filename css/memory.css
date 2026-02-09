@@ -27,40 +27,40 @@
     padding: 20px;
 } */
 
-#page-display {
+#page-display-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
-#page-input {
+#page-input-cBG {
     cursor: pointer;
     background: #ffffff;
 }
 
-#popup-retry {
+#popup-retry-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
-#popup-goto-backward {
+#popup-goto-backward-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
-#popup-correct {
+#popup-correct-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
 
-#page-result {
+#page-result-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 60%, #ffffff 60% 100%);
 }
-#page-details {
+#page-details-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #ff5c5f 0% 20%, #ffffff 20% 100%);
 }
-#page-content-rule1 {
+#page-content-rule1-cBG {
     background: linear-gradient(
         to bottom,
         transparent 0%,
@@ -213,7 +213,8 @@
     object-fit: fill;
 }
 .page-rule-mask.rule1 {
-    bottom: 70px;
+    height: 1177px;
+    bottom: 0px;
 }
 .page-mask-ready {
     position: absolute;
@@ -308,7 +309,8 @@
     top: -150px;
     width: 775px;
     height: 856px;
-    animation: right1Appear 1s ease-out forwards,
+    animation:
+        right1Appear 1s ease-out forwards,
         /* 出现动画，执行一次 */ right1Breath 4s ease-in-out 1s infinite;
 }
 
@@ -342,7 +344,8 @@
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: leftAppear1 1s ease-out forwards,
+    animation:
+        leftAppear1 1s ease-out forwards,
         /* 出现动画，执行一次 */ leftBreath1 4s ease-in-out 1s infinite;
 }
 
@@ -356,7 +359,8 @@
     left: -330px;
     top: 80px;
     transform-origin: center bottom;
-    animation: leftAppear1 1s ease-out forwards,
+    animation:
+        leftAppear1 1s ease-out forwards,
         leftBreath1 4s ease-in-out 1s infinite;
 }
 
@@ -381,17 +385,20 @@
     left: 230px;
     top: 0px;
     transform-origin: center bottom;
-    animation: leftAppear2 1s ease-out forwards,
+    animation:
+        leftAppear2 1s ease-out forwards,
         leftBreath2 4s ease-in-out 1s infinite;
 }
 
 .page-logo.left1.selected.success {
-    animation: leftBounce 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+    animation:
+        leftBounce 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
         leftBreath1 4s ease-in-out 600ms infinite;
 }
 
 .page-logo.left1.selected.failed {
-    animation: leftShake 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+    animation:
+        leftShake 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
         leftBreath1 4s ease-in-out 600ms infinite;
 }
 
@@ -1175,18 +1182,17 @@
     bottom: 20px;
     left: 235px;
     z-index: 9999;
-    color: #FF5C5F;
+    color: #ff5c5f;
     font-size: 38px;
     font-weight: bold;
     width: 281px;
     height: 80px;
-    border: 5px solid #FF5C5F;
+    border: 5px solid #ff5c5f;
     border-radius: 40px;
     display: flex;
     align-items: center; /* 垂直居中 */
     justify-content: center; /* 水平居中 */
     line-height: 1;
-
 }
 
 .timer-display #timer-text {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
@@ -17,45 +17,55 @@
             <div id="stage" class="stage">
                 <!-- P1: 欢迎页 -->
                 <div id="page-welcome" class="page">
-                    <img class="full-bg" src="../images/game2/welcome_bg.png" />
-                    <img
-                        class="page-welcome-mask"
-                        src="../images/game2/welcom_mask.png"
-                    />
-                    <img
-                        class="page-logo right welcome"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-dialogBG"
-                        src="../images/game1/welcome_txt_bg1.png"
-                    />
-
-                    <!-- 新增两行文本 -->
-                    <div class="page-texts-title">
-                        <p class="line2">欢迎来到<br />数字记忆小练习</p>
+                    <div id="page-welcome-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/welcome_bg.png" />
+                        <img
+                            class="page-welcome-mask"
+                            src="../images/game2/welcom_mask.png"
+                        />
+                        <div class="page-base">
+                            <img
+                                class="page-logo right welcome"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
                     </div>
+                    <div class="page-content">
+                        <img
+                            class="page-dialogBG"
+                            src="../images/game1/welcome_txt_bg1.png"
+                        />
 
-                    <div class="page-texts welcome">
-                        <p class="line1">你好呀,</p>
-                        <p class="line2">准备好挑战成为</p>
-                        <p class="line2">数字记忆达人了吗？</p>
+                        <!-- 新增两行文本 -->
+                        <div class="page-texts-title">
+                            <p class="line2">欢迎来到<br />数字记忆小练习</p>
+                        </div>
+
+                        <div class="page-texts welcome">
+                            <p class="line1">你好呀,</p>
+                            <p class="line2">准备好挑战成为</p>
+                            <p class="line2">数字记忆达人了吗？</p>
+                        </div>
+                        <button
+                            class="btn btn-welcome"
+                            onclick="MemoryGame.nextPage()"
+                        ></button>
                     </div>
-                    <button
-                        class="btn btn-welcome"
-                        onclick="MemoryGame.nextPage()"
-                    ></button>
                 </div>
                 <div id="page-rule-1" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask"
-                        src="../images/game2/burble_2.png"
-                    />
+                    <div id="page-rule-1-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask"
+                            src="../images/game2/burble_2.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts rule1">
                             <p class="line1">接下来，</p>
@@ -86,15 +96,19 @@
                     </div>
                 </div>
                 <div id="page-rule-2" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask"
-                        src="../images/game2/burble_2.png"
-                    />
+                    <div id="page-rule-2-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask"
+                            src="../images/game2/burble_2.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts rule2">
                             <p class="line1">请注意，</p>
@@ -125,15 +139,19 @@
                 </div>
 
                 <div id="page-ready" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left1"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-ready"
-                        src="../images/game2/burble_3.png"
-                    />
+                    <div id="page-ready-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left1"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-ready"
+                            src="../images/game2/burble_3.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts ready">
                             <p class="line2">
@@ -149,14 +167,18 @@
 
                 <!-- P3: 游戏主界面 - 数字展示阶段 -->
                 <div id="page-display" class="page">
-                    <img
-                        class="page-logo right display"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-display"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <div id="page-display-cBG" class="page-background">
+                        <div class="page-base">
+                            <img
+                                class="page-logo right display"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-display"
+                            src="../images/game2/burble_1.png"
+                        />
+                    </div>
 
                     <div class="page-content">
                         <div class="page-texts display">
@@ -177,20 +199,22 @@
 
                 <!-- P4: 游戏主界面 - 输入阶段 -->
                 <div id="page-input" class="page">
-                    <img
-                        class="test-logo"
-                        src="../images/game2/input_logo.png"
-                    />
-                    <img
-                        class="test-tip-bg"
-                        src="../images/game2/input_txt.png"
-                    />
-                    <img
-                        class="input-line"
-                        src="../images/game2/input_line.png"
-                    />
-
+                    <div id="page-input-cBG" class="page-background">
+                        <div class="page-base"></div>
+                    </div>
                     <div class="page-content">
+                        <img
+                            class="test-logo"
+                            src="../images/game2/input_logo.png"
+                        />
+                        <img
+                            class="test-tip-bg"
+                            src="../images/game2/input_txt.png"
+                        />
+                        <img
+                            class="input-line"
+                            src="../images/game2/input_line.png"
+                        />
                         <div class="input-display" id="input-display"></div>
 
                         <div class="keyboard">
@@ -276,14 +300,18 @@
 
                 <!-- P5: 正确反馈弹窗 -->
                 <div id="popup-correct" class="page">
-                    <img
-                        class="page-logo left1 selected success"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-popup"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <div id="popup-correct-cBG" class="page-background">
+                        <div class="page-base">
+                            <img
+                                class="page-logo left1 selected success"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-popup"
+                            src="../images/game2/burble_1.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts retry" id="ex-Last-Text">
                             <p class="line2">太棒了 🎉</p>
@@ -323,14 +351,18 @@
 
                 <!-- P6: 错误反馈弹窗（有复活机会） -->
                 <div id="popup-retry" class="page">
-                    <img
-                        class="page-logo left1 selected failed"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-popup"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <div id="popup-retry-cBG" class="page-background">
+                        <div class="page-base">
+                            <img
+                                class="page-logo left1 selected failed"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-popup"
+                            src="../images/game2/burble_1.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts retry">
                             <p class="line2">啊哦，失误了 🤯</p>
@@ -349,14 +381,18 @@
                 </div>
 
                 <div id="popup-goto-backward" class="page">
-                    <img
-                        class="page-logo left1 selected failed"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-popup"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <div id="popup-goto-backward-cBG" class="page-background">
+                        <div class="page-base">
+                            <img
+                                class="page-logo left1 selected failed"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-popup"
+                            src="../images/game2/burble_1.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts retry">
                             <p class="line2">啊哦，失误了 🤯</p>
@@ -380,15 +416,19 @@
                 </div>
 
                 <div id="page-backward-rule1" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left rule1"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask rule1"
-                        src="../images/game2/burble_2.png"
-                    />
+                    <div id="page-backward-rule1-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left rule1"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask rule1"
+                            src="../images/game2/burble_2.png"
+                        />
+                    </div>
                     <div id="page-content-rule1" class="page-content">
                         <div class="page-texts rule1 first">
                             <p class="line1">接下来，</p>
@@ -421,15 +461,19 @@
                 </div>
 
                 <div id="page-backward-rule2" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask"
-                        src="../images/game2/burble_2.png"
-                    />
+                    <div id="page-backward-rule2-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask"
+                            src="../images/game2/burble_2.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts rule1">
                             <p class="line1">比如</p>
@@ -448,15 +492,19 @@
                 </div>
 
                 <div id="page-backward-rule3" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask"
-                        src="../images/game2/burble_2.png"
-                    />
+                    <div id="page-backward-rule3-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask"
+                            src="../images/game2/burble_2.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts rule1">
                             <p class="line1">请注意</p>
@@ -487,6 +535,9 @@
                 </div>
                 <!-- P7: 倒序规则说明 -->
                 <div id="page-backward-rules" class="page">
+                    <div id="page-backward-rules-cBG" class="page-background">
+                        <div class="page-base"></div>
+                    </div>
                     <div class="page-content">
                         <div class="rules-card">
                             <div class="mascot-medium">🐑</div>
@@ -531,15 +582,19 @@
                 </div>
 
                 <div id="page-ready-backward" class="page">
-                    <img class="full-bg" src="../images/game2/rule_bg.png" />
-                    <img
-                        class="page-logo left1"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-ready"
-                        src="../images/game2/burble_3.png"
-                    />
+                    <div id="page-ready-backward-cBG" class="page-background">
+                        <img class="full-bg" src="../images/game2/rule_bg.png" />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left1"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-ready"
+                            src="../images/game2/burble_3.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts ready">
                             <p class="line2">
@@ -554,14 +609,18 @@
                 </div>
 
                 <div id="page-result" class="page">
-                    <img
-                        class="page-logo left2 result"
-                        src="../images/game2/memory_logo.png"
-                    />
-                    <img
-                        class="page-mask-result"
-                        src="../images/game2/burble_1.png"
-                    />
+                    <div id="page-result-cBG" class="page-background">
+                        <div class="page-base">
+                            <img
+                                class="page-logo left2 result"
+                                src="../images/game2/memory_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-mask-result"
+                            src="../images/game2/burble_1.png"
+                        />
+                    </div>
                     <div class="page-content">
                         <div class="page-texts result">
                             <p class="line2">挑战结束 🎉</p>
@@ -605,46 +664,51 @@
 
                 <!-- P9: 作答详情页面 -->
                 <div id="page-details" class="page">
-                    <!-- 页签切换 -->
-                    <img
-                        class="page-mask-details"
-                        src="../images/game2/burble_4.png"
-                    />
-                    <div class="details-tabs">
+                    <div id="page-details-cBG" class="page-background">
+                        <!-- 页签切换 -->
+                        <img
+                            class="page-mask-details"
+                            src="../images/game2/burble_4.png"
+                        />
+                        <div class="page-base"></div>
+                    </div>
+                    <div class="page-content">
+                        <div class="details-tabs">
+                            <button
+                                class="tab-btn active"
+                                data-tab="forward"
+                                onclick="MemoryGame.switchTab('forward')"
+                            ></button>
+                            <button
+                                class="tab-btn back"
+                                data-tab="backward"
+                                onclick="MemoryGame.switchTab('backward')"
+                            ></button>
+                        </div>
+
+                        <div class="details-container">
+                            <table class="details-table" id="details-table">
+                                <colgroup>
+                                    <col />
+                                    <col class="col-sep" />
+                                    <col class="col-sep" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>位数</th>
+                                        <th>数字序列</th>
+                                        <th>耗时/秒</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details-tbody"></tbody>
+                            </table>
+                        </div>
+
                         <button
-                            class="tab-btn active"
-                            data-tab="forward"
-                            onclick="MemoryGame.switchTab('forward')"
-                        ></button>
-                        <button
-                            class="tab-btn back"
-                            data-tab="backward"
-                            onclick="MemoryGame.switchTab('backward')"
+                            class="btn btn-detail"
+                            onclick="MemoryGame.backToResult()"
                         ></button>
                     </div>
-
-                    <div class="details-container">
-                        <table class="details-table" id="details-table">
-                            <colgroup>
-                                <col />
-                                <col class="col-sep" />
-                                <col class="col-sep" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>位数</th>
-                                    <th>数字序列</th>
-                                    <th>耗时/秒</th>
-                                </tr>
-                            </thead>
-                            <tbody id="details-tbody"></tbody>
-                        </table>
-                    </div>
-
-                    <button
-                        class="btn btn-detail"
-                        onclick="MemoryGame.backToResult()"
-                    ></button>
                 </div>
             </div>
         </div>

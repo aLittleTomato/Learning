@@ -3,12 +3,12 @@
  * 使用绿色系配色，营造轻松氛围
  */
 
-#page-result {
+#page-result-cBG {
     cursor: pointer;
     background: linear-gradient(to bottom, #5eb8e8 0% 40%, #ffffff 40% 100%);
     background-repeat: no-repeat;
 }
-#page-details {
+#page-details-cBG {
     background: linear-gradient(to bottom, #5eb8e8 0% 40%, #ffffff 40% 100%);
 }
 /* 欢迎页 */
@@ -469,7 +469,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -490,6 +489,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden; /* ⭐ 关键：按圆角裁剪子内容 */
+    z-index: 2;
 }
 /* Chrome / Safari / 新 Edge */
 .popup-scroll::-webkit-scrollbar {
@@ -936,15 +936,11 @@
 }
 .popup-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -200px;
+    left: -200px;
+    right: -200px;
+    bottom: -200px;
     background: rgba(0, 0, 0, 0.5);
-}
-
-.popup-overlay.front {
-    background: rgba(0, 0, 0, 0);
 }
 
 .popup-submit {

@@ -7,19 +7,25 @@
 }
 @font-face {
     font-family: "MyFont";
-    src: url("../fonts/ChillRoundGothic_Bold.woff2") format("woff2"),
+    src:
+        url("../fonts/ChillRoundGothic_Bold.woff2") format("woff2"),
         url("../fonts/chillroundgothic-bold.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    font-family: "MyFont", "MyFont1" sans-serif;
+    font-family:
+        "MyFont",
+        "MyFont1" sans-serif;
     user-select: none;
 }
 button {
     border: none;
-    font-family: "MyFont", -apple-system, sans-serif;
+    font-family:
+        "MyFont",
+        -apple-system,
+        sans-serif;
     background: none;
 }
 img {
@@ -32,7 +38,10 @@ html,
 body {
     width: 100%;
     height: 100%;
-    font-family: "MyFont", -apple-system, sans-serif;
+    font-family:
+        "MyFont",
+        -apple-system,
+        sans-serif;
     font-size: 16px;
     line-height: 1.5;
     background-color: #f5f5f5;
@@ -108,6 +117,27 @@ body {
     width: 100%;
     height: 100%;
     /* padding: 40px 20px; */
+}
+/* 三层结构样式 */
+.page-background,
+.page-base,
+.page-content {
+    position: absolute;
+    width: 750px;
+    height: 1437px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+}
+
+.page-background {
+    overflow: hidden;
+    z-index: 2;
+}
+
+.page-content {
+    z-index: 3;
 }
 
 /* 加载动画 */
@@ -407,7 +437,8 @@ body {
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: appear 1s ease-out forwards,
+    animation:
+        appear 1s ease-out forwards,
         /* 出现动画，执行一次 */ breath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
     /* background-image: "../images/game1/attention_logo.png"; */
@@ -421,9 +452,9 @@ body {
 .page-dialogBG {
     position: absolute;
     /* background-image: "../images/game1/welcome_txt_bg.png"; */
-    width: 750px;
+    width: 963px;
     height: 641px;
-    left: 0px;
+    left: -244px;
     bottom: 450px;
     object-fit: fill;
 }
@@ -506,7 +537,8 @@ body {
     /* 设置变换锚点为底部中间 */
     transform-origin: center bottom;
     /* x轴居中，y轴底部 */
-    animation: leftAppear 1s ease-out forwards,
+    animation:
+        leftAppear 1s ease-out forwards,
         /* 出现动画，执行一次 */ rightBreath 4s ease-in-out 1s infinite;
     /* 呼吸动画，1秒后开始循环 */
 }

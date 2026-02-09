@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
@@ -17,49 +17,64 @@
             <div id="stage" class="stage">
                 <!-- P1: 欢迎页 -->
                 <div id="page-welcome" class="page">
-                    <img class="full-bg" src="../images/game3/welcome_bg.png" />
-                    <img
-                        class="page-welcome-mask"
-                        src="../images/game3/welcom_mask.png"
-                    />
-                    <img
-                        class="page-logo right welcome"
-                        src="../images/game3/big_logo.png"
-                    />
-                    <img
-                        class="page-dialogBG"
-                        src="../images/game1/welcome_txt_bg1.png"
-                    />
-
-                    <!-- 新增两行文本 -->
-                    <div class="page-texts-title">
-                        <p class="line2">欢迎来到<br />连连看小练习</p>
+                    <div id="page-welcome-bg" class="page-background">
+                        <img
+                            class="full-bg"
+                            src="../images/game3/welcome_bg.png"
+                        />
+                        <img
+                            class="page-welcome-mask"
+                            src="../images/game3/welcom_mask.png"
+                        />
+                        <div class="page-base">
+                            <img
+                                class="page-logo right welcome"
+                                src="../images/game3/big_logo.png"
+                            />
+                        </div>
                     </div>
 
-                    <div class="page-texts welcome">
-                        <p class="line1">你好呀,</p>
-                        <p class="line2">准备好挑战成为</p>
-                        <p class="line2">数字记忆达人了吗？</p>
+                    <div class="page-content">
+                        <img
+                            class="page-dialogBG"
+                            src="../images/game1/welcome_txt_bg1.png"
+                        />
+
+                        <!-- 新增两行文本 -->
+                        <div class="page-texts-title">
+                            <p class="line2">欢迎来到<br />连连看小练习</p>
+                        </div>
+
+                        <div class="page-texts welcome">
+                            <p class="line1">你好呀,</p>
+                            <p class="line2">准备好挑战成为</p>
+                            <p class="line2">数字记忆达人了吗？</p>
+                        </div>
+                        <button
+                            class="btn btn-welcome"
+                            onclick="ConnectGame.nextPage()"
+                        ></button>
                     </div>
-                    <button
-                        class="btn btn-welcome"
-                        onclick="ConnectGame.nextPage()"
-                    ></button>
                 </div>
 
                 <div id="page-rule-1" class="page">
-                    <img
-                        class="full-bg rule"
-                        src="../images/game3/rule_bg.png"
-                    />
-                    <img
-                        class="page-logo left rule"
-                        src="../images/game3/big_logo.png"
-                    />
-                    <img
-                        class="page-rule-mask"
-                        src="../images/game3/burble_2.png"
-                    />
+                    <div id="page-rule-1-bg" class="page-background">
+                        <img
+                            class="full-bg rule"
+                            src="../images/game3/rule_bg.png"
+                        />
+                        <div class="page-base">
+                            <img
+                                class="page-logo left rule"
+                                src="../images/game3/big_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="page-rule-mask"
+                            src="../images/game3/burble_2.png"
+                        />
+                    </div>
+
                     <div class="page-content">
                         <div class="page-texts rule1">
                             <p class="line1">让我们来看看规则吧。</p>
@@ -86,20 +101,28 @@
                     </div>
                 </div>
                 <div id="page-rule-2" class="page">
-                    <img
-                        class="full-bg rule"
-                        src="../images/game3/rule_bg.png"
-                    />
-                    <img
-                        class="page-logo right1"
-                        src="../images/game3/big_logo.png"
-                    />
-                    <img class="full-bg" src="../images/game3/burble_1.png" />
-                    <img
-                        class="page-rule-tutorial"
-                        src="../images/game3/tutorial.png"
-                    />
+                    <div id="page-rule-2-bg" class="page-background">
+                        <img
+                            class="full-bg rule"
+                            src="../images/game3/rule_bg.png"
+                        />
+                        <div class="page-base">
+                            <img
+                                class="page-logo right1"
+                                src="../images/game3/big_logo.png"
+                            />
+                        </div>
+                        <img
+                            class="full-bg"
+                            src="../images/game3/burble_1.png"
+                        />
+                    </div>
+
                     <div class="page-content">
+                        <img
+                            class="page-rule-tutorial"
+                            src="../images/game3/tutorial.png"
+                        />
                         <div class="page-texts rule2">
                             <p class="line2">比如，下面出现了3个数字</p>
                             <p class="line2">我们需要快速按照“1、2、3”</p>
@@ -117,62 +140,81 @@
 
                 <!-- P2: 新手引导页 -->
                 <div id="page-tutorial" class="page">
-                    <img
-                        class="test-logo"
-                        src="../images/game3/input_logo.png"
-                    />
-                    <img
-                        class="test-tip-bg"
-                        src="../images/game3/input_txt.png"
-                    />
-                    <div class="page-texts test-tip">
-                        <p class="line2">请按照从小到大的顺序，</p>
-                        <p class="line2">快速点击下方的数字来连线吧。</p>
+                    <div id="page-tutorial-bg" class="page-background">
+                        <div class="page-base"></div>
                     </div>
 
-                    <div class="game-area">
-                        <canvas
-                            id="tutorial-canvas"
-                            class="game-canvas"
-                        ></canvas>
-                        <div
-                            id="tutorial-numbers"
-                            class="numbers-container"
-                        ></div>
+                    <div class="page-content">
+                        <img
+                            class="test-logo"
+                            src="../images/game3/input_logo.png"
+                        />
+                        <img
+                            class="test-tip-bg"
+                            src="../images/game3/input_txt.png"
+                        />
+                        <div class="page-texts test-tip">
+                            <p class="line2">请按照从小到大的顺序，</p>
+                            <p class="line2">快速点击下方的数字来连线吧。</p>
+                        </div>
+
+                        <div class="game-area">
+                            <canvas
+                                id="tutorial-canvas"
+                                class="game-canvas"
+                            ></canvas>
+                            <div
+                                id="tutorial-numbers"
+                                class="numbers-container"
+                            ></div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- P3: 游戏主界面 -->
                 <div id="page-game" class="page">
-                    <img
-                        class="test-logo"
-                        src="../images/game3/input_logo.png"
-                    />
-                    <img
-                        class="test-tip-bg"
-                        src="../images/game3/input_txt.png"
-                    />
-                    <div class="page-texts test-tip">
-                        <p class="line2">请按照从小到大的顺序，</p>
-                        <p class="line2">快速点击下方的数字来连线吧。</p>
-                    </div>
-                    <div class="game-area">
-                        <canvas id="game-canvas" class="game-canvas"></canvas>
-                        <div id="game-numbers" class="numbers-container"></div>
+                    <div id="page-game-bg" class="page-background"></div>
+                    <div class="page-base"></div>
+                    <div class="page-content">
+                        <img
+                            class="test-logo"
+                            src="../images/game3/input_logo.png"
+                        />
+                        <img
+                            class="test-tip-bg"
+                            src="../images/game3/input_txt.png"
+                        />
+                        <div class="page-texts test-tip">
+                            <p class="line2">请按照从小到大的顺序，</p>
+                            <p class="line2">快速点击下方的数字来连线吧。</p>
+                        </div>
+                        <div class="game-area">
+                            <canvas
+                                id="game-canvas"
+                                class="game-canvas"
+                            ></canvas>
+                            <div
+                                id="game-numbers"
+                                class="numbers-container"
+                            ></div>
+                        </div>
                     </div>
                 </div>
 
                 <div id="page-task" class="page">
-                    <img
-                        class="page-task-mask"
-                        src="../images/game3/burble_3.png"
-                    />
-                    <img
-                        class="page-logo bottom"
-                        src="../images/game3/big_logo.png"
-                    />
+                    <div id="page-task-bg" class="page-background">
+                        <img
+                            class="page-task-mask"
+                            src="../images/game3/burble_3.png"
+                        />
+                    </div>
+                    <div class="page-base"></div>
 
                     <div class="page-content">
+                        <img
+                            class="page-logo bottom"
+                            src="../images/game3/big_logo.png"
+                        />
                         <div class="page-texts task">
                             <p class="line2">太棒了 🎉</p>
                             <p class="line2">你已经顺利通过热身练习。</p>
@@ -199,11 +241,19 @@
                 </div>
 
                 <div id="page-result" class="page">
-                    <img
-                        class="page-logo left2"
-                        src="../images/game3/big_logo.png"
-                    />
-                    <img class="full-bg" src="../images/game3/burble_4.png" />
+                    <div id="page-result-bg" class="page-background">
+                        <img
+                            class="full-bg"
+                            src="../images/game3/burble_4.png"
+                        />
+                    </div>
+                    <div class="page-base">
+                        <img
+                            class="page-logo left2"
+                            src="../images/game3/big_logo.png"
+                        />
+                    </div>
+
                     <div class="page-content">
                         <div class="page-texts result">
                             <p class="line2">挑战结束 🎉</p>
@@ -247,32 +297,40 @@
 
                 <!-- P5: 作答详情页 -->
                 <div id="page-details" class="page">
-                    <img class="full-bg" src="../images/game3/burble_5.png" />
-
-                    <div class="details-container">
-                        <table class="details-table" id="details-table">
-                            <thead>
-                                <tr>
-                                    <th>数字</th>
-                                    <th>错误次数</th>
-                                    <th>耗时/秒</th>
-                                </tr>
-                            </thead>
-                            <tbody id="details-tbody"></tbody>
-                        </table>
+                    <div id="page-details-bg" class="page-background">
+                        <img
+                            class="full-bg"
+                            src="../images/game3/burble_5.png"
+                        />
                     </div>
+                    <div class="page-base"></div>
+                    <div class="page-content">
+                        <div class="details-container">
+                            <table class="details-table" id="details-table">
+                                <thead>
+                                    <tr>
+                                        <th>数字</th>
+                                        <th>错误次数</th>
+                                        <th>耗时/秒</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details-tbody"></tbody>
+                            </table>
+                        </div>
 
-                    <button
-                        class="btn btn-bottom long"
-                        onclick="ConnectGame.backToResult()"
-                    >
-                        返回
-                    </button>
+                        <button
+                            class="btn btn-bottom long"
+                            onclick="ConnectGame.backToResult()"
+                        >
+                            返回
+                        </button>
+                    </div>
                 </div>
-
-                <!-- 错误提示 Toast -->
-                <div id="error-toast" class="error-toast">
-                    <span id="error-message">请按顺序点击数字</span>
+                <div class="page-base top">
+                    <!-- 错误提示 Toast -->
+                    <div id="error-toast" class="error-toast">
+                        <span id="error-message">请按顺序点击数字</span>
+                    </div>
                 </div>
             </div>
         </div>
