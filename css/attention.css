@@ -1080,28 +1080,6 @@
     flex: 1;
 }
 
-/* 响应式调整 */
-@media screen and (max-width: 375px) {
-    .main-grid {
-        gap: 6px;
-    }
-
-    .grid-item {
-        font-size: 16px;
-    }
-
-    .game-container {
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .main-grid {
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
 .btn-detail {
     position: absolute;
     width: 93px;

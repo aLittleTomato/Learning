@@ -1200,20 +1200,3 @@
     /* line-height: 1; */
     text-align: center;
 }
-
-/* 响应式调整 */
-@media screen and (max-width: 375px) {
-    .number-circle {
-        width: 160px;
-        height: 160px;
-    }
-
-    .number-display {
-        font-size: 56px;
-    }
-
-    .key-btn {
-        height: 50px;
-        font-size: 20px;
-    }
-}

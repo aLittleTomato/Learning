@@ -707,13 +707,6 @@
     color: white;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .options-container {
-        grid-template-columns: repeat(var(--cols), 110px);
-    }
-}
-
 .progress-bar {
     position: absolute;
     width: 660px;

@@ -798,20 +798,3 @@
     padding: 20px 48px;
     font-size: 18px;
 } */
-
-/* 响应式调整 */
-@media screen and (max-width: 375px) {
-    .number-node {
-        width: 42px;
-        height: 42px;
-        font-size: 18px;
-    }
-
-    .welcome-title {
-        font-size: 24px;
-    }
-
-    .stat-value {
-        font-size: 28px;
-    }
-}
