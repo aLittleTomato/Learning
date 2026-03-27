@@ -53,6 +53,8 @@ var AttentionGame = (function () {
         mascotIdle: null,
     };
 
+    var isDemoMode = window.location.href.indexOf("demoPages") !== -1;
+
     /**
      * 初始化游戏
      */
@@ -61,6 +63,11 @@ var AttentionGame = (function () {
 
         // 初始化配置
         Config.init();
+
+        if (isDemoMode) {
+            Config.set("games.attention.pages", 2);
+        }
+
         // 预加载所有图片资源
         var imagesToPreload = [
             "../images/game1/welcome_bg.png",

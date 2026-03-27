@@ -48,7 +48,7 @@ var ConnectGame = (function () {
         lineWidth: 6, // 连线宽度
         errorToastDuration: 1500, // 错误提示持续时间（毫秒）
     };
-
+    var isDemoMode = window.location.href.indexOf("demoPages") !== -1;
     /**
      * 初始化游戏
      */
@@ -67,6 +67,9 @@ var ConnectGame = (function () {
             container: document.body,
             onComplete: function () {
                 console.log("所有资源加载完成");
+                if (isDemoMode) {
+                    config.gameNumbers = 15;
+                }
                 initPage();
             },
         });

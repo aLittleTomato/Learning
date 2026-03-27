@@ -69,7 +69,7 @@ var MemoryGame = (function () {
         displayInterval: 500, // 数字间隔时长（毫秒）
         readyCountdown: 3, // 准备倒计时（秒）
     };
-
+    var isDemoMode = window.location.href.indexOf("demoPages") !== -1;
     /**
      * 切换到下一页
      */
@@ -157,6 +157,11 @@ var MemoryGame = (function () {
         var imagesToPreload = [];
 
         getImgUrls(imagesToPreload);
+
+        if(isDemoMode) {
+            var detailsTabs = document.getElementById("details-tabs");
+            if (detailsTabs) detailsTabs.style.display = "none";
+        }
 
         Preloader.preload({
             images: imagesToPreload,
@@ -560,8 +565,11 @@ var MemoryGame = (function () {
         if (state.level >= config.maxLevel) {
             // 完成当前阶段
             if (state.phase === "forward") {
-                // 进入倒序阶段
-                showBackwardRules();
+                if (isDemoMode) {
+                    showResult();
+                } else {
+                    showBackwardRules();
+                }
             } else {
                 // 游戏结束
                 showResult();
@@ -603,8 +611,12 @@ var MemoryGame = (function () {
         } else {
             // 无复活机会，结束当前阶段
             if (state.phase === "forward") {
-                // 进入倒序阶段
-                showFailed();
+                if (isDemoMode) {
+                    showResult();
+                } else {
+                    // 进入倒序阶段
+                    showFailed();
+                }
             } else {
                 // 游戏结束
                 showResult();
@@ -806,7 +818,7 @@ var MemoryGame = (function () {
 
         if (statTime) statTime.textContent = Utils.formatTime(state.timeCost);
         if (statForward) statForward.textContent = forwardDigits + " 位";
-        if (statBackward) statBackward.textContent = backwardDigits + " 位";
+        if (statBackward && !isDemoMode) statBackward.textContent = backwardDigits + " 位";
         if (statTotal) statTotal.textContent = totalScore + " 分";
 
         // 根据成绩设置称号

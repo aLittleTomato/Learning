@@ -20,7 +20,7 @@ var PictureMemoryGame = (function () {
         currentDetailsIndex: 0,
         pictureTimer: null,
     };
-
+    var isDemoMode = window.location.href.indexOf("demoPages") !== -1;
     // 游戏配置
     var config = {
         warmup: {
@@ -61,7 +61,19 @@ var PictureMemoryGame = (function () {
         }
         console.log("图片记忆游戏初始化");
         // 预加载所有图片资源
-
+        if (isDemoMode) {
+            config.test = {
+                totalPictures: 10,
+                totalRounds: 20,
+                distribution: {
+                    once: 0,
+                    twice: 10,
+                    thrice: 0,
+                },
+                startIndex: 7,
+                endIndex: 65,
+            };
+        }
         var imagesToPreload = [].concat(picturePool);
         getImgUrls(imagesToPreload);
 
